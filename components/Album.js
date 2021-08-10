@@ -1,25 +1,33 @@
 import React from "react";
 import { Box, Heading, Center, Text, Image } from "@chakra-ui/react";
 
-function Album({ album }) {
-  let imgurl = "#text";
+function Album({ thing }) {
   const properties = {
-    imageUrl: album.image[2]["#text"],
-    artist: album.artist.name,
-    name: album.name,
-    url: album.url,
+    imageUrl: thing.image[2]["#text"],
+    artist: thing.artist.name,
+    name: thing.name,
+    url: thing.url,
   };
 
   //   const { `${imgurl}` } = properties.imageUrl;
   //   console.log(text);
-  console.log(properties.imageUrl);
+  //   console.log(properties.imageUrl);
   return (
     <div>
-      <Box>
-        <Image src={properties.imageUrl} alt="Album Cover"></Image>
-        <Box>
-          <Heading>{properties.name}</Heading>
-          <Text>{properties.artist}</Text>
+      <Box w="17rem" h="20rem" bg="orange.600" rounded="2xl">
+        <Center>
+          {" "}
+          <Image pt={14} src={properties.imageUrl} alt="Album Cover"></Image>
+        </Center>
+        <Box justifyContent="center">
+          <Center>
+            <Heading fontSize={24} color="black" textAlign={["center"]}>
+              {properties.name}
+            </Heading>
+          </Center>
+          <Center>
+            <Text fontSize={18}>{properties.artist}</Text>
+          </Center>
         </Box>
       </Box>
     </div>
