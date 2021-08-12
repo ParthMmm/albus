@@ -9,6 +9,7 @@ import {
   GridItem,
   Skeleton,
   SimpleGrid,
+  Flex,
 } from "@chakra-ui/react";
 import axios from "axios";
 import Album from "../components/Album";
@@ -69,42 +70,58 @@ function landing() {
         </Center>
       </Box>
 
-      <Box
-        bg="gray.600"
-        w="80%"
-        h="50rem"
-        mx="auto"
-        mt={10}
-        color="white"
-        d="flex"
-      >
+      <Box w="80%" h="50rem" mx="auto" mt={10} color="white">
+        <Box mb={4}>
+          <Heading>Top Dance Albums</Heading>
+          <Text>All Time</Text>
+        </Box>
         {error || isValidating ? (
-          <SimpleGrid columns="1" row="2" gap={1}>
-            <Box>
-              <Skeleton
-                startColor="purple.500"
-                endColor="orange.500"
-                height="25rem"
-                width="100%"
-              />
-            </Box>
-            <Box>
-              <Skeleton
-                startColor="orange.500"
-                endColor="purple.500"
-                height="25rem"
-                width="100%"
-              />
-            </Box>
-          </SimpleGrid>
-        ) : (
-          <SimpleGrid columns={{ sm: 1, md: 3, lg: 5 }} spacing={30}>
-            {albums.map((album) => (
+          <Center>
+            <SimpleGrid columns="1" row="2" gap={1}>
               <Box>
-                <Album key={album.mbid} thing={album}></Album>
+                <Skeleton
+                  startColor="purple.500"
+                  endColor="orange.500"
+                  height="25rem"
+                  width="100%"
+                />
               </Box>
+              <Box>
+                <Skeleton
+                  startColor="orange.500"
+                  endColor="purple.500"
+                  height="25rem"
+                  width="100%"
+                />
+              </Box>
+            </SimpleGrid>
+          </Center>
+        ) : (
+          <Grid
+            gridTemplateColumns={[
+              "repeat(2, 1fr)",
+              "repeat(2, 1fr)",
+              "repeat(5, 1fr)",
+            ]}
+            gap={3}
+          >
+            {albums.map((album) => (
+              <Album key={album.mbid} thing={album} />
             ))}
-          </SimpleGrid>
+          </Grid>
+          //   <Center>
+          //     <SimpleGrid
+          //       columns={{ sm: 2, md: 2, lg: 5 }}
+          //       spacingX="40px"
+          //       spacingY="10px"
+          //     >
+          //       {albums.map((album) => (
+          //         <Flex>
+          //           <Album key={album.mbid} thing={album}></Album>
+          //         </Flex>
+          //       ))}
+          //     </SimpleGrid>
+          //   </Center>
         )}
       </Box>
     </div>
