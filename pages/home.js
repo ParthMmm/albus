@@ -17,7 +17,7 @@ import { tagTopAlbumsFetch } from "../utils/fetch";
 import useSWR from "swr";
 import fetcher from "../utils/fetcher";
 
-function landing() {
+function home() {
   //   const [randomNum, setNum] = useState(0);
   //   const [albums, setAlbums] = useState([]);
   let albums = [];
@@ -56,17 +56,9 @@ function landing() {
       <Header />
 
       <Box bg="gray.600" w="80%" h="30rem" mx="auto" mt={10} color="white">
-        <Center
-          mb={8}
-          h="20vh"
-          w="35vh"
-          p={5}
-          flexDirection="column"
-          rounded="xl"
-        >
+        <Center mb={8} h="20vh" w="40vh" p={5}>
           {" "}
           <Heading>welcome to albus! {emojis[randomNum]} </Heading>
-          <Text></Text>
         </Center>
       </Box>
 
@@ -109,23 +101,10 @@ function landing() {
               <Album key={album.mbid} thing={album} />
             ))}
           </Grid>
-          //   <Center>
-          //     <SimpleGrid
-          //       columns={{ sm: 2, md: 2, lg: 5 }}
-          //       spacingX="40px"
-          //       spacingY="10px"
-          //     >
-          //       {albums.map((album) => (
-          //         <Flex>
-          //           <Album key={album.mbid} thing={album}></Album>
-          //         </Flex>
-          //       ))}
-          //     </SimpleGrid>
-          //   </Center>
         )}
       </Box>
     </div>
   );
 }
 
-export default landing;
+export default home;

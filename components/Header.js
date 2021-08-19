@@ -50,13 +50,13 @@ function Header() {
         </Flex>
         <Flex justifyContent="space-between">
           <ButtonGroup>
-            <NextLink href="/" passHref>
+            <NextLink href="/login" passHref>
               <Button as="a" bg="none" _hover={{ bg: "purple.600" }}>
                 Login
               </Button>
             </NextLink>
 
-            <NextLink href="/" passHref>
+            <NextLink href="/register" passHref>
               <Button as="a" bg="purple.600" _hover={{ bg: "purple.800" }}>
                 Sign Up
               </Button>
