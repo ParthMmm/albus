@@ -31,10 +31,7 @@ function Album({ thing }) {
   //   const { `${imgurl}` } = properties.imageUrl;
   //   console.log(text);
   //   console.log(properties.imageUrl);
-  const handleClick = () => {
-    album.getID(properties.name, properties.artist);
-    console.log("sfdjfja");
-  };
+
   return (
     <div>
       {/* <Box
@@ -95,7 +92,6 @@ function Album({ thing }) {
           bg="gray.600"
         >
           <NextLink
-            onClick={() => handleClick}
             href={{
               pathname: `/album/[...slug]`,
               query: {
