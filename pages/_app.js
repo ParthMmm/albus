@@ -1,11 +1,14 @@
 import { ChakraProvider } from "@chakra-ui/react";
-import { AuthProvider } from "../provider/authProvider";
+import { AlbumProvider } from "../providers/albumProvider";
+import { AuthProvider } from "../providers/authProvider";
 
 function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider>
       <AuthProvider>
-        <Component {...pageProps} />
+        <AlbumProvider>
+          <Component {...pageProps} />
+        </AlbumProvider>
       </AuthProvider>
     </ChakraProvider>
   );

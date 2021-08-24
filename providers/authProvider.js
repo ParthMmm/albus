@@ -45,6 +45,7 @@ function useProvideAuth() {
       console.log(res.data.msg);
     } else {
       console.log(res.data);
+      handleUser(res.data);
       router.push("/home");
     }
   };
@@ -60,23 +61,24 @@ function useProvideAuth() {
       console.log(res.data.msg);
     } else {
       console.log(res.data);
+      handleUser(res.data);
       router.push("/home");
     }
   };
 
   return {
-    register,
+    user,
+    loading,
     error,
     login,
-    loading,
+    register,
   };
 }
 
 const formatUser = async (user) => {
   return {
-    user_id: user.user_id,
-    token: user.access_token,
-    expiry: user.expiry,
+    user_id: user.id,
+    token: user.token,
     username: user.username,
   };
 };

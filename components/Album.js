@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   Heading,
@@ -9,18 +9,32 @@ import {
   Link,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
+import { useAlbum } from "../providers/albumProvider";
+import { useRouter } from "next/router";
 
 function Album({ thing }) {
+  const album = useAlbum();
+  const router = useRouter();
+
   const properties = {
     imageUrl: thing.image[2]["#text"],
     artist: thing.artist.name,
     name: thing.name,
     url: thing.url,
   };
+  let mbid;
+  // useEffect(() => {
+  //   album.getID(properties.name, properties.artist);
+  //   mbid = album.albumID;
+  // });
 
   //   const { `${imgurl}` } = properties.imageUrl;
   //   console.log(text);
   //   console.log(properties.imageUrl);
+  const handleClick = () => {
+    album.getID(properties.name, properties.artist);
+    console.log("sfdjfja");
+  };
   return (
     <div>
       {/* <Box
@@ -80,7 +94,20 @@ function Album({ thing }) {
           minHeight={{ sm: "100px", md: "120" }}
           bg="gray.600"
         >
-          <NextLink href={`${properties.url}`} passHref>
+          <NextLink
+            onClick={() => handleClick}
+            href={{
+              pathname: `/album/[...slug]`,
+              query: {
+                artist: properties.artist,
+                name: properties.name,
+              },
+            }}
+            as={`/album/${properties.artist}/${encodeURIComponent(
+              properties.name
+            )}`}
+            passHref
+          >
             <Link
               fontWeight="bold"
               lineHeight="normal"
@@ -102,3 +129,4 @@ function Album({ thing }) {
 }
 
 export default Album;
+// as={`/album/${properties.artist}/${properties.name}`}

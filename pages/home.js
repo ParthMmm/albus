@@ -98,7 +98,7 @@ function home() {
             gap={3}
           >
             {albums.map((album) => (
-              <Album key={album.mbid} thing={album} />
+              <Album key={album.artist.mbid} thing={album} />
             ))}
           </Grid>
         )}
