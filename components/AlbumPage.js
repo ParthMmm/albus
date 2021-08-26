@@ -8,6 +8,11 @@ import {
   Badge,
   Skeleton,
   Tag,
+  Stack,
+  Link,
+  Divider,
+  Button,
+  ButtonGroup,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
@@ -26,7 +31,6 @@ function AlbumInfo() {
   const router = useRouter();
   const album = useAlbum();
   // console.log(router.query.slug);
-
   const artist = router.query.slug[0];
   const albumName = router.query.slug[1];
 
@@ -77,29 +81,28 @@ function AlbumInfo() {
         <Box
           bg="gray.600"
           w="80%"
-          h="30rem"
           mx="auto"
           mt={10}
           color="white"
           d="flex"
+          flexGrow="1"
+          alignItems="flex-start"
+          justifyContent="space-between"
+          flexDir={{ sm: "column", md: "column", lg: "row" }}
         >
-          <Box p="5" maxW="320px" borderWidth="1px">
-            <Image borderRadius="md" src={currentAlbum.image} />
-            <Flex align="baseline" mt={2}>
-              {currentAlbum.tags.map((tag) => {
-                return (
-                  <Tag
-                    ml={2}
-                    textTransform="uppercase"
-                    fontSize="sm"
-                    fontWeight="bold"
-                    color="purple.800"
-                  >
-                    {tag.name}
-                  </Tag>
-                );
-              })}
-            </Flex>
+          <Box
+            p="5"
+            maxW="500px"
+            justifyContent="space-between"
+            flexDir="column"
+            flexShrink={{ sm: "1", md: "0" }}
+          >
+            <Image
+              borderRadius="md"
+              src={currentAlbum.image}
+              objectFit="contain"
+            />
+
             <Text mt={2} fontSize="xl" fontWeight="semibold" lineHeight="short">
               {currentAlbum.name}
             </Text>
@@ -112,7 +115,7 @@ function AlbumInfo() {
                     value={currentAlbum.playcount}
                     displayType="text"
                     thousandSeparator={true}
-                  ></NumberFormat>
+                  />
                 </b>
               </Text>
             </Flex>
@@ -124,34 +127,62 @@ function AlbumInfo() {
                     value={currentAlbum.listeners}
                     displayType="text"
                     thousandSeparator={true}
-                  ></NumberFormat>
+                  />
                 </b>
               </Text>
             </Flex>
           </Box>
           {currentAlbum.wiki ? (
-            <Box>
-              <Text>{currentAlbum.wiki}</Text>
+            <Box d="flex" flexShrink="1" m={4}>
+              <Text
+                fontSize="xl"
+                dangerouslySetInnerHTML={{ __html: currentAlbum.wiki }}
+              ></Text>
             </Box>
           ) : (
             <Box></Box>
           )}
         </Box>
-        <Box d="flex" alignItems="baseline">
-          <Box
-            d="flex"
-            bg="gray.600"
-            w="80%"
-            h="30rem"
-            mx="auto"
-            mt={10}
-            color="white"
-          >
-            <Box d="flex" flexDirection="column">
+        <Box bg="gray.600" mx="32" mt={1} color="white">
+          <Center>
+            <ButtonGroup>
+              <Button>Listened</Button>
+              <Button>Want to Listen</Button>
+              <Button>Listened</Button>
+            </ButtonGroup>
+          </Center>
+        </Box>
+        <Box>
+          <Box mt={8} mx={32}>
+            {" "}
+            <Heading>Tracklist </Heading>
+          </Box>
+          <Box bg="gray.600" mx="32" mt={1} color="white">
+            <Stack spacing={4}>
               {currentAlbum.tracks.map((track) => {
-                return <Text>{track.name}</Text>;
+                return (
+                  <Box
+                    d="flex"
+                    shadow="md"
+                    borderWidth="1px"
+                    alignItems="baseline"
+                    flexDir="row"
+                    justifyContent="space-between"
+                  >
+                    <Box>
+                      <Text as="span">
+                        <b>{track["@attr"].rank}.</b>
+                      </Text>
+                      <Link ml={2} fontSize="md" href={track.url}>
+                        {track.name}
+                      </Link>
+                    </Box>
+
+                    <Text>{convertTime(track.duration)}</Text>
+                  </Box>
+                );
               })}
-            </Box>
+            </Stack>
           </Box>
         </Box>
       </div>
@@ -166,6 +197,10 @@ function AlbumPage() {
       <AlbumInfo />
     </div>
   );
+}
+
+function convertTime(time) {
+  return time.toString().replace(/(.{2})$/, ":$1");
 }
 
 export default AlbumPage;
