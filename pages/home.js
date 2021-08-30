@@ -16,8 +16,11 @@ import Album from "../components/Album";
 import { tagTopAlbumsFetch } from "../utils/fetch";
 import useSWR from "swr";
 import fetcher from "../utils/fetcher";
+import { useAuth } from "../providers/authProvider";
 
 function home() {
+  const auth = useAuth();
+
   //   const [randomNum, setNum] = useState(0);
   //   const [albums, setAlbums] = useState([]);
   let albums = [];
@@ -58,7 +61,13 @@ function home() {
       <Box bg="gray.600" w="80%" h="30rem" mx="auto" mt={10} color="white">
         <Center mb={8} h="20vh" w="40vh" p={5}>
           {" "}
-          <Heading>welcome to albus! {emojis[randomNum]} </Heading>
+          {auth.user?.username ? (
+            <Heading>
+              Hi, {auth.user.username}! {emojis[randomNum]}
+            </Heading>
+          ) : (
+            <Heading>welcome to albus! {emojis[randomNum]} </Heading>
+          )}
         </Center>
       </Box>
 

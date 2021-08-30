@@ -19,19 +19,39 @@ function useProvideAuth() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const handleUser = (rawUser) => {
+  const handleUser = async (rawUser) => {
     if (rawUser) {
-      const user = formatUser(rawUser);
+      const user = await formatUser(rawUser);
 
-      setLoading(false);
+      const userString = JSON.stringify(user);
+
+      Cookies.set("albus-auth", userString, { expires: 7 });
       setUser(user);
+      setLoading(false);
       return user;
     } else {
-      setLoading(false);
       setUser(false);
+      Cookies.remove("albus-auth");
+      setLoading(false);
       return false;
     }
   };
+
+  const readCookie = () => {
+    const authState = Cookies.get("albus-auth");
+    if (authState) {
+      setLoading(false);
+      const parsedUser = JSON.parse(authState);
+      console.log(parsedUser);
+      setUser(parsedUser);
+    } else {
+      setLoading(false);
+      setUser(false);
+    }
+  };
+  useEffect(() => {
+    readCookie();
+  }, []);
 
   const register = async (data) => {
     setLoading(true);
@@ -46,7 +66,7 @@ function useProvideAuth() {
     } else {
       console.log(res.data);
       handleUser(res.data);
-      router.push("/home");
+      router.push("/");
     }
   };
 
@@ -62,8 +82,14 @@ function useProvideAuth() {
     } else {
       console.log(res.data);
       handleUser(res.data);
-      router.push("/home");
+
+      router.push("/");
     }
+  };
+  const logout = () => {
+    console.log("logging out");
+    handleUser(false);
+    router.push("/");
   };
 
   return {
@@ -72,6 +98,7 @@ function useProvideAuth() {
     error,
     login,
     register,
+    logout,
   };
 }
 

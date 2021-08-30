@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Flex,
   Heading,
@@ -21,6 +21,10 @@ import NextLink from "next/link";
 
 function Header() {
   const auth = useAuth();
+
+  useEffect(() => {
+    console.log(auth.user);
+  });
 
   return (
     //   <Flex
@@ -148,7 +152,7 @@ function Header() {
               <MenuList bg="gray.600">
                 <MenuItem>Profile</MenuItem>
                 <MenuItem>Settings</MenuItem>
-                <MenuItem>Log Out</MenuItem>
+                <MenuItem onClick={() => auth.logout()}>Log Out</MenuItem>
               </MenuList>
             </Menu>
           ) : (

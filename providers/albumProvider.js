@@ -37,6 +37,7 @@ function useProvideAlbum() {
     } else {
       console.log(res.data.id);
       setAlbumID(res.data.id);
+      console.log(albumID);
     }
   };
 

@@ -11,7 +11,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { useAuth } from "../provider/authProvider";
+import { useAuth } from "../providers/authProvider";
 
 function SignUp() {
   const auth = useAuth();

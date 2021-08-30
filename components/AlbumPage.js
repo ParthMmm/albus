@@ -17,6 +17,8 @@ import {
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import { useAlbum } from "../providers/albumProvider";
+import { useAction } from "../providers/actionProvider";
+
 import { useRouter } from "next/router";
 import { albumInfoFetch } from "../utils/fetch";
 import useSWR from "swr";
@@ -30,6 +32,7 @@ function AlbumInfo() {
   const [mbid, setMBID] = useState("");
   const router = useRouter();
   const album = useAlbum();
+  const action = useAction();
   // console.log(router.query.slug);
   const artist = router.query.slug[0];
   const albumName = router.query.slug[1];
@@ -45,8 +48,17 @@ function AlbumInfo() {
     }
   );
 
+  const handleClick = () => {
+    action.addListened(album.albumID);
+  };
+
   let currentAlbum = {};
   let tags;
+
+  useEffect(() => {
+    album.getID(albumName, artist);
+  }, []);
+
   if (!data) {
     return (
       <Box>
@@ -64,6 +76,7 @@ function AlbumInfo() {
   }
   if (data) {
     console.log(data);
+    console.log(album.albumID);
     currentAlbum = {
       artist: data.album.artist,
       name: data.album.name,
@@ -73,7 +86,7 @@ function AlbumInfo() {
       url: data.album.url,
       listeners: data.album.listeners,
       playcount: data.album.playcount,
-      tracks: data.album.tracks.track,
+      tracks: data.album.tracks?.track,
     };
 
     return (
@@ -146,9 +159,15 @@ function AlbumInfo() {
         <Box bg="gray.600" mx="32" mt={1} color="white">
           <Center>
             <ButtonGroup>
-              <Button>Listened</Button>
+              <Button
+                onClick={() => {
+                  handleClick();
+                }}
+              >
+                Listened
+              </Button>
               <Button>Want to Listen</Button>
-              <Button>Listened</Button>
+              <Button>Listening</Button>
             </ButtonGroup>
           </Center>
         </Box>
@@ -157,33 +176,38 @@ function AlbumInfo() {
             {" "}
             <Heading>Tracklist </Heading>
           </Box>
-          <Box bg="gray.600" mx="32" mt={1} color="white">
-            <Stack spacing={4}>
-              {currentAlbum.tracks.map((track) => {
-                return (
-                  <Box
-                    d="flex"
-                    shadow="md"
-                    borderWidth="1px"
-                    alignItems="baseline"
-                    flexDir="row"
-                    justifyContent="space-between"
-                  >
-                    <Box>
-                      <Text as="span">
-                        <b>{track["@attr"].rank}.</b>
-                      </Text>
-                      <Link ml={2} fontSize="md" href={track.url}>
-                        {track.name}
-                      </Link>
-                    </Box>
 
-                    <Text>{convertTime(track.duration)}</Text>
-                  </Box>
-                );
-              })}
-            </Stack>
-          </Box>
+          {Array.isArray(currentAlbum.tracks) ? (
+            <Box bg="gray.600" mx="32" mt={1} color="white">
+              <Stack spacing={4}>
+                {currentAlbum.tracks.map((track) => {
+                  return (
+                    <Box
+                      d="flex"
+                      shadow="md"
+                      borderWidth="1px"
+                      alignItems="baseline"
+                      flexDir="row"
+                      justifyContent="space-between"
+                    >
+                      <Box>
+                        <Text as="span">
+                          <b>{track["@attr"].rank}.</b>
+                        </Text>
+                        <Link ml={2} fontSize="md" href={track.url}>
+                          {track.name}
+                        </Link>
+                      </Box>
+
+                      <Text>{convertTime(track.duration)}</Text>
+                    </Box>
+                  );
+                })}
+              </Stack>
+            </Box>
+          ) : (
+            <></>
+          )}
         </Box>
       </div>
     );
