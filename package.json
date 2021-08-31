@@ -24,6 +24,7 @@
     "react-hook-form": "^7.12.2",
     "react-icons": "^4.2.0",
     "react-moment": "^1.1.1",
+    "react-nice-avatar": "^1.2.4",
     "react-number-format": "^4.7.3",
     "swr": "^0.5.6"
   },

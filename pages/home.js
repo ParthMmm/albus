@@ -55,9 +55,8 @@ function home() {
   //   }, [randomNum]);
 
   return (
-    <div>
+    <>
       <Header />
-
       <Box bg="gray.600" w="80%" h="30rem" mx="auto" mt={10} color="white">
         <Center mb={8} h="20vh" w="40vh" p={5}>
           {" "}
@@ -112,7 +111,7 @@ function home() {
           </Grid>
         )}
       </Box>
-    </div>
+    </>
   );
 }
 

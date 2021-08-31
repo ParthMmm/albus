@@ -15,99 +15,21 @@ import {
   Link,
   FormControl,
 } from "@chakra-ui/react";
-import { SearchIcon } from "@chakra-ui/icons";
 import { useAuth } from "../providers/authProvider";
 import { RiAccountCircleLine } from "react-icons/ri";
 import NextLink from "next/link";
 import Search from "./Search";
+import { useRouter } from "next/router";
 
 function Header() {
   const auth = useAuth();
-  const [value, setValue] = React.useState("");
-  const handleChange = (event) => setValue(event.target.value);
+  const router = useRouter();
 
   useEffect(() => {
     console.log(auth.user);
   });
 
-  const searchSubmit = () => {
-    <Search input={value}></Search>;
-  };
-
-  const handleKeypress = (e) => {
-    if (e.charCode === 13 && value) {
-      console.log("ding");
-      searchSubmit();
-    }
-  };
-
   return (
-    //   <Flex
-    //     bg="tomato"
-    //     w="100%"
-    //     h="12vh"
-    //     p={10}
-    //     color="white"
-    //     alignItems="center"
-    //     justifyContent="space-between"
-    //   >
-    //     <Flex pl={5}>
-    //       <NextLink href="/">
-    //         <Heading
-    //           fontSize={{ base: "24px", md: "48px" }}
-    //           _hover={{ color: "purple.600" }}
-    //         >
-    //           albus
-    //         </Heading>
-    //       </NextLink>
-    //     </Flex>
-    //     <Flex justifyContent="center" w="50%" pt={2}>
-    //       <InputGroup>
-    //         <InputLeftElement
-    //           pointerEvents="none"
-    //           children={<SearchIcon color="purple.600" />}
-    //         />
-    //         <Input
-    //           rounded="2xl"
-    //           focusBorderColor="purple.600"
-    //           placeholder="Search for an album"
-    //           _placeholder={{ color: "gray.200" }}
-    //         ></Input>
-    //       </InputGroup>
-    //     </Flex>
-    //     <Flex justifyContent="end">
-    //       {auth.user ? (
-    //         <Menu>
-    //           <MenuButton
-    //             as={IconButton}
-    //             icon={<RiAccountCircleLine />}
-    //             color="purple.600"
-    //             bg="0"
-    //           >
-    //             <MenuList>
-    //               <MenuItem>Profile</MenuItem>
-    //               <MenuItem>Profile</MenuItem>
-    //               <MenuItem>Log Out</MenuItem>
-    //             </MenuList>
-    //           </MenuButton>
-    //         </Menu>
-    //       ) : (
-    //         <ButtonGroup>
-    //           <NextLink href="/login" passHref>
-    //             <Button as="a" bg="none" _hover={{ bg: "purple.600" }}>
-    //               Login
-    //             </Button>
-    //           </NextLink>
-
-    //           <NextLink href="/register" passHref>
-    //             <Button as="a" bg="purple.600" _hover={{ bg: "purple.800" }}>
-    //               Sign Up
-    //             </Button>
-    //           </NextLink>
-    //         </ButtonGroup>
-    //       )}
-    //     </Flex>
-    //   </Flex>
     <Flex
       backgroundColor="tomato"
       mb={[8, 12]}
@@ -147,7 +69,11 @@ function Header() {
                 size="lg"
               />
               <MenuList bg="gray.600">
-                <MenuItem>Profile</MenuItem>
+                <MenuItem
+                  onClick={() => router.push(`/profile/${auth.user.user_id}`)}
+                >
+                  Profile
+                </MenuItem>
                 <MenuItem>Settings</MenuItem>
                 <MenuItem onClick={() => auth.logout()}>Log Out</MenuItem>
               </MenuList>

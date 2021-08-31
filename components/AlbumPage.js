@@ -15,7 +15,6 @@ import {
   ButtonGroup,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import Header from "../components/Header";
 import { useAlbum } from "../providers/albumProvider";
 import { useAction } from "../providers/actionProvider";
 
@@ -49,6 +48,7 @@ function AlbumInfo() {
   );
 
   const handleClick = () => {
+    console.log(album.albumID);
     action.addListened(album.albumID);
   };
 
@@ -217,7 +217,6 @@ function AlbumInfo() {
 function AlbumPage() {
   return (
     <div>
-      <Header />
       <AlbumInfo />
     </div>
   );

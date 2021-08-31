@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import React from "react";
 import AlbumPage from "../../components/AlbumPage";
+import Header from "../../components/Header";
 
 export async function getStaticProps(context) {
   console.log(context.params); // return { title: 'Mortal Kombat' }
@@ -21,6 +22,7 @@ function album() {
   const { artist, name } = router.query;
   return (
     <div>
+      <Header />
       <AlbumPage artist={artist} name={name} />
     </div>
   );
