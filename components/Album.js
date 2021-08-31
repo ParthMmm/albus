@@ -15,13 +15,25 @@ import { useRouter } from "next/router";
 function Album({ thing }) {
   const album = useAlbum();
   const router = useRouter();
+  console.log(thing);
+  let properties = {};
 
-  const properties = {
-    imageUrl: thing.image[2]["#text"],
-    artist: thing.artist.name,
-    name: thing.name,
-    url: thing.url,
-  };
+  if (thing.artist.name) {
+    properties = {
+      imageUrl: thing.image[2]["#text"],
+      artist: thing.artist.name,
+      name: thing.name,
+      url: thing.url,
+    };
+  } else {
+    properties = {
+      imageUrl: thing.image[2]["#text"],
+      artist: thing.artist,
+      name: thing.name,
+      url: thing.url,
+    };
+  }
+
   let mbid;
   // useEffect(() => {
   //   album.getID(properties.name, properties.artist);

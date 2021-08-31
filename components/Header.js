@@ -13,18 +13,33 @@ import {
   Menu,
   IconButton,
   Link,
+  FormControl,
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import { useAuth } from "../providers/authProvider";
 import { RiAccountCircleLine } from "react-icons/ri";
 import NextLink from "next/link";
+import Search from "./Search";
 
 function Header() {
   const auth = useAuth();
+  const [value, setValue] = React.useState("");
+  const handleChange = (event) => setValue(event.target.value);
 
   useEffect(() => {
     console.log(auth.user);
   });
+
+  const searchSubmit = () => {
+    <Search input={value}></Search>;
+  };
+
+  const handleKeypress = (e) => {
+    if (e.charCode === 13 && value) {
+      console.log("ding");
+      searchSubmit();
+    }
+  };
 
   return (
     //   <Flex
@@ -120,25 +135,7 @@ function Header() {
             </Heading>
           </NextLink>
         </Flex>
-        <Flex
-          justifyContent="center"
-          alignItems="center"
-          w="5xl"
-          mx={{ base: "0", md: 10 }}
-        >
-          <InputGroup>
-            <InputLeftElement
-              pointerEvents="none"
-              children={<SearchIcon color="purple.600" />}
-            />
-            <Input
-              rounded="2xl"
-              focusBorderColor="purple.600"
-              placeholder="Search for an album"
-              _placeholder={{ color: "gray.200" }}
-            ></Input>
-          </InputGroup>
-        </Flex>
+        <Search></Search>
         <Flex justifyContent="center" alignItems="center" ml={[4, null, 0]}>
           {auth.user ? (
             <Menu>
