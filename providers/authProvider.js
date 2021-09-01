@@ -86,6 +86,14 @@ function useProvideAuth() {
       router.push("/");
     }
   };
+
+  const fetchUser = async () => {
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/user/fetchUser`,
+      { headers: { Authorization: `Bearer ${user.token}` } }
+    );
+    user.actions = res.data.actions;
+  };
   const logout = () => {
     console.log("logging out");
     handleUser(false);
@@ -96,6 +104,7 @@ function useProvideAuth() {
     user,
     loading,
     error,
+    fetchUser,
     login,
     register,
     logout,
@@ -107,5 +116,6 @@ const formatUser = async (user) => {
     user_id: user.id,
     token: user.token,
     username: user.username,
+    actions: {},
   };
 };

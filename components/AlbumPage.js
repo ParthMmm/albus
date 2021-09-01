@@ -25,6 +25,7 @@ import { MdStar, MdPeople, MdPlayArrow } from "react-icons/md";
 import { Suspense } from "react";
 import fetcher from "../utils/fetcher";
 import NumberFormat from "react-number-format";
+import ActionButtons from "./ActionButtons";
 
 function AlbumInfo() {
   const [mounted, setMounted] = useState(false);
@@ -156,21 +157,7 @@ function AlbumInfo() {
             <Box></Box>
           )}
         </Box>
-        <Box bg="gray.600" mx="32" mt={1} color="white">
-          <Center>
-            <ButtonGroup>
-              <Button
-                onClick={() => {
-                  handleClick();
-                }}
-              >
-                Listened
-              </Button>
-              <Button>Want to Listen</Button>
-              <Button>Listening</Button>
-            </ButtonGroup>
-          </Center>
-        </Box>
+        <ActionButtons />
         <Box>
           <Box mt={8} mx={32}>
             {" "}
