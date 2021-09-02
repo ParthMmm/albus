@@ -26,7 +26,10 @@ function Header() {
   const router = useRouter();
 
   useEffect(() => {
-    console.log(auth.user);
+    if (auth.user) {
+      auth.fetchUser();
+    }
+    // console.log(auth.user);
   });
 
   return (

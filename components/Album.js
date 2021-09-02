@@ -11,6 +11,8 @@ import {
 import NextLink from "next/link";
 import { useAlbum } from "../providers/albumProvider";
 import { useRouter } from "next/router";
+import useSWR from "swr";
+import { albumInfoFetch, albumSearchFetch } from "../utils/fetch";
 
 function Album({ thing }) {
   const album = useAlbum();
@@ -18,14 +20,37 @@ function Album({ thing }) {
   console.log(thing);
   let properties = {};
 
-  if (thing.artist.name) {
+  if (thing._id && thing.mbid) {
+    const { data, error, isValidating } = useSWR(
+      albumInfoFetch + `&mbid=${thing.mbid}`,
+      {
+        revalidateOnFocus: false,
+        refreshWhenOffline: false,
+        refreshWhenHidden: false,
+        refreshInterval: 0,
+        dedupingInterval: 1000000,
+      }
+    );
+    if (data) {
+      console.log(data);
+      properties = {
+        imageUrl: data.album.image[2]["#text"],
+        artist: data.album.artist,
+        name: data.album.name,
+        url: data.album.url,
+      };
+    }
+  } else if (thing.artist?.name) {
     properties = {
       imageUrl: thing.image[2]["#text"],
       artist: thing.artist.name,
       name: thing.name,
       url: thing.url,
     };
-  } else {
+  }
+  // if (thing._id) {
+  //   console.log("thi");
+  else if (thing.artist) {
     properties = {
       imageUrl: thing.image[2]["#text"],
       artist: thing.artist,

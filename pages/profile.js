@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../components/Header";
-import Profile from "../components/Profile";
+import Profile from "../components/Profile/Profile";
 
 function profile() {
   return (

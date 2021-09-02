@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   Heading,
@@ -11,11 +11,16 @@ import {
   Flex,
   Image,
 } from "@chakra-ui/react";
-import { useAuth } from "../providers/authProvider";
+import { useAuth } from "../../providers/authProvider";
 import Avatar, { genConfig } from "react-nice-avatar";
+import SavedAlbums from "./SavedAlbums";
 
 function Profile() {
   const auth = useAuth();
+
+  useEffect(() => {
+    auth.fetchUser();
+  });
 
   const config = {
     sex: "man",
@@ -62,6 +67,7 @@ function Profile() {
           <Text>Blond</Text>
         </Box>
       </Box>
+      <SavedAlbums />
     </div>
   );
 }
