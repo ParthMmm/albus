@@ -48,12 +48,34 @@ function useProvideAction() {
       { headers: { Authorization: `Bearer ${user.token}` } }
     );
     console.log(res);
-
-    // const addWantToListen = async () => {};
-
-    // const addListening = async () => {};
+  };
+  const addWantToListen = async (data) => {
+    console.log(user.token);
+    console.log(data);
+    const stringData = JSON.stringify(data);
+    setLoading(true);
+    const res = await axios.post(
+      `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/user/addWantToListen`,
+      data,
+      { headers: { Authorization: `Bearer ${user.token}` } }
+    );
+    console.log(res);
+  };
+  const addListening = async (data) => {
+    console.log(user.token);
+    console.log(data);
+    const stringData = JSON.stringify(data);
+    setLoading(true);
+    const res = await axios.post(
+      `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/user/addListening`,
+      data,
+      { headers: { Authorization: `Bearer ${user.token}` } }
+    );
+    console.log(res);
   };
   return {
     addListened,
+    addWantToListen,
+    addListening,
   };
 }

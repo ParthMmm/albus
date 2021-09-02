@@ -48,11 +48,6 @@ function AlbumInfo() {
     }
   );
 
-  const handleClick = () => {
-    console.log(album.albumID);
-    action.addListened(album.albumID);
-  };
-
   let currentAlbum = {};
   let tags;
 
@@ -210,7 +205,9 @@ function AlbumPage() {
 }
 
 function convertTime(time) {
-  return time.toString().replace(/(.{2})$/, ":$1");
+  if (time) {
+    return time.toString().replace(/(.{2})$/, ":$1");
+  }
 }
 
 export default AlbumPage;
