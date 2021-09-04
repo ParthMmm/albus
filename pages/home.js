@@ -71,6 +71,10 @@ function home() {
       </Box>
 
       <Box w="80%" h="50rem" mx="auto" mt={10} color="white">
+        <Box mb={4}>
+          <Heading>Top Dance Albums</Heading>
+          <Text>All Time</Text>
+        </Box>
         {error || isValidating ? (
           <Center>
             <SimpleGrid columns="1" row="2" gap={1}>

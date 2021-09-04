@@ -1,9 +1,9 @@
 import React from "react";
 import { useRouter } from "next/router";
-import Header from "../../components/Header";
-import Profile from "../../components/Profile/Profile";
+import Header from "../../../components/Header";
+import Profile from "../../../components/Profile/Profile";
 
-function profile() {
+function index() {
   const router = useRouter();
   const { artist, name } = router.query;
   return (
@@ -14,4 +14,4 @@ function profile() {
   );
 }
 
-export default profile;
+export default index;
