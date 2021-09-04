@@ -17,7 +17,6 @@ import { albumInfoFetch, albumSearchFetch } from "../utils/fetch";
 function Album({ thing }) {
   const album = useAlbum();
   const router = useRouter();
-  console.log(thing);
   let properties = {};
 
   if (thing._id && thing.mbid) {
@@ -32,7 +31,6 @@ function Album({ thing }) {
       }
     );
     if (data) {
-      console.log(data);
       properties = {
         imageUrl: data.album.image[2]["#text"],
         artist: data.album.artist,
@@ -40,7 +38,29 @@ function Album({ thing }) {
         url: data.album.url,
       };
     }
+  } else if (thing.albumName) {
+    const { data, error, isValidating } = useSWR(
+      albumInfoFetch + `&artist=${thing.artist}` + `&album=${thing.albumName}`,
+      {
+        revalidateOnFocus: false,
+        refreshWhenOffline: false,
+        refreshWhenHidden: false,
+        refreshInterval: 0,
+        dedupingInterval: 1000000,
+      }
+    );
+    console.log(data);
+    // if (data) {
+    //   properties = {
+    //     imageUrl: data.album.image[2]["#text"],
+    //     artist: data.album.artist,
+    //     name: data.album.name,
+    //     url: data.album.url,
+    //   };
+    // }
   } else if (thing.artist?.name) {
+    console.log(thing);
+
     properties = {
       imageUrl: thing.image[2]["#text"],
       artist: thing.artist.name,
@@ -51,6 +71,8 @@ function Album({ thing }) {
   // if (thing._id) {
   //   console.log("thi");
   else if (thing.artist) {
+    console.log(thing);
+
     properties = {
       imageUrl: thing.image[2]["#text"],
       artist: thing.artist,

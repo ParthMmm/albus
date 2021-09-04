@@ -33,11 +33,13 @@ function useProvideAlbum() {
 
     if (res.status === 201) {
       setError("error");
+      setLoading(false);
+
       //   console.log(res.data.msg);
     } else {
       console.log(res.data.id);
       setAlbumID(res.data.id);
-      console.log(albumID);
+      setLoading(false);
     }
   };
 

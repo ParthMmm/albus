@@ -68,9 +68,18 @@ function AlbumInfo() {
     );
   }
   if (error || isValidating) {
-    console.log("Poop");
+    return (
+      <Box>
+        <Skeleton
+          startColor="orange.500"
+          endColor="purple.500"
+          height="25rem"
+          width="100%"
+        />
+      </Box>
+    );
   }
-  if (data) {
+  if (data && !album.loading) {
     console.log(data);
     console.log(album.albumID);
     currentAlbum = {
@@ -152,7 +161,15 @@ function AlbumInfo() {
             <Box></Box>
           )}
         </Box>
-        <ActionButtons />
+        {/* {album.albumID ? (
+          <ActionButtons
+            name={currentAlbum.name}
+            artist={currentAlbum.artist}
+          />
+        ) : (
+          <></>
+        )} */}
+        <ActionButtons name={currentAlbum.name} artist={currentAlbum.artist} />
         <Box>
           <Box mt={8} mx={32}>
             {" "}
@@ -192,6 +209,17 @@ function AlbumInfo() {
           )}
         </Box>
       </div>
+    );
+  } else {
+    return (
+      <Box>
+        <Skeleton
+          startColor="orange.500"
+          endColor="purple.500"
+          height="25rem"
+          width="100%"
+        />
+      </Box>
     );
   }
 }

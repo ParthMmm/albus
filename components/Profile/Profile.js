@@ -14,13 +14,20 @@ import {
 import { useAuth } from "../../providers/authProvider";
 import Avatar, { genConfig } from "react-nice-avatar";
 import SavedAlbums from "./SavedAlbums";
+import { useRouter } from "next/router";
 
 function Profile() {
   const auth = useAuth();
+  const router = useRouter();
+
+  const userID = router.query.pid;
 
   useEffect(() => {
-    auth.fetchUser();
-  });
+    auth.fetchUserInfo(userID);
+    // console.log(auth.loading);
+
+    console.log(auth.userInfo);
+  }, []);
 
   const config = {
     sex: "man",
@@ -42,31 +49,49 @@ function Profile() {
   const myConfig = genConfig(config);
   return (
     <div>
-      <Box bg="gray.600" w="20%" h="30rem" mx={32} color="white">
-        {" "}
-        <Box d="flex" flexDir="column" alignItems="center" pt={10}>
+      {auth.loading && !auth.userInfo ? (
+        <Box>
+          <Skeleton
+            startColor="purple.500"
+            endColor="orange.500"
+            height="25rem"
+            width="100%"
+          />
+        </Box>
+      ) : (
+        <Box bg="gray.600" w="20%" h="30rem" mx={32} color="white">
           {" "}
-          <Avatar
-            style={{ width: "8rem", height: "8rem" }}
-            {...config}
-          ></Avatar>
-          <Heading mt={2}>{auth.user.username}</Heading>
+          <Box d="flex" flexDir="column" alignItems="center" pt={10}>
+            {" "}
+            <Avatar
+              style={{ width: "8rem", height: "8rem" }}
+              {...config}
+            ></Avatar>
+            <Heading mt={2}>{auth.userInfo?.username}</Heading>
+          </Box>
+          <Box
+            d="flex"
+            flexDir="column"
+            alignItems="flex-start"
+            pt={10}
+            ml={10}
+          >
+            <Heading fontSize="md" mt={2}>
+              Genre
+            </Heading>
+            <Text>wave</Text>
+            <Heading fontSize="md" mt={2}>
+              Artist
+            </Heading>
+            <Text>Frank Ocean</Text>
+            <Heading fontSize="md" mt={2}>
+              Album
+            </Heading>
+            <Text>Blond</Text>
+          </Box>
         </Box>
-        <Box d="flex" flexDir="column" alignItems="flex-start" pt={10} ml={10}>
-          <Heading fontSize="md" mt={2}>
-            Genre
-          </Heading>
-          <Text>wave</Text>
-          <Heading fontSize="md" mt={2}>
-            Artist
-          </Heading>
-          <Text>Frank Ocean</Text>
-          <Heading fontSize="md" mt={2}>
-            Album
-          </Heading>
-          <Text>Blond</Text>
-        </Box>
-      </Box>
+      )}
+
       <SavedAlbums />
     </div>
   );

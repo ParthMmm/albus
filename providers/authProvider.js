@@ -18,7 +18,7 @@ function useProvideAuth() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
+  const [userInfo, setUserInfo] = useState(null);
   const handleUser = async (rawUser) => {
     if (rawUser) {
       const user = await formatUser(rawUser);
@@ -27,13 +27,22 @@ function useProvideAuth() {
 
       Cookies.set("albus-auth", userString, { expires: 7 });
       setUser(user);
-      setLoading(false);
       return user;
     } else {
       setUser(false);
       Cookies.remove("albus-auth");
       setLoading(false);
       return false;
+    }
+  };
+
+  const handleUserInfo = async (rawUser) => {
+    // console.log(rawUser);
+    if (rawUser) {
+      const user = await formatUserInfo(rawUser);
+      setUserInfo(user);
+      setLoading(false);
+      return user;
     }
   };
 
@@ -88,12 +97,33 @@ function useProvideAuth() {
   };
 
   const fetchUser = async () => {
+    setLoading(true);
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/user/fetchUser`,
       { headers: { Authorization: `Bearer ${user.token}` } }
     );
     user.actions = res.data.actions;
+    setLoading(false);
   };
+
+  const fetchUserInfo = async (data) => {
+    setLoading(true);
+
+    const userID = { userID: data };
+    const res = await axios.post(
+      `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/fetchUserInfo`,
+      userID
+    );
+    if (res.status === 200) {
+      handleUserInfo(res.data);
+      // console.log(res.data);
+      return;
+    } else {
+      // console.log(res, data);
+      setLoading(false);
+    }
+  };
+
   const logout = () => {
     console.log("logging out");
     handleUser(false);
@@ -102,20 +132,34 @@ function useProvideAuth() {
 
   return {
     user,
+    userInfo,
     loading,
     error,
     fetchUser,
+    fetchUserInfo,
     login,
     register,
     logout,
   };
 }
 
-const formatUser = async (user) => {
+const formatUser = async (data) => {
   return {
-    user_id: user.id,
-    token: user.token,
-    username: user.username,
+    user_id: data.id,
+    token: data.token,
+    username: data.username,
     actions: {},
+  };
+};
+
+const formatUserInfo = async (data) => {
+  return {
+    user_id: data._id,
+    username: data.username,
+    actions: {
+      listened: data.listened,
+      wantToListen: data.wantToListen,
+      listening: data.listening,
+    },
   };
 };

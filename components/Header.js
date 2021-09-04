@@ -27,10 +27,12 @@ function Header() {
 
   useEffect(() => {
     if (auth.user) {
+      console.log("should not ding");
       auth.fetchUser();
+      // console.log(auth.user);
     }
     // console.log(auth.user);
-  });
+  }, []);
 
   return (
     <Flex
