@@ -27,11 +27,8 @@ function Header() {
 
   useEffect(() => {
     if (auth.user) {
-      console.log("should not ding");
       auth.fetchUser();
-      // console.log(auth.user);
     }
-    // console.log(auth.user);
   }, []);
 
   return (
@@ -79,7 +76,13 @@ function Header() {
                 >
                   Profile
                 </MenuItem>
-                <MenuItem>Settings</MenuItem>
+                <MenuItem
+                  onClick={() =>
+                    router.push(`/profile/${auth.user.user_id}/settings`)
+                  }
+                >
+                  Settings
+                </MenuItem>
                 <MenuItem onClick={() => auth.logout()}>Log Out</MenuItem>
               </MenuList>
             </Menu>

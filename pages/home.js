@@ -39,7 +39,6 @@ function home() {
   );
 
   if (error || isValidating) {
-    console.log("Poop");
   } else {
     albums = data.albums.album;
     // setAlbums(data.albums.album);

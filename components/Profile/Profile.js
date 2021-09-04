@@ -10,6 +10,7 @@ import {
   SimpleGrid,
   Flex,
   Image,
+  Spinner,
 } from "@chakra-ui/react";
 import { useAuth } from "../../providers/authProvider";
 import Avatar, { genConfig } from "react-nice-avatar";
@@ -51,12 +52,7 @@ function Profile() {
     <div>
       {auth.loading && !auth.userInfo ? (
         <Box>
-          <Skeleton
-            startColor="purple.500"
-            endColor="orange.500"
-            height="25rem"
-            width="100%"
-          />
+          <Spinner bg="tomato" />
         </Box>
       ) : (
         <Box bg="gray.600" w="20%" h="30rem" mx={32} color="white">

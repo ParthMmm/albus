@@ -26,7 +26,6 @@ function useProvideAction() {
     if (authState) {
       setLoading(false);
       const parsedUser = JSON.parse(authState);
-      console.log(parsedUser);
       setUser(parsedUser);
     } else {
       setLoading(false);
@@ -38,8 +37,6 @@ function useProvideAction() {
   }, []);
 
   const addListened = async (data) => {
-    console.log(user.token);
-    console.log(data);
     const stringData = JSON.stringify(data);
     setLoading(true);
     const res = await axios.post(
@@ -47,11 +44,8 @@ function useProvideAction() {
       data,
       { headers: { Authorization: `Bearer ${user.token}` } }
     );
-    console.log(res);
   };
   const addWantToListen = async (data) => {
-    console.log(user.token);
-    console.log(data);
     const stringData = JSON.stringify(data);
     setLoading(true);
     const res = await axios.post(
@@ -59,11 +53,8 @@ function useProvideAction() {
       data,
       { headers: { Authorization: `Bearer ${user.token}` } }
     );
-    console.log(res);
   };
   const addListening = async (data) => {
-    console.log(user.token);
-    console.log(data);
     const stringData = JSON.stringify(data);
     setLoading(true);
     const res = await axios.post(
@@ -71,7 +62,6 @@ function useProvideAction() {
       data,
       { headers: { Authorization: `Bearer ${user.token}` } }
     );
-    console.log(res);
   };
   return {
     addListened,
