@@ -118,14 +118,19 @@ function ActionButtons() {
   }, []);
   return (
     <div>
-      <Box bg="gray.600" w="80%" mx="auto" mt={1} color="white">
+      <Box w="80%" mx="auto" mt={1} color="white">
         <Center>
           {auth.user ? (
             <ButtonGroup>
               {listened ? (
-                <Button bg="purple.600" _hover={{ background: "purple.600" }}>
+                <Button
+                  bg="purple.600"
+                  _hover={{ background: "purple.600" }}
+                  rounded="xl"
+                  size="lg"
+                >
                   <Box as={MdDone} color="tomato" mr={2} />
-                  Listened
+                  listened
                 </Button>
               ) : (
                 <Button
@@ -134,15 +139,24 @@ function ActionButtons() {
                   }}
                   bg="tomato"
                   _hover={{ background: "purple.600" }}
+                  rounded="xl"
+                  size="lg"
                 >
-                  Listened
+                  <Text _hover={{ color: "tomato" }} fontWeight="semibold">
+                    listened
+                  </Text>{" "}
                 </Button>
               )}
 
               {wantToListen ? (
-                <Button bg="purple.600" _hover={{ background: "purple.600" }}>
-                  <Box as={MdDone} color="tomato" mr={2} />
-                  Want To Listen
+                <Button
+                  bg="purple.600"
+                  _hover={{ background: "purple.600" }}
+                  rounded="xl"
+                  size="lg"
+                  leftIcon={<MdDone color="tomato" />}
+                >
+                  want To Listen
                 </Button>
               ) : (
                 <Button
@@ -151,14 +165,23 @@ function ActionButtons() {
                   }}
                   bg="tomato"
                   _hover={{ background: "purple.600" }}
+                  rounded="xl"
+                  size="lg"
                 >
-                  Want To Listen
+                  <Text _hover={{ color: "tomato" }} fontWeight="semibold">
+                    want to listen
+                  </Text>
                 </Button>
               )}
               {listening ? (
-                <Button bg="purple.600" _hover={{ background: "purple.600" }}>
+                <Button
+                  bg="purple.600"
+                  _hover={{ background: "purple.600" }}
+                  rounded="xl"
+                  size="lg"
+                >
                   <Box as={MdDone} color="tomato" mr={2} />
-                  Listening
+                  listening
                 </Button>
               ) : (
                 <Button
@@ -167,8 +190,12 @@ function ActionButtons() {
                   }}
                   bg="tomato"
                   _hover={{ background: "purple.600" }}
+                  rounded="xl"
+                  size="lg"
                 >
-                  Listening
+                  <Text _hover={{ color: "tomato" }} fontWeight="semibold">
+                    listening
+                  </Text>
                 </Button>
               )}
             </ButtonGroup>
@@ -180,6 +207,7 @@ function ActionButtons() {
                 }}
                 bg="tomato"
                 _hover={{ background: "purple.600" }}
+                size="lg"
               >
                 Want To Listen
               </Button>
@@ -190,6 +218,7 @@ function ActionButtons() {
                 }}
                 bg="tomato"
                 _hover={{ background: "purple.600" }}
+                size="lg"
               >
                 Listened
               </Button>
@@ -199,6 +228,7 @@ function ActionButtons() {
                 }}
                 bg="tomato"
                 _hover={{ background: "purple.600" }}
+                size="lg"
               >
                 Listened
               </Button>

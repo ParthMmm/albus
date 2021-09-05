@@ -39,6 +39,7 @@ function home() {
   );
 
   if (error || isValidating) {
+    console.log("poop");
   } else {
     albums = data.albums.album;
     // setAlbums(data.albums.album);
@@ -56,12 +57,21 @@ function home() {
   return (
     <>
       <Header />
-      <Box bg="gray.600" w="80%" h="30rem" mx="auto" mt={10} color="white">
+      <Box
+        bg="gray.600"
+        w="80%"
+        h="30rem"
+        mx="auto"
+        mt={10}
+        color="white"
+        rounded="lg"
+        shadow="md"
+      >
         <Center mb={8} h="20vh" w="40vh" p={5}>
           {" "}
           {auth.user?.username ? (
             <Heading>
-              Hi, {auth.user.username}! {emojis[randomNum]}
+              hi, {auth.user.username}! {emojis[randomNum]}
             </Heading>
           ) : (
             <Heading>welcome to albus! {emojis[randomNum]} </Heading>

@@ -38,6 +38,8 @@ function Header() {
       w="full"
       borderTop="5px solid"
       borderColor="purple.600"
+      roundedBottom="md"
+      shadow="md"
     >
       <Flex
         alignItems="center"

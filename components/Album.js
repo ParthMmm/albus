@@ -81,7 +81,7 @@ function Album({ thing }) {
 
   return (
     <div>
-      <Box rounded="md" bg="white">
+      <Box shadow="md">
         {" "}
         <Box
           flexShrink="0"
@@ -91,8 +91,8 @@ function Album({ thing }) {
           alignItems="center"
           justifyContent="center"
           minHeight={{ base: 250, md: 200 }}
-          // shadow="sm"
-          rounded="md"
+          shadow="lg"
+          rounded="lg"
           roundedBottom="none"
         >
           <Image
@@ -111,6 +111,7 @@ function Album({ thing }) {
           minWidth="0px"
           minHeight={{ sm: "100px", md: "120" }}
           bg="gray.600"
+          roundedBottom="lg"
         >
           <NextLink
             href={{

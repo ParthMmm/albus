@@ -22,9 +22,12 @@ function Profile() {
   const router = useRouter();
 
   const userID = router.query.pid;
-
+  console.log(userID);
   useEffect(() => {
-    auth.fetchUserInfo(userID);
+    if (userID) {
+      auth.fetchUserInfo(userID);
+    }
+    // auth.fetchUserInfo(userID);
     // console.log(auth.loading);
 
     console.log(auth.userInfo);
@@ -55,7 +58,15 @@ function Profile() {
           <Spinner bg="tomato" />
         </Box>
       ) : (
-        <Box bg="gray.600" w="20%" h="30rem" mx={32} color="white">
+        <Box
+          bg="gray.600"
+          w="20%"
+          h="30rem"
+          mx={32}
+          color="white"
+          rounded="lg"
+          shadow="sm"
+        >
           {" "}
           <Box d="flex" flexDir="column" alignItems="center" pt={10}>
             {" "}
