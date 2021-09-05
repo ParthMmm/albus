@@ -26,6 +26,7 @@ import { Suspense } from "react";
 import fetcher from "../utils/fetcher";
 import NumberFormat from "react-number-format";
 import ActionButtons from "./ActionButtons";
+import Tags from "./Tags";
 
 function AlbumInfo() {
   const [mounted, setMounted] = useState(false);
@@ -49,7 +50,6 @@ function AlbumInfo() {
   );
 
   let currentAlbum = {};
-  let tags;
 
   useEffect(() => {
     album.getID(albumName, artist);
@@ -151,11 +151,22 @@ function AlbumInfo() {
             </Flex>
           </Box>
           {currentAlbum.wiki ? (
-            <Box d="flex" flexShrink="1" m={4}>
-              <Text
-                fontSize="xl"
-                dangerouslySetInnerHTML={{ __html: currentAlbum.wiki }}
-              ></Text>
+            <Box>
+              <Box d="flex" flexShrink="1" m={4}>
+                <Text
+                  fontSize="xl"
+                  dangerouslySetInnerHTML={{ __html: currentAlbum.wiki }}
+                ></Text>
+              </Box>
+              <Box d="flex" justifyContent="space-around">
+                {currentAlbum.tags ? (
+                  currentAlbum.tags.map((tag) => (
+                    <Tags key={tag.url} tag={tag} />
+                  ))
+                ) : (
+                  <></>
+                )}
+              </Box>
             </Box>
           ) : (
             <Box></Box>
