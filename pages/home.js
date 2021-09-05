@@ -17,6 +17,8 @@ import { tagTopAlbumsFetch } from "../utils/fetch";
 import useSWR from "swr";
 import fetcher from "../utils/fetcher";
 import { useAuth } from "../providers/authProvider";
+import TrendingArtists from "../components/TrendingArtists";
+import TrendingTracks from "../components/Tracks/TrendingTracks";
 
 function home() {
   const auth = useAuth();
@@ -81,8 +83,8 @@ function home() {
 
       <Box w="80%" h="50rem" mx="auto" mt={10} color="white">
         <Box mb={4}>
-          <Heading>Top Dance Albums</Heading>
-          <Text>All Time</Text>
+          <Heading>top dance albums</Heading>
+          <Text>all time</Text>
         </Box>
         {error || isValidating ? (
           <Center>
@@ -119,6 +121,20 @@ function home() {
             ))}
           </Grid>
         )}
+        <Box mt={10}>
+          <Box mb={4}>
+            <Heading>trending artists</Heading>
+            <Text>this week</Text>
+          </Box>
+          <TrendingArtists />
+        </Box>
+        <Box mt={10}>
+          <Box mb={4}>
+            <Heading>trending tracks</Heading>
+            <Text>this week</Text>
+          </Box>
+          <TrendingTracks />
+        </Box>
       </Box>
     </>
   );

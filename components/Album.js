@@ -132,12 +132,18 @@ function Album({ thing }) {
               fontSize="xl"
               display="block"
               color="purple.300"
+              _hover={{ color: "tomato" }}
             >
               {properties.name}
             </Link>
           </NextLink>
 
-          <Text fontSize="sm" color="white" placeItems="center">
+          <Text
+            fontSize="sm"
+            color="white"
+            placeItems="center"
+            fontWeight="semibold"
+          >
             {properties.artist}
           </Text>
         </Box>
