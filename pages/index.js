@@ -21,7 +21,7 @@ import TrendingArtists from "../components/Artist/TrendingArtists";
 import TrendingTracks from "../components/Tracks/TrendingTracks";
 import TopAlbums from "../components/Album/TopAlbums";
 
-function home() {
+function index() {
   const auth = useAuth();
 
   let albums = [];
@@ -78,4 +78,4 @@ function home() {
   );
 }
 
-export default home;
+export default index;
