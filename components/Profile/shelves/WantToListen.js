@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../../providers/authProvider";
 import { Grid, Box, Heading, Text, Link, Spinner } from "@chakra-ui/react";
-import Album from "../../Album";
+import Album from "../../Album/Album";
 
 function WantToListen({ pid }) {
   const auth = useAuth();
