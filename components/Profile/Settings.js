@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useAuth } from "../../providers/authProvider";
 import { useForm } from "react-hook-form";
 import {
@@ -9,9 +9,16 @@ import {
   Button,
   Flex,
   Heading,
+  Text,
+  ButtonGroup,
 } from "@chakra-ui/react";
+import { useAction } from "../../providers/actionProvider";
+import NextLink from "next/link";
+
 function Settings() {
   const auth = useAuth();
+  const action = useAction();
+
   const {
     register,
     handleSubmit,
@@ -20,8 +27,20 @@ function Settings() {
   } = useForm();
 
   const onSubmit = (data) => {
+    console.log(data);
+    action.updateInfo(data);
     reset();
   };
+
+  useEffect(() => {
+    if (auth.userInfo?.info) {
+      reset({
+        genre: auth.userInfo.info.genre,
+        artist: auth.userInfo.info.artist,
+        album: auth.userInfo.info.album,
+      });
+    }
+  }, []);
 
   if (auth.user) {
     return (
@@ -35,8 +54,8 @@ function Settings() {
           >
             <Heading mb={8}>{auth.user.username}'s favorites</Heading>
 
-            <Flex direction="column" background="gray.700" p={12} rounded={6}>
-              <FormControl isInvalid={errors.username}>
+            <Flex direction="column" background="gray.700" p={12} rounded="xl">
+              <FormControl>
                 <Heading fontSize="md">Favorite Genre</Heading>
                 <Input
                   mt={2}
@@ -44,10 +63,11 @@ function Settings() {
                   id="genre"
                   placeholder="genre"
                   variant="filled"
+                  {...register("genre")}
                 />
               </FormControl>
 
-              <FormControl isInvalid={errors.password}>
+              <FormControl>
                 <Heading fontSize="md">Favorite Artist</Heading>
                 <Input
                   mt={2}
@@ -55,37 +75,58 @@ function Settings() {
                   id="artist"
                   placeholder="artist"
                   variant="filled"
+                  {...register("artist")}
                 />
               </FormControl>
 
-              <FormControl isInvalid={errors.password}>
+              <FormControl>
                 <Heading fontSize="md">Favorite Album</Heading>
 
                 <Input
                   mt={2}
-                  mb={6}
                   id="album"
                   placeholder="album"
                   variant="filled"
+                  {...register("album")}
                 />
               </FormControl>
               <Flex
                 direction="row"
                 justifyContent="space-between"
                 alignItems="baseline"
-              >
-                <Button mt={6} colorScheme="teal" type="submit">
-                  Cancel
-                </Button>
+              ></Flex>
+              <ButtonGroup spacing="20" mt={10} mb="-6">
+                <NextLink
+                  href={{
+                    pathname: `/profile/${auth.userInfo.user_id}`,
+                  }}
+                >
+                  <Button
+                    isLoading={isSubmitting}
+                    bg="purple.600"
+                    rounded="xl"
+                    size="lg"
+                    _hover={{ background: "tomato" }}
+                  >
+                    <Text _hover={{ color: "purple.600" }} color="white">
+                      Cancel
+                    </Text>
+                  </Button>
+                </NextLink>
+
                 <Button
-                  mt={6}
-                  colorScheme="teal"
                   isLoading={isSubmitting}
                   type="submit"
+                  bg="tomato"
+                  rounded="xl"
+                  size="lg"
+                  _hover={{ background: "purple.600" }}
                 >
-                  Submit
+                  <Text _hover={{ color: "tomato" }} color="white">
+                    Submit
+                  </Text>
                 </Button>
-              </Flex>
+              </ButtonGroup>
             </Flex>
           </Flex>
         </form>

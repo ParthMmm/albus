@@ -20,15 +20,17 @@ import { useAction } from "../../providers/actionProvider";
 import { useAuth } from "../../providers/authProvider";
 import { MdDone } from "react-icons/md";
 import { useRouter } from "next/router";
+import { useToast } from "@chakra-ui/react";
 
 function ActionButtons() {
   const album = useAlbum();
   const action = useAction();
   const auth = useAuth();
   const router = useRouter();
+  const toast = useToast();
 
-  const artist = router.query.slug[0];
-  const name = router.query.slug[1];
+  let artist;
+  let name;
   const [listened, setListened] = useState(false);
   const [wantToListen, setWantToListen] = useState(false);
   const [listening, setListening] = useState(false);
@@ -107,6 +109,8 @@ function ActionButtons() {
     setListening(false);
     setWantToListen(false);
     setListened(false);
+    artist = router.query.slug[0];
+    name = router.query.slug[1];
     if (auth.user) {
       auth.fetchUser();
     }
@@ -115,7 +119,7 @@ function ActionButtons() {
     }
 
     console.log(listened, wantToListen, listening);
-  }, []);
+  }, [router.query]);
   return (
     <div>
       <Box w="80%" mx="auto" mt={10} color="white">
@@ -202,35 +206,62 @@ function ActionButtons() {
           ) : (
             <ButtonGroup>
               <Button
-                onClick={() => {
-                  router.push("/register");
-                }}
+                onClick={() =>
+                  toast({
+                    title: "Authorization needed",
+                    description: "Log in or sign up for an account",
+                    status: "error",
+                    duration: 8000,
+                    isClosable: true,
+                  })
+                }
                 bg="tomato"
                 _hover={{ background: "purple.600" }}
                 size="lg"
+                rounded="xl"
               >
-                Want To Listen
+                <Text _hover={{ color: "tomato" }} fontWeight="semibold">
+                  listened
+                </Text>
               </Button>
 
               <Button
-                onClick={() => {
-                  router.push("/register");
-                }}
+                onClick={() =>
+                  toast({
+                    title: "Authorization needed",
+                    description: "Log in or sign up for an account",
+                    status: "error",
+                    duration: 8000,
+                    isClosable: true,
+                  })
+                }
                 bg="tomato"
                 _hover={{ background: "purple.600" }}
                 size="lg"
+                rounded="xl"
               >
-                Listened
+                <Text _hover={{ color: "tomato" }} fontWeight="semibold">
+                  want to listen
+                </Text>
               </Button>
               <Button
-                onClick={() => {
-                  router.push("/register");
-                }}
+                onClick={() =>
+                  toast({
+                    title: "Authorization needed",
+                    description: "Log in or sign up for an account",
+                    status: "error",
+                    duration: 8000,
+                    isClosable: true,
+                  })
+                }
                 bg="tomato"
                 _hover={{ background: "purple.600" }}
                 size="lg"
+                rounded="xl"
               >
-                Listened
+                <Text _hover={{ color: "tomato" }} fontWeight="semibold">
+                  listening
+                </Text>
               </Button>
             </ButtonGroup>
           )}

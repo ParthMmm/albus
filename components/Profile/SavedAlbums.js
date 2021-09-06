@@ -16,15 +16,22 @@ function SavedAlbums() {
   const fetchActions = () => {
     if (auth.userInfo.actions?.listened) {
       let res = auth.userInfo.actions.listened;
-      setListened(res.reverse());
+      console.log(res.length);
+      if (res.length > 0) {
+        setListened(res.reverse());
+      }
     }
     if (auth.userInfo.actions?.wantToListen) {
       let res = auth.userInfo.actions.wantToListen;
-      setWantToListen(res.reverse());
+      if (res.length > 0) {
+        setWantToListen(res.reverse());
+      }
     }
     if (auth.user.actions?.listening) {
       let res = auth.userInfo.actions.listening;
-      setListening(res.reverse());
+      if (res.length > 0) {
+        setListening(res.reverse());
+      }
     }
   };
 
@@ -35,25 +42,30 @@ function SavedAlbums() {
   });
 
   return (
-    <Box w="80%" h="50rem" mx="auto" mt={10} color="white">
+    <Box w="80%" h="40rem" mx="auto" mt={10} color="white">
       {listened ? (
         <Box
           d="flex"
           justifyContent="space-between"
           alignItems="baseline"
           flexDir="row"
+          mt={2}
         >
           <Box>
-            <Heading>Listened</Heading>
+            <Heading mb={2}>listened</Heading>
           </Box>
           <Box>
-            <NextLink
-              href={{
-                pathname: `/profile/${auth.userInfo.user_id}/listened`,
-              }}
-            >
-              Show All
-            </NextLink>
+            {listened.length > 5 ? (
+              <NextLink
+                href={{
+                  pathname: `/profile/${auth.userInfo.user_id}/listened`,
+                }}
+              >
+                Show All
+              </NextLink>
+            ) : (
+              <></>
+            )}
           </Box>
         </Box>
       ) : (
@@ -79,18 +91,25 @@ function SavedAlbums() {
           justifyContent="space-between"
           alignItems="baseline"
           flexDir="row"
+          mt={2}
         >
           <Box>
-            <Heading>Want To Listen</Heading>
+            <Heading mb={2} mt={2}>
+              want to listen
+            </Heading>
           </Box>
           <Box>
-            <NextLink
-              href={{
-                pathname: `/profile/${auth.userInfo.user_id}/wantToListen`,
-              }}
-            >
-              Show All
-            </NextLink>
+            {wantToListen.length > 5 ? (
+              <NextLink
+                href={{
+                  pathname: `/profile/${auth.userInfo.user_id}/wantToListen`,
+                }}
+              >
+                Show All
+              </NextLink>
+            ) : (
+              <> </>
+            )}
           </Box>
         </Box>
       ) : (
@@ -118,18 +137,25 @@ function SavedAlbums() {
           justifyContent="space-between"
           alignItems="baseline"
           flexDir="row"
+          mt={2}
         >
           <Box>
-            <Heading>Listening</Heading>
+            <Heading mb={2} mt={2}>
+              listening
+            </Heading>
           </Box>
           <Box>
-            <NextLink
-              href={{
-                pathname: `/profile/${auth.userInfo.user_id}/listening`,
-              }}
-            >
-              Show All
-            </NextLink>
+            {listening.length > 5 ? (
+              <NextLink
+                href={{
+                  pathname: `/profile/${auth.userInfo.user_id}/listening`,
+                }}
+              >
+                Show All
+              </NextLink>
+            ) : (
+              <> </>
+            )}
           </Box>
         </Box>
       ) : (

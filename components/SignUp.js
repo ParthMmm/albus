@@ -83,12 +83,18 @@ function SignUp() {
             </FormControl>
 
             <Button
-              mt={6}
-              colorScheme="teal"
               isLoading={isSubmitting}
               type="submit"
+              bg="tomato"
+              rounded="xl"
+              size="lg"
+              _hover={{ background: "purple.600" }}
+              mt={5}
+              mb="-6"
             >
-              Sign Up
+              <Text _hover={{ color: "tomato" }} color="white">
+                Submit
+              </Text>
             </Button>
           </Flex>
         </Flex>

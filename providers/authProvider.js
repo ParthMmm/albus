@@ -102,7 +102,9 @@ function useProvideAuth() {
       `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/user/fetchUser`,
       { headers: { Authorization: `Bearer ${user.token}` } }
     );
+    console.log(res.data);
     user.actions = res.data.actions;
+    user.info = res.data.info;
     setLoading(false);
   };
 
@@ -149,6 +151,7 @@ const formatUser = async (data) => {
     token: data.token,
     username: data.username,
     actions: {},
+    info: {},
   };
 };
 
@@ -160,6 +163,11 @@ const formatUserInfo = async (data) => {
       listened: data.listened,
       wantToListen: data.wantToListen,
       listening: data.listening,
+    },
+    info: {
+      genre: data.info.genre,
+      artist: data.info.artist,
+      album: data.info.album,
     },
   };
 };
