@@ -1,16 +1,6 @@
 import React from "react";
 import useSWR from "swr";
-import {
-  Box,
-  Heading,
-  Center,
-  Text,
-  Grid,
-  GridItem,
-  Skeleton,
-  SimpleGrid,
-  Flex,
-} from "@chakra-ui/react";
+import { Box, Grid, Skeleton } from "@chakra-ui/react";
 import { tagTopAlbumsFetch } from "../../utils/fetch";
 import Album from "./Album";
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../../providers/authProvider";
-import { Grid, Box, Heading, Text, Link } from "@chakra-ui/react";
+import { Grid, Box, Heading } from "@chakra-ui/react";
 import Album from "../../Album/Album";
 
 function Listening({ pid }) {

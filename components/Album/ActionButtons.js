@@ -1,20 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Center,
-  Heading,
-  Flex,
-  Text,
-  Image,
-  Badge,
-  Skeleton,
-  Tag,
-  Stack,
-  Link,
-  Divider,
-  Button,
-  ButtonGroup,
-} from "@chakra-ui/react";
+import { Box, Center, Text, Button, ButtonGroup } from "@chakra-ui/react";
 import { useAlbum } from "../../providers/albumProvider";
 import { useAction } from "../../providers/actionProvider";
 import { useAuth } from "../../providers/authProvider";
@@ -31,6 +16,7 @@ function ActionButtons() {
 
   let artist;
   let name;
+
   const [listened, setListened] = useState(false);
   const [wantToListen, setWantToListen] = useState(false);
   const [listening, setListening] = useState(false);
@@ -117,8 +103,6 @@ function ActionButtons() {
     if (!auth.loading) {
       checkActions();
     }
-
-    console.log(listened, wantToListen, listening);
   }, [router.query]);
   return (
     <div>

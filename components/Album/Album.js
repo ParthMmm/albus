@@ -1,13 +1,5 @@
-import React, { useEffect } from "react";
-import {
-  Box,
-  Heading,
-  Center,
-  Text,
-  Image,
-  Flex,
-  Link,
-} from "@chakra-ui/react";
+import React from "react";
+import { Box, Text, Image, Link } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useAlbum } from "../../providers/albumProvider";
 import { useRouter } from "next/router";
@@ -30,7 +22,6 @@ function Album({ thing }) {
         dedupingInterval: 1000000,
       }
     );
-    console.log(error);
     if (data?.error) {
       return <div></div>;
     }
@@ -53,7 +44,6 @@ function Album({ thing }) {
         dedupingInterval: 1000000,
       }
     );
-    console.log(error);
 
     if (data?.error) {
       return <div></div>;
@@ -73,12 +63,7 @@ function Album({ thing }) {
       name: thing.name,
       url: thing.url,
     };
-  }
-  // if (thing._id) {
-  //   console.log("thi");
-  else if (thing.artist) {
-    console.log(thing);
-
+  } else if (thing.artist) {
     properties = {
       imageUrl: thing.image[2]["#text"],
       artist: thing.artist,
@@ -161,4 +146,3 @@ function Album({ thing }) {
 }
 
 export default Album;
-// as={`/album/${properties.artist}/${properties.name}`}

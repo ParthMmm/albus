@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Stack, Text, Link } from "@chakra-ui/react";
 function Tracklist({ tracks }) {
-  console.log(tracks);
   return (
     <Box
       bg="gray.600"

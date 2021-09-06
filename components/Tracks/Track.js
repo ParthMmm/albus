@@ -1,6 +1,6 @@
 import React from "react";
-import { Box, Text, Link, Flex, Image } from "@chakra-ui/react";
-import { MdStar, MdPeople, MdPlayArrow } from "react-icons/md";
+import { Box, Text, Link, Flex } from "@chakra-ui/react";
+import { MdPeople, MdPlayArrow } from "react-icons/md";
 import NumberFormat from "react-number-format";
 
 function Track({ track }) {

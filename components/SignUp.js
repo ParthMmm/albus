@@ -2,7 +2,6 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import {
   FormErrorMessage,
-  FormLabel,
   FormControl,
   Input,
   Button,
@@ -10,7 +9,6 @@ import {
   Heading,
   Text,
 } from "@chakra-ui/react";
-import Link from "next/link";
 import { useAuth } from "../providers/authProvider";
 
 function SignUp() {

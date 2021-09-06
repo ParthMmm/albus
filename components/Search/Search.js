@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Flex,
   Input,
@@ -6,7 +6,6 @@ import {
   InputLeftElement,
   FormControl,
 } from "@chakra-ui/react";
-import useSWR from "swr";
 import { SearchIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/router";
 import { useAlbum } from "../../providers/albumProvider";

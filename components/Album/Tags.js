@@ -1,10 +1,7 @@
 import { Tag, Link, Center } from "@chakra-ui/react";
 import React from "react";
-import NextLink from "next/link";
 
 function Tags(tag) {
-  console.log(tag.tag);
-
   const tagName = tag.tag[0];
   const tagURL = tag.tag[1];
   return (

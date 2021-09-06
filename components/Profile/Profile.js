@@ -1,17 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  Box,
-  Heading,
-  Center,
-  Text,
-  Grid,
-  GridItem,
-  Skeleton,
-  SimpleGrid,
-  Flex,
-  Image,
-  Spinner,
-} from "@chakra-ui/react";
+import { Box, Heading, Center, Text, Skeleton } from "@chakra-ui/react";
 import { useAuth } from "../../providers/authProvider";
 import Avatar, { genConfig } from "react-nice-avatar";
 import SavedAlbums from "./SavedAlbums";
@@ -24,12 +12,9 @@ function Profile() {
   let userID;
   useEffect(() => {
     userID = router.query.pid;
-    console.log(userID);
     if (userID) {
       auth.fetchUserInfo(userID);
     }
-
-    console.log(auth.userInfo);
   }, [router.query]);
 
   const config = {

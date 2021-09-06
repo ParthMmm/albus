@@ -2,7 +2,7 @@ import React from "react";
 import useSWR from "swr";
 import { chartTopTracks } from "../../utils/fetch";
 import Track from "./Track";
-import { Spinner, Flex, Grid, Box, GridItem, Skeleton } from "@chakra-ui/react";
+import { Grid, Box, Skeleton } from "@chakra-ui/react";
 
 function TrendingTracks() {
   const { data, error, isValidating } = useSWR(chartTopTracks, {

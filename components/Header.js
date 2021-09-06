@@ -4,16 +4,12 @@ import {
   Heading,
   ButtonGroup,
   Button,
-  Input,
-  InputGroup,
-  InputLeftElement,
   MenuButton,
   MenuList,
   MenuItem,
   Menu,
   IconButton,
   Link,
-  FormControl,
 } from "@chakra-ui/react";
 import { useAuth } from "../providers/authProvider";
 import { RiAccountCircleLine } from "react-icons/ri";
@@ -51,7 +47,6 @@ function Header() {
         w="full"
         px={5}
         h="12vh"
-        //   border="1px solid red"
       >
         <Flex align="center">
           <NextLink href="/home">

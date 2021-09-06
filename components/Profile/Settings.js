@@ -2,8 +2,6 @@ import React, { useEffect } from "react";
 import { useAuth } from "../../providers/authProvider";
 import { useForm } from "react-hook-form";
 import {
-  FormErrorMessage,
-  FormLabel,
   FormControl,
   Input,
   Button,
@@ -27,7 +25,6 @@ function Settings() {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
     action.updateInfo(data);
     reset();
   };

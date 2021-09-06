@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Album from "../Album/Album";
 import { useAuth } from "../../providers/authProvider";
-import { Grid, Box, Heading, Text, Link } from "@chakra-ui/react";
-import { useRouter } from "next/router";
+import { Grid, Box, Heading } from "@chakra-ui/react";
 import NextLink from "next/link";
 
 function SavedAlbums() {
   const auth = useAuth();
-  const router = useRouter();
 
   const [listened, setListened] = useState(null);
   const [wantToListen, setWantToListen] = useState(null);

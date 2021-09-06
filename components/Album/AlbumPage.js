@@ -113,8 +113,6 @@ function AlbumInfo() {
     );
   }
   if (data && !album.loading) {
-    // console.log(data);
-    // console.log(album.albumID);
     currentAlbum = {
       artist: data.album.artist,
       name: data.album.name,
@@ -132,7 +130,6 @@ function AlbumInfo() {
       return a[0].length - b[0].length;
     });
 
-    console.log(currentAlbum.tags);
     return (
       <div>
         <Box
@@ -201,12 +198,10 @@ function AlbumInfo() {
             </Flex>
             <SimpleGrid
               mt={3}
-              // minChildWidth={{ sm: "150px", md: "" }}
               columns={{ sm: 4, md: 5, lg: 3 }}
               row={{ sm: 2, md: 1, lg: 4 }}
               spacingY="2"
               spacingX="2"
-              // autoColumns="min-content"
             >
               {currentAlbum.tags ? (
                 currentAlbum.tags.map((tag) => <Tags key={tag.url} tag={tag} />)
@@ -229,17 +224,6 @@ function AlbumInfo() {
         ) : (
           <></>
         )}
-        {/* <Box w="80%" mx={16} justifyContent="center" d="flex" flexDir="column">
-          <Box mb={6} mt={6}>
-            {" "}
-            <Heading>tracklist</Heading>
-          </Box>
-          {Array.isArray(currentAlbum.tracks) ? (
-            <Tracklist tracks={currentAlbum.tracks} />
-          ) : (
-            <></>
-          )}
-        </Box> */}
       </div>
     );
   } else {
@@ -280,12 +264,6 @@ function AlbumPage() {
       <AlbumInfo />
     </div>
   );
-}
-
-function convertTime(time) {
-  if (time) {
-    return time.toString().replace(/(.{2})$/, ":$1");
-  }
 }
 
 export default AlbumPage;

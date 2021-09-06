@@ -3,15 +3,7 @@ import { useRouter } from "next/router";
 import Album from "../Album/Album";
 import useSWR from "swr";
 import { albumSearchFetch } from "../../utils/fetch";
-import {
-  Heading,
-  Box,
-  Skeleton,
-  Grid,
-  SimpleGrid,
-  Text,
-  Center,
-} from "@chakra-ui/react";
+import { Heading, Box, Skeleton, Grid, Text } from "@chakra-ui/react";
 
 function SearchPage() {
   const router = useRouter();
