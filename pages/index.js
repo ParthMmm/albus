@@ -1,25 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Header from "../components/Header";
-import {
-  Box,
-  Heading,
-  Center,
-  Text,
-  Grid,
-  GridItem,
-  Skeleton,
-  SimpleGrid,
-  Flex,
-} from "@chakra-ui/react";
-import axios from "axios";
-import Album from "../components/Album/Album";
-import { tagTopAlbumsFetch } from "../utils/fetch";
-import useSWR from "swr";
-import fetcher from "../utils/fetcher";
+import { Box, Heading, Center, Text } from "@chakra-ui/react";
+
 import { useAuth } from "../providers/authProvider";
 import TrendingArtists from "../components/Artist/TrendingArtists";
 import TrendingTracks from "../components/Tracks/TrendingTracks";
 import TopAlbums from "../components/Album/TopAlbums";
+import Head from "next/head";
 
 function index() {
   const auth = useAuth();
@@ -30,6 +17,12 @@ function index() {
 
   return (
     <>
+      <Head>
+        <meta
+          httpEquiv="Content-Security-Policy"
+          content="upgrade-insecure-requests"
+        />
+      </Head>
       <Header />
       <Box
         bg="gray.600"
