@@ -16,7 +16,6 @@ function SavedAlbums() {
   const fetchActions = () => {
     if (auth.userInfo.actions?.listened) {
       let res = auth.userInfo.actions.listened;
-      console.log(res.length);
       if (res.length > 0) {
         setListened(res.reverse());
       }

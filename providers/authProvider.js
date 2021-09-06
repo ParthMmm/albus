@@ -51,7 +51,6 @@ function useProvideAuth() {
     if (authState) {
       setLoading(false);
       const parsedUser = JSON.parse(authState);
-      console.log(parsedUser);
       setUser(parsedUser);
     } else {
       setLoading(false);
@@ -71,9 +70,7 @@ function useProvideAuth() {
 
     if (res.status === 201) {
       setError(res.data.msg);
-      console.log(res.data.msg);
     } else {
-      console.log(res.data);
       handleUser(res.data);
       router.push("/");
     }
@@ -87,9 +84,7 @@ function useProvideAuth() {
     );
     if (res.status === 201) {
       setError(res.data.msg);
-      console.log(res.data.msg);
     } else {
-      console.log(res.data);
       handleUser(res.data);
 
       router.push("/");
@@ -102,7 +97,6 @@ function useProvideAuth() {
       `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/user/fetchUser`,
       { headers: { Authorization: `Bearer ${user.token}` } }
     );
-    console.log(res.data);
     user.actions = res.data.actions;
     user.info = res.data.info;
     setLoading(false);
@@ -118,16 +112,13 @@ function useProvideAuth() {
     );
     if (res.status === 200) {
       handleUserInfo(res.data);
-      // console.log(res.data);
       return;
     } else {
-      // console.log(res, data);
       setLoading(false);
     }
   };
 
   const logout = () => {
-    console.log("logging out");
     handleUser(false);
     router.push("/");
   };

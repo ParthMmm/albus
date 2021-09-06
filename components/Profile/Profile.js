@@ -54,11 +54,21 @@ function Profile() {
   if (auth.loading) {
     return (
       <>
-        <Box w="20%" h="30rem" mx={32} color="white" rounded="lg" shadow="sm">
-          <Skeleton startColor="pink.500" endColor="orange.500" h="30rem" />
+        <Box w="80%" mx="auto" mt={10} d="flex">
+          <Skeleton
+            startColor="pink.500"
+            endColor="orange.500"
+            h="30rem"
+            rounded="lg"
+          />
         </Box>
         <Box w="80%" h="50rem" mx="auto" mt={10} color="white">
-          <Skeleton startColor="pink.500" endColor="orange.500" h="50rem" />
+          <Skeleton
+            startColor="pink.500"
+            endColor="orange.500"
+            h="50rem"
+            rounded="lg"
+          />
         </Box>
       </>
     );
@@ -66,11 +76,21 @@ function Profile() {
   if (!auth.userInfo) {
     return (
       <>
-        <Box w="20%" h="30rem" mx={32} color="white" rounded="lg" shadow="sm">
-          <Skeleton startColor="pink.500" endColor="orange.500" h="30rem" />
+        <Box w="80%" mx="auto" mt={10} d="flex">
+          <Skeleton
+            startColor="pink.500"
+            endColor="orange.500"
+            h="30rem"
+            rounded="lg"
+          />
         </Box>
         <Box w="80%" h="50rem" mx="auto" mt={10} color="white">
-          <Skeleton startColor="pink.500" endColor="orange.500" h="50rem" />
+          <Skeleton
+            startColor="pink.500"
+            endColor="orange.500"
+            h="50rem"
+            rounded="lg"
+          />
         </Box>
       </>
     );

@@ -32,7 +32,7 @@ function SearchPage() {
   if (error || isValidating) {
     return (
       <div>
-        <Box w="80%" h="50rem" mx="auto" mt={10} color="white">
+        <Box w="80%" h="50rem" mx="auto" mt={10} color="white" rounded="lg">
           <Skeleton
             startColor="orange.500"
             endColor="purple.500"

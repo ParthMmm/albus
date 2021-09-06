@@ -54,7 +54,6 @@ function AlbumInfo() {
       dedupingInterval: 1000000,
     }
   );
-
   let currentAlbum = {};
 
   useEffect(() => {
@@ -63,26 +62,54 @@ function AlbumInfo() {
 
   if (!data) {
     return (
-      <Box>
-        <Skeleton
-          startColor="orange.500"
-          endColor="purple.500"
-          height="25rem"
-          width="100%"
-        />
-      </Box>
+      <>
+        <Box w="80%" mx="auto" mt={10} d="flex">
+          <Skeleton
+            startColor="pink.500"
+            endColor="orange.500"
+            h="30rem"
+            rounded="lg"
+          />
+        </Box>
+        <Box
+          w="80%"
+          mx="auto"
+          mt={10}
+          d="flex"
+          rounded="lg"
+          boxShadow="lg"
+          flexDir="column"
+        >
+          <Skeleton
+            startColor="pink.500"
+            endColor="orange.500"
+            h="30rem"
+            rounded="lg"
+          />
+        </Box>
+      </>
     );
   }
   if (error || isValidating) {
     return (
-      <Box>
-        <Skeleton
-          startColor="orange.500"
-          endColor="purple.500"
-          height="25rem"
-          width="100%"
-        />
-      </Box>
+      <>
+        <Box w="80%" mx="auto" mt={10} d="flex">
+          <Skeleton
+            startColor="pink.500"
+            endColor="orange.500"
+            h="30rem"
+            rounded="lg"
+          />
+        </Box>
+        <Box w="80%" mx="auto" mt={10} d="flex">
+          <Skeleton
+            startColor="pink.500"
+            endColor="orange.500"
+            h="30rem"
+            rounded="lg"
+          />
+        </Box>
+      </>
     );
   }
   if (data && !album.loading) {
@@ -217,14 +244,32 @@ function AlbumInfo() {
     );
   } else {
     return (
-      <Box>
-        <Skeleton
-          startColor="orange.500"
-          endColor="purple.500"
-          height="25rem"
-          width="100%"
-        />
-      </Box>
+      <>
+        <Box w="80%" mx="auto" mt={10} d="flex" rounded="lg" flexDir="column">
+          <Skeleton
+            startColor="pink.500"
+            endColor="orange.500"
+            h="30rem"
+            rounded="lg"
+          />
+        </Box>
+        <Box
+          w="80%"
+          mx="auto"
+          mt={10}
+          d="flex"
+          rounded="lg"
+          boxShadow="lg"
+          flexDir="column"
+        >
+          <Skeleton
+            startColor="pink.500"
+            endColor="orange.500"
+            h="30rem"
+            rounded="lg"
+          />
+        </Box>
+      </>
     );
   }
 }

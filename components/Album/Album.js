@@ -30,7 +30,10 @@ function Album({ thing }) {
         dedupingInterval: 1000000,
       }
     );
-
+    console.log(error);
+    if (data?.error) {
+      return <div></div>;
+    }
     if (data) {
       properties = {
         imageUrl: data.album.image[2]["#text"],
@@ -50,6 +53,11 @@ function Album({ thing }) {
         dedupingInterval: 1000000,
       }
     );
+    console.log(error);
+
+    if (data?.error) {
+      return <div></div>;
+    }
     if (data) {
       properties = {
         imageUrl: data.album.image[2]["#text"],
