@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import React from "react";
-import AlbumPage from "../../components/AlbumPage";
+import AlbumPage from "../../components/Album/AlbumPage";
 import Header from "../../components/Header";
 
 function album() {

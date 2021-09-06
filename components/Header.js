@@ -18,7 +18,7 @@ import {
 import { useAuth } from "../providers/authProvider";
 import { RiAccountCircleLine } from "react-icons/ri";
 import NextLink from "next/link";
-import Search from "./Search";
+import Search from "./Search/Search";
 import { useRouter } from "next/router";
 
 function Header() {

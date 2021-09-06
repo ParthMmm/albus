@@ -16,7 +16,6 @@ function Track({ track }) {
       artistURL: track.artist.url,
     };
   }
-  console.log(trackItem);
   return (
     <div>
       <Box

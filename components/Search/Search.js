@@ -8,13 +8,12 @@ import {
 } from "@chakra-ui/react";
 import useSWR from "swr";
 import { SearchIcon } from "@chakra-ui/icons";
-import { useAlbum } from "../providers/albumProvider";
 import { useRouter } from "next/router";
+import { useAlbum } from "../../providers/albumProvider";
 
 function Search() {
   const album = useAlbum();
   const router = useRouter();
-
   const [value, setValue] = React.useState("");
   const handleChange = (event) => setValue(event.target.value);
 

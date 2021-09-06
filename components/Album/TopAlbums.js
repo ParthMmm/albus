@@ -1,0 +1,62 @@
+import React from "react";
+import useSWR from "swr";
+import {
+  Box,
+  Heading,
+  Center,
+  Text,
+  Grid,
+  GridItem,
+  Skeleton,
+  SimpleGrid,
+  Flex,
+} from "@chakra-ui/react";
+import { tagTopAlbumsFetch } from "../../utils/fetch";
+import Album from "./Album";
+
+function TopAlbums() {
+  let albums = [];
+
+  const { data, error, isValidating } = useSWR(
+    tagTopAlbumsFetch + "&tag=dance",
+    {
+      revalidateOnFocus: false,
+      refreshWhenOffline: false,
+      refreshWhenHidden: false,
+      refreshInterval: 0,
+      dedupingInterval: 1000000,
+    }
+  );
+
+  if (error || isValidating) {
+    return (
+      <Box>
+        <Skeleton
+          startColor="orange.500"
+          endColor="purple.500"
+          height="25rem"
+        />
+      </Box>
+    );
+  }
+  if (data) {
+    albums = data.albums.album;
+    return (
+      <Grid
+        gridTemplateColumns={[
+          "repeat(2, 1fr)",
+          "repeat(2, 1fr)",
+          "repeat(5, 1fr)",
+        ]}
+        gap={3}
+      >
+        {albums.map((album) => (
+          <Album key={album.artist.mbid} thing={album} />
+        ))}
+      </Grid>
+    );
+  }
+  return <div></div>;
+}
+
+export default TopAlbums;

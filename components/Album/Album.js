@@ -9,10 +9,10 @@ import {
   Link,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { useAlbum } from "../providers/albumProvider";
+import { useAlbum } from "../../providers/albumProvider";
 import { useRouter } from "next/router";
 import useSWR from "swr";
-import { albumInfoFetch, albumSearchFetch } from "../utils/fetch";
+import { albumInfoFetch, albumSearchFetch } from "../../utils/fetch";
 
 function Album({ thing }) {
   const album = useAlbum();

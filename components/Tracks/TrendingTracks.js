@@ -2,7 +2,7 @@ import React from "react";
 import useSWR from "swr";
 import { chartTopTracks } from "../../utils/fetch";
 import Track from "./Track";
-import { Spinner, Flex, Grid, Box, GridItem } from "@chakra-ui/react";
+import { Spinner, Flex, Grid, Box, GridItem, Skeleton } from "@chakra-ui/react";
 
 function TrendingTracks() {
   const { data, error, isValidating } = useSWR(chartTopTracks, {
@@ -12,7 +12,6 @@ function TrendingTracks() {
     refreshInterval: 0,
     dedupingInterval: 1000000,
   });
-  console.log(data);
   if (data) {
     return (
       <div>
@@ -32,7 +31,15 @@ function TrendingTracks() {
     );
   }
   if (error || isValidating) {
-    return <Spinner />;
+    return (
+      <Box>
+        <Skeleton
+          startColor="orange.500"
+          endColor="purple.500"
+          height="25rem"
+        />
+      </Box>
+    );
   }
 }
 

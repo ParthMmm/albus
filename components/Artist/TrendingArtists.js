@@ -1,10 +1,10 @@
-import { Spinner, Flex, Grid, Box, GridItem } from "@chakra-ui/react";
 import React from "react";
 import useSWR from "swr";
-import { chartTopArtists } from "../utils/fetch";
+import { chartTopArtists } from "../../utils/fetch";
 import Artist from "./Artist";
+import { Box, Grid, Skeleton } from "@chakra-ui/react";
 function TrendingArtists() {
-  const { data, error, isValidating } = useSWR(chartTopArtists + `&limit=10`, {
+  const { data, error, isValidating } = useSWR(chartTopArtists, {
     revalidateOnFocus: false,
     refreshWhenOffline: false,
     refreshWhenHidden: false,
@@ -12,7 +12,6 @@ function TrendingArtists() {
     dedupingInterval: 1000000,
   });
   if (data) {
-    // console.log(data.artists.artist);
     return (
       <Grid
         gridTemplateColumns={[
@@ -29,7 +28,15 @@ function TrendingArtists() {
     );
   }
   if (error || isValidating) {
-    return <Spinner />;
+    return (
+      <Box>
+        <Skeleton
+          startColor="orange.500"
+          endColor="purple.500"
+          height="25rem"
+        />
+      </Box>
+    );
   }
 }
 
