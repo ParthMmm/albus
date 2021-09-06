@@ -13,6 +13,8 @@ import {
   ButtonGroup,
 } from "@chakra-ui/react";
 import { useAction } from "../../providers/actionProvider";
+import NextLink from "next/link";
+
 function Settings() {
   const auth = useAuth();
   const action = useAction();
@@ -31,7 +33,7 @@ function Settings() {
   };
 
   useEffect(() => {
-    if (auth.userInfo.info) {
+    if (auth.userInfo?.info) {
       reset({
         genre: auth.userInfo.info.genre,
         artist: auth.userInfo.info.artist,
@@ -93,27 +95,26 @@ function Settings() {
                 justifyContent="space-between"
                 alignItems="baseline"
               ></Flex>
-            </Flex>
-            <Flex
-            //   direction="row"
-            //   justifyContent="space-between"
-            //   alignItems="center"
-            >
-              <ButtonGroup spacing="20">
-                <Button
-                  mt={6}
-                  isLoading={isSubmitting}
-                  bg="purple.600"
-                  rounded="xl"
-                  size="lg"
-                  _hover={{ background: "tomato" }}
+              <ButtonGroup spacing="20" mt={10} mb="-6">
+                <NextLink
+                  href={{
+                    pathname: `/profile/${auth.userInfo.user_id}`,
+                  }}
                 >
-                  <Text _hover={{ color: "purple.600" }} color="white">
-                    Cancel
-                  </Text>
-                </Button>
+                  <Button
+                    isLoading={isSubmitting}
+                    bg="purple.600"
+                    rounded="xl"
+                    size="lg"
+                    _hover={{ background: "tomato" }}
+                  >
+                    <Text _hover={{ color: "purple.600" }} color="white">
+                      Cancel
+                    </Text>
+                  </Button>
+                </NextLink>
+
                 <Button
-                  mt={6}
                   isLoading={isSubmitting}
                   type="submit"
                   bg="tomato"

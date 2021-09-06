@@ -8,6 +8,7 @@ import {
   Button,
   Flex,
   Heading,
+  Text,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useAuth } from "../providers/authProvider";
@@ -76,12 +77,18 @@ function LogIn() {
             </FormControl>
 
             <Button
-              mt={6}
-              colorScheme="teal"
               isLoading={isSubmitting}
               type="submit"
+              bg="tomato"
+              rounded="xl"
+              size="lg"
+              _hover={{ background: "purple.600" }}
+              mt={5}
+              mb="-6"
             >
-              Log In
+              <Text _hover={{ color: "tomato" }} color="white">
+                Submit
+              </Text>
             </Button>
           </Flex>
         </Flex>

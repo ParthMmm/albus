@@ -29,7 +29,10 @@ function Wiki({ summary }) {
                 mt="1rem"
                 rounded="xl"
               >
-                show {show ? "less" : "more"}
+                <Text _hover={{ color: "tomato" }} fontWeight="semibold">
+                  {" "}
+                  show {show ? "less" : "more"}
+                </Text>
               </Button>
             </Box>
           </Box>
