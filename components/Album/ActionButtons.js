@@ -15,9 +15,9 @@ import {
   Button,
   ButtonGroup,
 } from "@chakra-ui/react";
-import { useAlbum } from "../providers/albumProvider";
-import { useAction } from "../providers/actionProvider";
-import { useAuth } from "../providers/authProvider";
+import { useAlbum } from "../../providers/albumProvider";
+import { useAction } from "../../providers/actionProvider";
+import { useAuth } from "../../providers/authProvider";
 import { MdDone } from "react-icons/md";
 import { useRouter } from "next/router";
 
@@ -118,7 +118,7 @@ function ActionButtons() {
   }, []);
   return (
     <div>
-      <Box w="80%" mx="auto" mt={1} color="white">
+      <Box w="80%" mx="auto" mt={10} color="white">
         <Center>
           {auth.user ? (
             <ButtonGroup>

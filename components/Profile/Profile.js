@@ -27,8 +27,6 @@ function Profile() {
     if (userID) {
       auth.fetchUserInfo(userID);
     }
-    // auth.fetchUserInfo(userID);
-    // console.log(auth.loading);
 
     console.log(auth.userInfo);
   }, []);
@@ -51,13 +49,23 @@ function Profile() {
     bgColor: "#FC909F",
   };
   const myConfig = genConfig(config);
-  return (
-    <div>
-      {auth.loading && !auth.userInfo ? (
-        <Box>
-          <Spinner bg="tomato" />
+
+  if (auth.loading) {
+    return (
+      <>
+        <Box w="20%" h="30rem" mx={32} color="white" rounded="lg" shadow="sm">
+          <Skeleton startColor="pink.500" endColor="orange.500" h="30rem" />
         </Box>
-      ) : (
+        <Box w="80%" h="50rem" mx="auto" mt={10} color="white">
+          <Skeleton startColor="pink.500" endColor="orange.500" h="50rem" />
+        </Box>
+      </>
+    );
+  }
+
+  if (auth.userInfo && !auth.loading) {
+    return (
+      <>
         <Box
           bg="gray.600"
           w="20%"
@@ -96,12 +104,17 @@ function Profile() {
             </Heading>
             <Text>Blond</Text>
           </Box>
-        </Box>
-      )}
-
-      <SavedAlbums />
-    </div>
-  );
+        </Box>{" "}
+        <SavedAlbums />
+      </>
+    );
+  } else {
+    return (
+      <Center>
+        <Heading>hmm something is missing</Heading>
+      </Center>
+    );
+  }
 }
 
 export default Profile;

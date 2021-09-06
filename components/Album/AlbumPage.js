@@ -1,36 +1,31 @@
 import {
   Box,
-  Center,
   Heading,
   Flex,
   Text,
   Image,
-  Badge,
   Skeleton,
-  Tag,
   Stack,
   Link,
-  Divider,
   Button,
-  HStack,
-  Spacer,
   Collapse,
   SimpleGrid,
   Grid,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { useAlbum } from "../providers/albumProvider";
-import { useAction } from "../providers/actionProvider";
+import { useAlbum } from "../../providers/albumProvider";
+import { useAction } from "../../providers/actionProvider";
 
 import { useRouter } from "next/router";
-import { albumInfoFetch } from "../utils/fetch";
+import { albumInfoFetch } from "../../utils/fetch";
 import useSWR from "swr";
-import { MdStar, MdPeople, MdPlayArrow } from "react-icons/md";
-import { Suspense } from "react";
-import fetcher from "../utils/fetcher";
+import { MdPeople, MdPlayArrow } from "react-icons/md";
+
 import NumberFormat from "react-number-format";
 import ActionButtons from "./ActionButtons";
 import Tags from "./Tags";
+import Tracklist from "./Tracklist";
+import Wiki from "./Wiki";
 
 function AlbumInfo() {
   const [mounted, setMounted] = useState(false);
@@ -43,6 +38,7 @@ function AlbumInfo() {
   const handleToggle = () => setShow(!show);
   // console.log(router.query.slug);
   let artist, albumName;
+  let tagArray = [];
   if (router.query.slug) {
     artist = router.query.slug[0];
     albumName = router.query.slug[1];
@@ -90,13 +86,12 @@ function AlbumInfo() {
     );
   }
   if (data && !album.loading) {
-    console.log(data);
-    console.log(album.albumID);
+    // console.log(data);
+    // console.log(album.albumID);
     currentAlbum = {
       artist: data.album.artist,
       name: data.album.name,
       wiki: data.album.wiki?.content,
-      tags: data.album.tags.tag,
       image: data.album.image[4]["#text"],
       url: data.album.url,
       listeners: data.album.listeners,
@@ -104,6 +99,13 @@ function AlbumInfo() {
       tracks: data.album.tracks?.track,
     };
 
+    data.album.tags?.tag?.map((tag) => tagArray.push([tag.name, tag.url]));
+
+    currentAlbum.tags = tagArray.sort(function (a, b) {
+      return a[0].length - b[0].length;
+    });
+
+    console.log(currentAlbum.tags);
     return (
       <div>
         <Box
@@ -114,7 +116,6 @@ function AlbumInfo() {
           color="white"
           d="flex"
           flexGrow="1"
-          alignItems="flex-start"
           justifyContent={{ sm: "center", md: "center", lg: "space-between" }}
           rounded="lg"
           boxShadow="lg"
@@ -123,14 +124,13 @@ function AlbumInfo() {
           <Box
             p="5"
             d="flex"
-            justifyContent={{ sm: "center", md: "space-between" }}
+            justifyContent={{ sm: "center", md: "center" }}
             flexShrink={{ sm: "1", md: "0" }}
-            flexFlow="column "
+            flexFlow="column wrap"
           >
             <Image
-              borderRadius="md"
+              borderRadius="full"
               rounded="lg"
-              boxShadow="lg"
               src={currentAlbum.image}
               objectFit="contain"
             />
@@ -174,10 +174,11 @@ function AlbumInfo() {
             </Flex>
             <SimpleGrid
               mt={3}
-              minChildWidth={{ sm: "80px", md: "" }}
-              // columns={{ md: 10, lg: 3 }}
-              // row={{ md: 1, lg: 4 }}
-              spacingY="1"
+              // minChildWidth={{ sm: "150px", md: "" }}
+              columns={{ sm: 4, md: 5, lg: 3 }}
+              row={{ sm: 2, md: 1, lg: 4 }}
+              spacingY="2"
+              spacingX="2"
               // autoColumns="min-content"
             >
               {currentAlbum.tags ? (
@@ -188,115 +189,30 @@ function AlbumInfo() {
             </SimpleGrid>
           </Box>
 
-          <Box d="flex" flexDir="column">
-            <Box>
-              {currentAlbum.wiki ? (
-                <Box flexShrink="1" m={4}>
-                  <Collapse startingHeight="22rem" in={show} rounded="lg">
-                    <Text
-                      fontFamily="Helvetica"
-                      fontSize="xl"
-                      fontWeight="semibold"
-                      dangerouslySetInnerHTML={{ __html: currentAlbum.wiki }}
-                      color="white"
-                    ></Text>
-                  </Collapse>
-                  <Box d="flex" flexDir="row-reverse">
-                    {" "}
-                    <Button
-                      fontFamily="Helvetica"
-                      fontWeight="semibold"
-                      size="md"
-                      onClick={handleToggle}
-                      mt="1rem"
-                      rounded="xl"
-                    >
-                      show {show ? "less" : "more"}
-                    </Button>
-                  </Box>
-                </Box>
-              ) : (
-                <Box></Box>
-              )}
-            </Box>
-          </Box>
+          <Wiki summary={currentAlbum.wiki} />
         </Box>
-        {/* {album.albumID ? (
-          <ActionButtons
-            name={currentAlbum.name}
-            artist={currentAlbum.artist}
-          />
+
+        <ActionButtons name={currentAlbum.name} artist={currentAlbum.artist} />
+        <Box w="80%" mx="auto" mt={10} color="white">
+          {" "}
+          <Heading>tracklist</Heading>
+        </Box>
+        {Array.isArray(currentAlbum.tracks) ? (
+          <Tracklist tracks={currentAlbum.tracks} />
         ) : (
           <></>
-        )} */}
-        <ActionButtons name={currentAlbum.name} artist={currentAlbum.artist} />
-        <Box
-          w="80%"
-          mx="auto"
-          mt={10}
-          color="white"
-          d="flex"
-          flexGrow="1"
-          alignItems="flex-start"
-          justifyContent={{ sm: "center", md: "center", lg: "space-between" }}
-          rounded="lg"
-          boxShadow="lg"
-          flexDir="column"
-          mb="10"
-        >
-          <Box mb={6}>
+        )}
+        {/* <Box w="80%" mx={16} justifyContent="center" d="flex" flexDir="column">
+          <Box mb={6} mt={6}>
             {" "}
-            <Heading>Tracklist </Heading>
+            <Heading>tracklist</Heading>
           </Box>
-
           {Array.isArray(currentAlbum.tracks) ? (
-            <Box
-              bg="gray.600"
-              mt={1}
-              color="white"
-              w="50%"
-              rounded="lg"
-              boxShadow="lg"
-              p={5}
-            >
-              <Stack spacing={4}>
-                {currentAlbum.tracks.map((track) => {
-                  return (
-                    <Box
-                      d="flex"
-                      alignItems="baseline"
-                      flexDir="row"
-                      justifyContent="space-between"
-                      _hover={{ bg: "tomato" }}
-                      rounded="xl"
-                      p={2}
-                    >
-                      <Box>
-                        <Text as="span" fontSize="lg">
-                          <b>{track["@attr"].rank}.</b>
-                        </Text>
-                        <Text
-                          as="span"
-                          fontSize="lg"
-                          fontWeight="semibold"
-                          _hover={{ color: "purple.600" }}
-                        >
-                          <Link ml={2} fontSize="md" href={track.url}>
-                            {track.name}
-                          </Link>
-                        </Text>
-                      </Box>
-
-                      <Text>{convertTime(track.duration)}</Text>
-                    </Box>
-                  );
-                })}
-              </Stack>
-            </Box>
+            <Tracklist tracks={currentAlbum.tracks} />
           ) : (
             <></>
           )}
-        </Box>
+        </Box> */}
       </div>
     );
   } else {

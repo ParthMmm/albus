@@ -8,13 +8,12 @@ import {
 } from "@chakra-ui/react";
 import useSWR from "swr";
 import { SearchIcon } from "@chakra-ui/icons";
-import { useAlbum } from "../providers/albumProvider";
 import { useRouter } from "next/router";
+import { useAlbum } from "../../providers/albumProvider";
 
 function Search() {
   const album = useAlbum();
   const router = useRouter();
-
   const [value, setValue] = React.useState("");
   const handleChange = (event) => setValue(event.target.value);
 
@@ -37,8 +36,8 @@ function Search() {
       <Flex
         justifyContent="center"
         alignItems="center"
-        w="5xl"
-        mx={{ base: "0", md: 10 }}
+        w={{ sm: "20rem", md: "36rem", lg: "48rem" }}
+        // mx={{ sm: 10, md: 10 }}
       >
         <FormControl>
           <InputGroup>

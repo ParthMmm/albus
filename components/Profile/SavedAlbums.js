@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Album from "../Album";
+import Album from "../Album/Album";
 import { useAuth } from "../../providers/authProvider";
 import { Grid, Box, Heading, Text, Link } from "@chakra-ui/react";
 import { useRouter } from "next/router";
@@ -59,13 +59,16 @@ function SavedAlbums() {
       ) : (
         <></>
       )}
-      <Grid gridTemplateColumns={["repeat(5, 1fr)"]} gap={4}>
+      <Grid
+        gridTemplateColumns={[
+          "repeat(2, 1fr)",
+          "repeat(2, 1fr)",
+          "repeat(5, 1fr)",
+        ]}
+        gap={3}
+      >
         {listened ? (
-          listened.slice(0, 5).map((x) => (
-            <Box d="flex" flexDir="row" justifyContent="space-between">
-              <Album key={x._id} thing={x} />
-            </Box>
-          ))
+          listened.slice(0, 5).map((x) => <Album key={x._id} thing={x} />)
         ) : (
           <></>
         )}
@@ -93,14 +96,17 @@ function SavedAlbums() {
       ) : (
         <> </>
       )}
-      <Grid gridTemplateColumns={["repeat(5, 1fr)"]} gap={3}>
+      <Grid
+        gridTemplateColumns={[
+          "repeat(2, 1fr)",
+          "repeat(2, 1fr)",
+          "repeat(5, 1fr)",
+        ]}
+        gap={3}
+      >
         <Box>
           {wantToListen ? (
-            wantToListen.slice(0, 5).map((x) => (
-              <Box d="flex" flexDir="column">
-                <Album key={x._id} thing={x} />
-              </Box>
-            ))
+            wantToListen.slice(0, 5).map((x) => <Album key={x._id} thing={x} />)
           ) : (
             <></>
           )}
@@ -129,15 +135,16 @@ function SavedAlbums() {
       ) : (
         <> </>
       )}
-      <Grid gridTemplateColumns={["repeat(5, 1fr)"]} gap={3}>
+      <Grid
+        gridTemplateColumns={[
+          "repeat(2, 1fr)",
+          "repeat(2, 1fr)",
+          "repeat(5, 1fr)",
+        ]}
+        gap={3}
+      >
         {listening ? (
-          listening.slice(0, 5).map((x) => (
-            <Box d="flex" flexDir="column">
-              <Box>
-                <Album key={x._id} thing={x} />
-              </Box>
-            </Box>
-          ))
+          listening.slice(0, 5).map((x) => <Album key={x._id} thing={x} />)
         ) : (
           <></>
         )}
