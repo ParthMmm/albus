@@ -118,7 +118,7 @@ function ActionButtons() {
   }, []);
   return (
     <div>
-      <Box w="80%" mx="auto" mt={1} color="white">
+      <Box w="80%" mx="auto" mt={10} color="white">
         <Center>
           {auth.user ? (
             <ButtonGroup>

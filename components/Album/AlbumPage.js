@@ -99,10 +99,10 @@ function AlbumInfo() {
       tracks: data.album.tracks?.track,
     };
 
-    data.album.tags.tag.map((tag) => tagArray.push([tag.name, tag.url]));
+    data.album.tags?.tag?.map((tag) => tagArray.push([tag.name, tag.url]));
 
     currentAlbum.tags = tagArray.sort(function (a, b) {
-      return b[0].length - a[0].length;
+      return a[0].length - b[0].length;
     });
 
     console.log(currentAlbum.tags);
@@ -124,7 +124,7 @@ function AlbumInfo() {
           <Box
             p="5"
             d="flex"
-            justifyContent={{ sm: "center", md: "space-between" }}
+            justifyContent={{ sm: "center", md: "center" }}
             flexShrink={{ sm: "1", md: "0" }}
             flexFlow="column wrap"
           >
@@ -174,10 +174,11 @@ function AlbumInfo() {
             </Flex>
             <SimpleGrid
               mt={3}
-              minChildWidth={{ sm: "80px", md: "" }}
-              // columns={{ md: 10, lg: 3 }}
-              // row={{ md: 1, lg: 4 }}
-              spacingY="1"
+              // minChildWidth={{ sm: "150px", md: "" }}
+              columns={{ sm: 4, md: 5, lg: 3 }}
+              row={{ sm: 2, md: 1, lg: 4 }}
+              spacingY="2"
+              spacingX="2"
               // autoColumns="min-content"
             >
               {currentAlbum.tags ? (

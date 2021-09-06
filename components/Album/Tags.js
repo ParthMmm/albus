@@ -1,4 +1,4 @@
-import { Tag, Link } from "@chakra-ui/react";
+import { Tag, Link, Center } from "@chakra-ui/react";
 import React from "react";
 import NextLink from "next/link";
 
@@ -19,16 +19,20 @@ function Tags(tag) {
         rounded="xl"
         _hover={{ bg: "tomato" }}
         textDecoration="none"
-        maxW="120px"
+        maxW={{ sm: "80px", md: "120" }}
+        minW={{ sm: "80px", md: "100px" }}
+        d="inline-block"
       >
-        <Link
-          href={tagURL}
-          textDecoration="none"
-          _hover={{ color: "purple.600" }}
-        >
-          {" "}
-          {tagName}
-        </Link>
+        <Center>
+          <Link
+            href={tagURL}
+            textDecoration="none"
+            _hover={{ color: "purple.600" }}
+          >
+            {" "}
+            {tagName}
+          </Link>
+        </Center>
       </Tag>
     </div>
   );

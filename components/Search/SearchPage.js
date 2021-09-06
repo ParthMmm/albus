@@ -68,6 +68,18 @@ function SearchPage() {
         </Box>
       </div>
     );
+  } else {
+    return (
+      <div>
+        <Box w="80%" h="50rem" mx="auto" mt={10} color="white">
+          <Skeleton
+            startColor="orange.500"
+            endColor="purple.500"
+            height="50rem"
+          />
+        </Box>
+      </div>
+    );
   }
 }
 

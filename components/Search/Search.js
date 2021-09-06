@@ -36,8 +36,8 @@ function Search() {
       <Flex
         justifyContent="center"
         alignItems="center"
-        w="5xl"
-        mx={{ base: "0", md: 10 }}
+        w={{ sm: "20rem", md: "36rem", lg: "48rem" }}
+        // mx={{ sm: 10, md: 10 }}
       >
         <FormControl>
           <InputGroup>

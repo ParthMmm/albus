@@ -8,7 +8,7 @@ function Wiki({ summary }) {
   return (
     <>
       {summary ? (
-        <Box d="flex" flexDir="column">
+        <Box>
           <Box flexShrink="1" m={4}>
             <Collapse startingHeight="22rem" in={show} rounded="lg">
               <Text
@@ -35,7 +35,9 @@ function Wiki({ summary }) {
           </Box>
         </Box>
       ) : (
-        <Center p={10}>no summary found</Center>
+        <Center p={10}>
+          <Text>no summary </Text>
+        </Center>
       )}
     </>
   );
