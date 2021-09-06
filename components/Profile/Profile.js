@@ -94,15 +94,15 @@ function Profile() {
             <Heading fontSize="md" mt={2}>
               Genre
             </Heading>
-            <Text>wave</Text>
+            <Text>{auth.userInfo?.info?.genre}</Text>
             <Heading fontSize="md" mt={2}>
               Artist
             </Heading>
-            <Text>Frank Ocean</Text>
+            <Text>{auth.userInfo?.info?.artist}</Text>
             <Heading fontSize="md" mt={2}>
               Album
             </Heading>
-            <Text>Blond</Text>
+            <Text>{auth.userInfo?.info?.album}</Text>
           </Box>
         </Box>{" "}
         <SavedAlbums />
