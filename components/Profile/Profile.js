@@ -1,5 +1,12 @@
 import React, { useEffect } from "react";
-import { Box, Heading, Center, Text, Skeleton } from "@chakra-ui/react";
+import {
+  Box,
+  Heading,
+  Center,
+  Text,
+  Skeleton,
+  useColorMode,
+} from "@chakra-ui/react";
 import { useAuth } from "../../providers/authProvider";
 import Avatar, { genConfig } from "react-nice-avatar";
 import SavedAlbums from "./SavedAlbums";
@@ -8,6 +15,7 @@ import { useRouter } from "next/router";
 function Profile() {
   const auth = useAuth();
   const router = useRouter();
+  const { colorMode } = useColorMode();
 
   let userID;
   useEffect(() => {
@@ -47,7 +55,7 @@ function Profile() {
             rounded="lg"
           />
         </Box>
-        <Box w="80%" h="50rem" mx="auto" mt={10} color="white">
+        <Box w="80%" h="50rem" mx="auto" mt={10}>
           <Skeleton
             startColor="pink.500"
             endColor="orange.500"
@@ -69,7 +77,7 @@ function Profile() {
             rounded="lg"
           />
         </Box>
-        <Box w="80%" h="50rem" mx="auto" mt={10} color="white">
+        <Box w="80%" h="50rem" mx="auto" mt={10}>
           <Skeleton
             startColor="pink.500"
             endColor="orange.500"
@@ -86,11 +94,11 @@ function Profile() {
       <>
         <Box flexDir="row" justifyContent="space-between">
           <Box
-            bg="gray.600"
+            bg={colorMode === "light" ? "#ECF0F1" : "#34495E"}
             w="80%"
             mx="auto"
             mt={10}
-            color="white"
+            color={{ dark: "white", light: "black" }}
             d="flex"
             rounded="lg"
             boxShadow="lg"

@@ -9,6 +9,9 @@ import {
   Heading,
   Text,
   ButtonGroup,
+  useColorMode,
+  Box,
+  Skeleton,
 } from "@chakra-ui/react";
 import { useAction } from "../../providers/actionProvider";
 import NextLink from "next/link";
@@ -16,6 +19,7 @@ import NextLink from "next/link";
 function Settings() {
   const auth = useAuth();
   const action = useAction();
+  const { colorMode } = useColorMode();
 
   const {
     register,
@@ -30,6 +34,7 @@ function Settings() {
   };
 
   useEffect(() => {
+    auth.fetchUser();
     if (auth.userInfo?.info) {
       reset({
         genre: auth.userInfo.info.genre,
@@ -37,11 +42,22 @@ function Settings() {
         album: auth.userInfo.info.album,
       });
     }
-  }, []);
+    console.log(auth.user);
+  }, [auth.user]);
+  if (auth.loading) {
+    <Flex
+      height="60vh"
+      alignItems="center"
+      justifyContent="center"
+      direction="column"
+    >
+      <Skeleton startColor="pink.500" endColor="orange.500" rounded="lg" />
+    </Flex>;
+  }
 
   if (auth.user) {
     return (
-      <div>
+      <Box>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Flex
             height="60vh"
@@ -51,7 +67,13 @@ function Settings() {
           >
             <Heading mb={8}>{auth.user.username}'s favorites</Heading>
 
-            <Flex direction="column" background="gray.700" p={12} rounded="xl">
+            <Flex
+              direction="column"
+              bg={colorMode === "light" ? "#ECF0F1" : "#34495E"}
+              p={12}
+              rounded="xl"
+              shadow="2xl"
+            >
               <FormControl>
                 <Heading fontSize="md">Favorite Genre</Heading>
                 <Input
@@ -61,6 +83,11 @@ function Settings() {
                   placeholder="genre"
                   variant="filled"
                   {...register("genre")}
+                  borderRadius="sm"
+                  border={colorMode === "light" ? "2px solid" : "0px"}
+                  borderColor="gray.300"
+                  focusBorderColor="purple.600"
+                  rounded="xl"
                 />
               </FormControl>
 
@@ -73,6 +100,11 @@ function Settings() {
                   placeholder="artist"
                   variant="filled"
                   {...register("artist")}
+                  borderRadius="sm"
+                  border={colorMode === "light" ? "2px solid" : "0px"}
+                  borderColor="gray.300"
+                  focusBorderColor="purple.600"
+                  rounded="xl"
                 />
               </FormControl>
 
@@ -85,6 +117,11 @@ function Settings() {
                   placeholder="album"
                   variant="filled"
                   {...register("album")}
+                  borderRadius="sm"
+                  border={colorMode === "light" ? "2px solid" : "0px"}
+                  borderColor="gray.300"
+                  focusBorderColor="purple.600"
+                  rounded="xl"
                 />
               </FormControl>
               <Flex
@@ -95,7 +132,7 @@ function Settings() {
               <ButtonGroup spacing="20" mt={10} mb="-6">
                 <NextLink
                   href={{
-                    pathname: `/profile/${auth.userInfo.user_id}`,
+                    pathname: `/profile/${auth.user.user_id}`,
                   }}
                 >
                   <Button
@@ -127,7 +164,7 @@ function Settings() {
             </Flex>
           </Flex>
         </form>
-      </div>
+      </Box>
     );
   } else {
     return <div></div>;

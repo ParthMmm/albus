@@ -1,10 +1,11 @@
 import React from "react";
-import { Box, Text, Link, Flex } from "@chakra-ui/react";
+import { Box, Text, Link, Flex, useColorMode } from "@chakra-ui/react";
 import { MdPeople, MdPlayArrow } from "react-icons/md";
 import NumberFormat from "react-number-format";
 
 function Track({ track }) {
   let trackItem;
+  const { colorMode } = useColorMode();
 
   if (track) {
     trackItem = {
@@ -17,7 +18,7 @@ function Track({ track }) {
     };
   }
   return (
-    <div>
+    <Box shadow="xl">
       <Box
         display="flex"
         justifyContent="center"
@@ -25,9 +26,11 @@ function Track({ track }) {
         flexShrink="0"
         p={5}
         minHeight={{ sm: "100px", md: "120" }}
-        bg="gray.600"
-        rounded="lg"
-        shadow="md"
+        bg={{ dark: "gray.600", light: "white" }}
+        borderRadius="sm"
+        border="2px solid"
+        borderColor={colorMode === "dark" ? "purple.300" : "purple.600"}
+        rounded="xl"
       >
         {" "}
         <Text
@@ -35,15 +38,15 @@ function Track({ track }) {
           lineHeight="normal"
           fontSize="xl"
           display="block"
-          color="purple.300"
           _hover={{ color: "tomato" }}
+          color={colorMode === "dark" ? "purple.300" : "purple.600"}
         >
           {" "}
           <Link href={trackItem.url}>{trackItem.name}</Link>
         </Text>
         <Text
           fontSize="sm"
-          color="white"
+          color={{ dark: "white", light: "black" }}
           placeItems="center"
           fontWeight="semibold"
           _hover={{ color: "tomato" }}
@@ -76,7 +79,7 @@ function Track({ track }) {
           </Text>
         </Flex>
       </Box>
-    </div>
+    </Box>
   );
 }
 

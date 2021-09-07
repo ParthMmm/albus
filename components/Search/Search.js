@@ -52,6 +52,7 @@ function Search() {
               focusBorderColor="purple.600"
               placeholder="Search for an album"
               _placeholder={{ color: "gray.200" }}
+              color="white"
             ></Input>
           </InputGroup>
         </FormControl>

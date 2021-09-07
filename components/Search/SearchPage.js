@@ -38,7 +38,7 @@ function SearchPage() {
     albums = data?.results.albummatches.album;
     return (
       <div>
-        <Box w="80%" h="50rem" mx="auto" mt={10} color="white">
+        <Box w="80%" h="50rem" mx="auto" mt={10}>
           <Box mb={4}>
             <Heading>{input}</Heading>
             <Text>results</Text>

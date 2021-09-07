@@ -1,22 +1,28 @@
-import { Box, Collapse, Button, Text, Center } from "@chakra-ui/react";
+import {
+  Box,
+  Collapse,
+  Button,
+  Text,
+  Center,
+  useColorMode,
+} from "@chakra-ui/react";
 import React from "react";
 
 function Wiki({ summary }) {
   const [show, setShow] = React.useState(false);
+  const { colorMode } = useColorMode();
 
   const handleToggle = () => setShow(!show);
   return (
     <>
       {summary ? (
-        <Box>
+        <Box color={colorMode === "dark" ? "white" : "black"} s>
           <Box flexShrink="1" m={4}>
             <Collapse startingHeight="22rem" in={show} rounded="lg">
               <Text
                 fontFamily="Helvetica"
                 fontSize="xl"
-                fontWeight="semibold"
                 dangerouslySetInnerHTML={{ __html: summary }}
-                color="white"
               ></Text>
             </Collapse>
             <Box d="flex" flexDir="row-reverse">
@@ -28,6 +34,7 @@ function Wiki({ summary }) {
                 onClick={handleToggle}
                 mt="1rem"
                 rounded="xl"
+                bg="gray.400"
               >
                 <Text _hover={{ color: "tomato" }} fontWeight="semibold">
                   {" "}

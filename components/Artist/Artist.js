@@ -1,11 +1,12 @@
 import React from "react";
-import { Box, Text, Link, Flex } from "@chakra-ui/react";
+import { Box, Text, Link, Flex, useColorMode } from "@chakra-ui/react";
 import { MdPeople, MdPlayArrow } from "react-icons/md";
 import NumberFormat from "react-number-format";
 import { useRouter } from "next/router";
 
 function Artist({ artist }) {
   const router = useRouter();
+  const { colorMode } = useColorMode();
 
   let artistItem;
   if (artist) {
@@ -24,7 +25,7 @@ function Artist({ artist }) {
     });
   };
   return (
-    <div>
+    <Box shadow="xl">
       <Box
         display="flex"
         justifyContent="center"
@@ -32,9 +33,11 @@ function Artist({ artist }) {
         flexShrink="0"
         p={5}
         minHeight={{ sm: "100px", md: "120" }}
-        bg="gray.600"
-        rounded="lg"
-        shadow="md"
+        bg={{ dark: "gray.600", light: "0" }}
+        borderRadius="sm"
+        border="2px solid"
+        borderColor={colorMode === "dark" ? "purple.300" : "purple.600"}
+        rounded="xl"
       >
         {" "}
         <Text
@@ -42,7 +45,7 @@ function Artist({ artist }) {
           lineHeight="normal"
           fontSize="xl"
           display="block"
-          color="purple.300"
+          color={colorMode === "dark" ? "purple.300" : "purple.600"}
           _hover={{ color: "tomato" }}
         >
           {" "}
@@ -73,7 +76,7 @@ function Artist({ artist }) {
           </Text>
         </Flex>
       </Box>
-    </div>
+    </Box>
   );
 }
 

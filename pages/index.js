@@ -18,14 +18,13 @@ function index() {
     <>
       <Header />
       <Box
-        bg="gray.600"
+        bg={{ dark: "white", light: "white" }}
         w="80%"
         h="30rem"
         mx="auto"
         mt={10}
-        color="white"
+        color={{ dark: "white", light: "black" }}
         rounded="lg"
-        shadow="md"
       >
         <Center mb={8} h="20vh" w="40vh" p={5}>
           {" "}
@@ -39,7 +38,7 @@ function index() {
         </Center>
       </Box>
 
-      <Box w="80%" h="50rem" mx="auto" mt={10} color="white">
+      <Box w="80%" h="50rem" mx="auto" mt={10}>
         <Box mb={4}>
           <Heading>top dance albums</Heading>
           <Text>all time</Text>
