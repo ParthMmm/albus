@@ -31,4 +31,4 @@ Find your new favorite album, and keep track of your albums.
 
 
 ## License
-[MIT](https://github.com/ParthMmm/impress/blob/master/LICENSE)
+[MIT](https://github.com/ParthMmm/albus/blob/main/LICENSE)
