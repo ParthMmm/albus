@@ -38,7 +38,6 @@ function AlbumInfo() {
   const { colorMode } = useColorMode();
 
   const handleToggle = () => setShow(!show);
-  // console.log(router.query.slug);
   let artist, albumName;
   let tagArray = [];
   if (router.query.slug) {
@@ -216,14 +215,15 @@ function AlbumInfo() {
 
           <Wiki summary={currentAlbum.wiki} />
         </Box>
-
         <ActionButtons name={currentAlbum.name} artist={currentAlbum.artist} />
-        <Box w="80%" mx="auto" mt={10}>
-          {" "}
-          <Heading>tracklist</Heading>
-        </Box>
         {Array.isArray(currentAlbum.tracks) ? (
-          <Tracklist tracks={currentAlbum.tracks} />
+          <>
+            <Box w="80%" mx="auto" mt={10}>
+              {" "}
+              <Heading>tracklist</Heading>
+            </Box>
+            <Tracklist tracks={currentAlbum.tracks} />
+          </>
         ) : (
           <></>
         )}

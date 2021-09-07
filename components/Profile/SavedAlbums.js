@@ -126,13 +126,11 @@ function SavedAlbums() {
         ]}
         gap={3}
       >
-        <Box>
-          {wantToListen ? (
-            wantToListen.slice(0, 5).map((x) => <Album key={x._id} thing={x} />)
-          ) : (
-            <></>
-          )}
-        </Box>
+        {wantToListen ? (
+          wantToListen.slice(0, 5).map((x) => <Album key={x._id} thing={x} />)
+        ) : (
+          <></>
+        )}
       </Grid>
       {listening ? (
         <Box
