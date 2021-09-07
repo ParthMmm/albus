@@ -11,6 +11,7 @@ import {
   Collapse,
   SimpleGrid,
   Grid,
+  useColorMode,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useAlbum } from "../../providers/albumProvider";
@@ -34,6 +35,7 @@ function AlbumInfo() {
   const album = useAlbum();
   const action = useAction();
   const [show, setShow] = React.useState(false);
+  const { colorMode } = useColorMode();
 
   const handleToggle = () => setShow(!show);
   // console.log(router.query.slug);
@@ -133,11 +135,11 @@ function AlbumInfo() {
     return (
       <div>
         <Box
-          bg="gray.600"
+          color={colorMode === "dark" ? "gray.600" : "0"}
           w="80%"
           mx="auto"
           mt={10}
-          color="white"
+          color={colorMode === "dark" ? "white" : "black"}
           d="flex"
           flexGrow="1"
           justifyContent={{ sm: "center", md: "center", lg: "space-between" }}
@@ -151,6 +153,7 @@ function AlbumInfo() {
             justifyContent={{ sm: "center", md: "center" }}
             flexShrink={{ sm: "1", md: "0" }}
             flexFlow="column wrap"
+            color={colorMode === "dark" ? "white" : "black"}
           >
             <Image
               borderRadius="full"
@@ -215,7 +218,7 @@ function AlbumInfo() {
         </Box>
 
         <ActionButtons name={currentAlbum.name} artist={currentAlbum.artist} />
-        <Box w="80%" mx="auto" mt={10} color="white">
+        <Box w="80%" mx="auto" mt={10}>
           {" "}
           <Heading>tracklist</Heading>
         </Box>

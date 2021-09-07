@@ -1,11 +1,12 @@
 import React from "react";
-import { Box, Stack, Text, Link } from "@chakra-ui/react";
+import { Box, Stack, Text, Link, useColorMode } from "@chakra-ui/react";
 function Tracklist({ tracks }) {
+  const { colorMode } = useColorMode();
+
   return (
     <Box
-      bg="gray.600"
       mt={1}
-      color="white"
+      color={colorMode === "dark" ? "white" : "black"}
       rounded="lg"
       boxShadow="lg"
       p={5}

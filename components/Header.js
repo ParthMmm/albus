@@ -10,11 +10,12 @@ import {
   Menu,
   IconButton,
   Link,
+  useColorMode,
 } from "@chakra-ui/react";
 import { useAuth } from "../providers/authProvider";
 import { RiAccountCircleLine } from "react-icons/ri";
 import { MdMenu } from "react-icons/md";
-
+import { IoSunnySharp, IoMoonSharp } from "react-icons/io5";
 import NextLink from "next/link";
 import Search from "./Search/Search";
 import { useRouter } from "next/router";
@@ -22,7 +23,7 @@ import { useRouter } from "next/router";
 function Header() {
   const auth = useAuth();
   const router = useRouter();
-
+  const { colorMode, toggleColorMode } = useColorMode();
   useEffect(() => {
     if (auth.user) {
       auth.fetchUser();
@@ -53,6 +54,7 @@ function Header() {
             <Heading
               fontSize={{ base: "24px", md: "36px", lg: "48px" }}
               _hover={{ color: "purple.600" }}
+              color="white"
             >
               <Link>albus</Link>
             </Heading>
@@ -60,16 +62,22 @@ function Header() {
         </Flex>
         <Search />
         <Flex justifyContent="center" alignItems="center" ml={[0, null, 0]}>
+          <Button
+            as={IconButton}
+            icon={colorMode === "dark" ? <IoSunnySharp /> : <IoMoonSharp />}
+            onClick={toggleColorMode}
+            color="purple.600"
+            bg="0"
+          />
           {auth.user ? (
-            <Menu>
+            <Menu bg={{ dark: "gray.600", light: "white" }}>
               <MenuButton
                 as={IconButton}
                 icon={<RiAccountCircleLine />}
                 color="purple.600"
                 bg="0"
-                size="lg"
               />
-              <MenuList bg="gray.600">
+              <MenuList>
                 <MenuItem
                   onClick={() => router.push(`/profile/${auth.user.user_id}`)}
                 >
@@ -107,13 +115,23 @@ function Header() {
               </Menu>
               <ButtonGroup d={{ sm: "none", md: "flex", lg: "flex" }}>
                 <NextLink href="/login" passHref>
-                  <Button as="a" bg="none" _hover={{ bg: "purple.600" }}>
+                  <Button
+                    as="a"
+                    bg="none"
+                    _hover={{ bg: "purple.600" }}
+                    color="white"
+                  >
                     Login
                   </Button>
                 </NextLink>
 
                 <NextLink href="/register" passHref>
-                  <Button as="a" bg="purple.600" _hover={{ bg: "purple.800" }}>
+                  <Button
+                    as="a"
+                    bg="purple.600"
+                    _hover={{ bg: "purple.800" }}
+                    color="white"
+                  >
                     Sign Up
                   </Button>
                 </NextLink>

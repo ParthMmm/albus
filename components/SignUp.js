@@ -8,11 +8,14 @@ import {
   Flex,
   Heading,
   Text,
+  useColorMode,
 } from "@chakra-ui/react";
 import { useAuth } from "../providers/authProvider";
 
 function SignUp() {
   const auth = useAuth();
+  const { colorMode } = useColorMode();
+
   const {
     register,
     handleSubmit,
@@ -29,7 +32,13 @@ function SignUp() {
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Flex height="100vh" alignItems="center" justifyContent="center">
-          <Flex direction="column" background="gray.700" p={12} rounded={6}>
+          <Flex
+            direction="column"
+            bg={colorMode === "light" ? "#ECF0F1" : "#34495E"}
+            p={12}
+            rounded="xl"
+            shadow="2xl"
+          >
             <Heading mb={8}>Sign Up</Heading>
             <FormControl isInvalid={errors.username}>
               <Input
@@ -49,6 +58,11 @@ function SignUp() {
                     message: "Must be at most 12 characters",
                   },
                 })}
+                borderRadius="sm"
+                border={colorMode === "light" ? "2px solid" : "0px"}
+                borderColor="gray.300"
+                focusBorderColor="purple.600"
+                rounded="xl"
               />
               <FormErrorMessage mb={3}>
                 {errors.username && errors.username.message}
@@ -74,6 +88,11 @@ function SignUp() {
                     message: "Must be at most 20 characters",
                   },
                 })}
+                borderRadius="sm"
+                border={colorMode === "light" ? "2px solid" : "0px"}
+                borderColor="gray.300"
+                focusBorderColor="purple.600"
+                rounded="xl"
               />
               <FormErrorMessage mb={6}>
                 {errors.password && errors.password.message}

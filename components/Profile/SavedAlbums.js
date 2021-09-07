@@ -39,7 +39,13 @@ function SavedAlbums() {
   });
 
   return (
-    <Box w="80%" h="40rem" mx="auto" mt={10} color="white">
+    <Box
+      w="80%"
+      h="40rem"
+      mx="auto"
+      mt={10}
+      color={{ dark: "white", light: "black" }}
+    >
       {listened ? (
         <Box
           d="flex"

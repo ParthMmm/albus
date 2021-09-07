@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Text, Image, Link } from "@chakra-ui/react";
+import { Box, Text, Image, Link, useColorMode } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useAlbum } from "../../providers/albumProvider";
 import { useRouter } from "next/router";
@@ -10,6 +10,20 @@ function Album({ thing }) {
   const album = useAlbum();
   const router = useRouter();
   let properties = {};
+  const { colorMode } = useColorMode();
+
+  const colors = [
+    "red.300",
+    "orange.300",
+    "yellow.300",
+    "green.300",
+    "teal.300",
+    "blue.300",
+    "cyan.300",
+    "purple.300",
+    "pink.300",
+  ];
+  let randomNum = Math.floor(Math.random() * colors.length);
 
   if (thing._id && thing.mbid) {
     const { data, error, isValidating } = useSWR(
@@ -74,17 +88,16 @@ function Album({ thing }) {
 
   return (
     <div>
-      <Box shadow="md">
+      <Box shadow="2xl">
         {" "}
         <Box
           flexShrink="0"
-          bg="orange.500"
+          bg={colors[randomNum]}
           p={5}
           display="flex"
           alignItems="center"
           justifyContent="center"
           minHeight={{ base: 250, md: 200 }}
-          shadow="lg"
           rounded="lg"
           roundedBottom="none"
         >
@@ -103,7 +116,9 @@ function Album({ thing }) {
           p={4}
           minWidth="0px"
           minHeight={{ sm: "100px", md: "120" }}
-          bg="gray.600"
+          // bg={{ dark: "#2C3E50", light: "#ECF0F1" }}
+          // bg="#34495E"
+          bg={colorMode === "light" ? "#ECF0F1" : "#34495E"}
           roundedBottom="lg"
         >
           <NextLink
@@ -124,19 +139,14 @@ function Album({ thing }) {
               lineHeight="normal"
               fontSize="xl"
               display="block"
-              color="purple.300"
               _hover={{ color: "tomato" }}
+              color={"purple.300"}
             >
-              {properties.name}
+              <Text> {properties.name}</Text>
             </Link>
           </NextLink>
 
-          <Text
-            fontSize="sm"
-            color="white"
-            placeItems="center"
-            fontWeight="semibold"
-          >
+          <Text fontSize="sm" placeItems="center" fontWeight="semibold">
             {properties.artist}
           </Text>
         </Box>
