@@ -19,6 +19,7 @@ function useProvideAuth() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [userInfo, setUserInfo] = useState(null);
+
   const handleUser = async (rawUser) => {
     if (rawUser) {
       const user = await formatUser(rawUser);
@@ -37,7 +38,6 @@ function useProvideAuth() {
   };
 
   const handleUserInfo = async (rawUser) => {
-    // console.log(rawUser);
     if (rawUser) {
       const user = await formatUserInfo(rawUser);
       setUserInfo(user);

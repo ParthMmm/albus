@@ -23,8 +23,8 @@ function Listening({ pid }) {
     }
   }, []);
   return (
-    <Box w="80%" h="50rem" mx="auto" mt={10} color="white">
-      <Heading>Listening</Heading>
+    <Box w="80%" h="50rem" mx="auto" mt={10}>
+      <Heading mb={2}>listening</Heading>
       <Grid gridTemplateColumns={["repeat(5, 1fr)"]} gap={4}>
         {listening ? (
           listening.map((x) => (

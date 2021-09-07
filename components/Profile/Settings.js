@@ -15,11 +15,15 @@ import {
 } from "@chakra-ui/react";
 import { useAction } from "../../providers/actionProvider";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
 
 function Settings() {
   const auth = useAuth();
   const action = useAction();
+  const router = useRouter();
+
   const { colorMode } = useColorMode();
+  let userID;
 
   const {
     register,
@@ -42,8 +46,11 @@ function Settings() {
         album: auth.userInfo.info.album,
       });
     }
-    console.log(auth.user);
-  }, [auth.user]);
+    userID = router.query.pid;
+    if (userID) {
+      auth.fetchUserInfo(userID);
+    }
+  }, [router.query]);
   if (auth.loading) {
     <Flex
       height="60vh"

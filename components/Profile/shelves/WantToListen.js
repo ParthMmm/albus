@@ -30,8 +30,8 @@ function WantToListen({ pid }) {
     );
   } else {
     return (
-      <Box w="80%" h="50rem" mx="auto" mt={10} color="white">
-        <Heading>Want To Listen</Heading>
+      <Box w="80%" h="50rem" mx="auto" mt={10}>
+        <Heading mb={2}>want to listen</Heading>
         <Grid gridTemplateColumns={["repeat(5, 1fr)"]} gap={4}>
           {wantToListen ? (
             wantToListen.map((x) => (

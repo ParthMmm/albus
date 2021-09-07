@@ -23,8 +23,8 @@ function Listened({ pid }) {
     }
   }, []);
   return (
-    <Box w="80%" h="50rem" mx="auto" mt={10} color="white">
-      <Heading>Listened</Heading>
+    <Box w="80%" h="50rem" mx="auto" mt={10}>
+      <Heading mb={2}>listened</Heading>
       <Grid gridTemplateColumns={["repeat(5, 1fr)"]} gap={4}>
         {listened ? (
           listened.map((x) => (

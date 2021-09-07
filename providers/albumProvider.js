@@ -34,21 +34,11 @@ function useProvideAlbum() {
     if (res.status === 201) {
       setError("error");
       setLoading(false);
-
-      //   console.log(res.data.msg);
     } else {
-      console.log(res.data.id);
       setAlbumID(res.data.id);
       setLoading(false);
     }
   };
-
-  //   const getInfo = async (mbid) => {
-  //     setLoading(true);
-  //     const res = await axios.get(`${albumInfoFetch}&mbid=${mbid}`);
-
-  //     console.log(res.data);
-  //   };
 
   return {
     album,
@@ -58,11 +48,3 @@ function useProvideAlbum() {
     albumID,
   };
 }
-
-// const formatUser = async (user) => {
-//   return {
-//     user_id: user.id,
-//     token: user.token,
-//     username: user.username,
-//   };
-// };
