@@ -25,17 +25,17 @@ function Artist({ artist }) {
     });
   };
   return (
-    <Box shadow="xl">
+    <Box shadow="lg">
       <Box
         display="flex"
         justifyContent="center"
         flexDirection="column"
         flexShrink="0"
         p={5}
-        minHeight={{ sm: "100px", md: "120" }}
+        h="120"
         bg={{ dark: "gray.600", light: "0" }}
         borderRadius="sm"
-        border="2px solid"
+        border="3px solid"
         borderColor={colorMode === "dark" ? "purple.300" : "purple.600"}
         rounded="xl"
       >

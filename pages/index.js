@@ -7,12 +7,13 @@ import TrendingArtists from "../components/Artist/TrendingArtists";
 import TrendingTracks from "../components/Tracks/TrendingTracks";
 import TopAlbums from "../components/Album/TopAlbums";
 
+import { colors, emojis } from "../utils/randoms";
 function index() {
   const auth = useAuth();
 
   let albums = [];
-  const emojis = ["👋", "🌊", "🔊", "💿", "🎸", "🥁", "🎶", "🎺", "🎻", "🎤"];
-  let randomNum = Math.floor(Math.random() * 9);
+  let randomNum = Math.floor(Math.random() * emojis.length);
+  let randomColor = Math.floor(Math.random() * colors.length);
 
   return (
     <>
@@ -29,9 +30,13 @@ function index() {
         <Center mb={8} h="20vh" w="40vh" p={5}>
           {" "}
           {auth.user?.username ? (
-            <Heading>
-              hi, {auth.user.username}! {emojis[randomNum]}
-            </Heading>
+            <>
+              <Heading color={colors[randomColor]} pr={2}>
+                hi, {auth.user.username}!{"  "}
+              </Heading>
+              {"  "}
+              <Heading as="span"> {emojis[randomNum]}</Heading>
+            </>
           ) : (
             <Heading>welcome to albus! {emojis[randomNum]} </Heading>
           )}
@@ -51,7 +56,7 @@ function index() {
           </Box>
           <TrendingArtists />
         </Box>
-        <Box mt={10}>
+        <Box mt={10} pb={10}>
           <Box mb={4}>
             <Heading>trending tracks</Heading>
             <Text>this week</Text>

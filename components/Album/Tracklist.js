@@ -7,7 +7,10 @@ function Tracklist({ tracks }) {
     <Box
       mt={1}
       color={colorMode === "dark" ? "white" : "black"}
-      rounded="lg"
+      border="5px solid"
+      borderColor="purple.600"
+      borderRadius="sm"
+      rounded="xl"
       boxShadow="lg"
       p={5}
       w="80%"

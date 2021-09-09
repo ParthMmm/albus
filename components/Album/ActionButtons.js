@@ -95,8 +95,11 @@ function ActionButtons() {
     setListening(false);
     setWantToListen(false);
     setListened(false);
-    artist = router.query.slug[0];
-    name = router.query.slug[1];
+    if (router.query.slug) {
+      artist = router.query.slug[0];
+      name = router.query.slug[1];
+    }
+
     if (auth.user) {
       auth.fetchUser();
     }
@@ -107,7 +110,11 @@ function ActionButtons() {
   return (
     <div>
       <Box w="80%" mx="auto" mt={10} color="white">
-        <Center>
+        <Box
+          d="flex"
+          justifyContent="center"
+          flexDir={{ base: "column", sm: "column", md: "row" }}
+        >
           {auth.user ? (
             <ButtonGroup>
               {listened ? (
@@ -116,8 +123,8 @@ function ActionButtons() {
                   _hover={{ background: "purple.600" }}
                   rounded="xl"
                   size="lg"
+                  leftIcon={<MdDone color="tomato" />}
                 >
-                  <Box as={MdDone} color="tomato" mr={2} />
                   listened
                 </Button>
               ) : (
@@ -144,7 +151,7 @@ function ActionButtons() {
                   size="lg"
                   leftIcon={<MdDone color="tomato" />}
                 >
-                  want To Listen
+                  want to listen
                 </Button>
               ) : (
                 <Button
@@ -167,8 +174,8 @@ function ActionButtons() {
                   _hover={{ background: "purple.600" }}
                   rounded="xl"
                   size="lg"
+                  leftIcon={<MdDone color="tomato" />}
                 >
-                  <Box as={MdDone} color="tomato" mr={2} />
                   listening
                 </Button>
               ) : (
@@ -249,7 +256,7 @@ function ActionButtons() {
               </Button>
             </ButtonGroup>
           )}
-        </Center>
+        </Box>
       </Box>
     </div>
   );
