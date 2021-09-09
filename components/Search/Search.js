@@ -25,7 +25,6 @@ function Search() {
 
   const handleKeypress = (e) => {
     if (e.charCode === 13 && value) {
-      console.log("ding");
       searchSubmit();
     }
   };

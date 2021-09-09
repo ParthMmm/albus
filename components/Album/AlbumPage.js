@@ -56,7 +56,6 @@ function AlbumInfo() {
       dedupingInterval: 1000000,
     }
   );
-  console.log(data);
 
   let currentAlbum = {};
 
