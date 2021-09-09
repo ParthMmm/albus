@@ -1,4 +1,4 @@
-# Impress
+# Albus
 
 Find your new favorite album, and keep track of your albums.
 
