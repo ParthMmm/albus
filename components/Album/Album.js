@@ -87,71 +87,68 @@ function Album({ thing }) {
   }
 
   return (
-    <div>
-      <Box shadow="2xl">
-        {" "}
-        <Box
-          flexShrink="0"
-          bg={colors[randomNum]}
-          p={5}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          minHeight={{ base: 250, md: 200 }}
-          rounded="lg"
-          roundedBottom="none"
-        >
-          <Image
-            src={properties.imageUrl}
-            alt="Album Cover"
-            objectFit="contain"
-            w={{ md: 40 }}
-            h={{ md: 175 }}
-          />
-        </Box>
-        <Box
-          display="flex"
-          justifyContent="center"
-          flexDirection="column"
-          p={4}
-          minWidth="0px"
-          minHeight={{ sm: "100px", md: "120" }}
-          // bg={{ dark: "#2C3E50", light: "#ECF0F1" }}
-          // bg="#34495E"
-          bg={colorMode === "light" ? "#ECF0F1" : "#34495E"}
-          roundedBottom="lg"
-        >
-          <NextLink
-            href={{
-              pathname: `/album/[...slug]`,
-              query: {
-                artist: properties.artist,
-                name: properties.name,
-              },
-            }}
-            as={`/album/${properties.artist}/${encodeURIComponent(
-              properties.name
-            )}`}
-            passHref
-          >
-            <Link
-              fontWeight="bold"
-              lineHeight="normal"
-              fontSize="xl"
-              display="block"
-              _hover={{ color: "tomato" }}
-              color={"purple.300"}
-            >
-              <Text> {properties.name}</Text>
-            </Link>
-          </NextLink>
-
-          <Text fontSize="sm" placeItems="center" fontWeight="semibold">
-            {properties.artist}
-          </Text>
-        </Box>
+    <Box shadow="xl">
+      {" "}
+      <Box
+        bg={colors[randomNum]}
+        p={5}
+        d="flex"
+        alignItems="center"
+        justifyContent="center"
+        rounded="lg"
+        roundedBottom="none"
+        w={{ base: "18vh", md: "full" }}
+      >
+        <Image
+          src={properties.imageUrl}
+          alt="Album Cover"
+          objectFit="contain"
+        />
       </Box>
-    </div>
+      <Box
+        d="flex"
+        justifyContent="center"
+        alignItems="flex-start"
+        flexDirection="column"
+        px="4"
+        flexShrink="1"
+        h="150"
+        // bg={colorMode === "light" ? "#ECF0F1" : "#34495E"}
+        border="5px solid"
+        borderColor={colors[randomNum]}
+        roundedBottom="lg"
+        w={{ base: "18vh", md: "full" }}
+      >
+        <NextLink
+          href={{
+            pathname: `/album/[...slug]`,
+            query: {
+              artist: properties.artist,
+              name: properties.name,
+            },
+          }}
+          as={`/album/${properties.artist}/${encodeURIComponent(
+            properties.name
+          )}`}
+          passHref
+        >
+          <Link
+            fontWeight="bold"
+            lineHeight="normal"
+            // fontSize="xl"
+            fontSize={{ base: "l", md: "xl" }}
+            _hover={{ color: "tomato" }}
+            color={colorMode === "light" ? "purple.600" : "purple.300"}
+          >
+            <Text> {properties.name}</Text>
+          </Link>
+        </NextLink>
+
+        <Text fontSize="md" fontWeight="semibold">
+          {properties.artist}
+        </Text>
+      </Box>
+    </Box>
   );
 }
 

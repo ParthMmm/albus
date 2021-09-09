@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext, createContext } from "react";
 import router from "next/router";
 import Cookies from "js-cookie";
 import axios from "axios";
+import { useRouter } from "next/router";
+
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
@@ -19,6 +21,8 @@ function useProvideAuth() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [userInfo, setUserInfo] = useState(null);
+
+  const router = useRouter();
 
   const handleUser = async (rawUser) => {
     if (rawUser) {

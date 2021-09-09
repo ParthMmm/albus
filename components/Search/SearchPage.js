@@ -4,6 +4,7 @@ import Album from "../Album/Album";
 import useSWR from "swr";
 import { albumSearchFetch } from "../../utils/fetch";
 import { Heading, Box, Skeleton, Grid, Text } from "@chakra-ui/react";
+import SearchResults from "./SearchResults";
 
 function SearchPage() {
   const router = useRouter();
@@ -37,28 +38,13 @@ function SearchPage() {
   if (data) {
     albums = data?.results.albummatches.album;
     return (
-      <div>
-        <Box w="80%" h="50rem" mx="auto" mt={10}>
-          <Box mb={4}>
-            <Heading>{input}</Heading>
-            <Text>results</Text>
-          </Box>
-          <Grid
-            gridTemplateColumns={[
-              "repeat(2, 1fr)",
-              "repeat(2, 1fr)",
-              "repeat(5, 1fr)",
-            ]}
-            gap={3}
-          >
-            {albums.map((album) => (
-              <>
-                <Album key={album.artist.mbid} thing={album} />
-              </>
-            ))}
-          </Grid>
+      <Box w="80%" h="50rem" mx="auto" mt={10}>
+        <Box mb={4}>
+          <Heading>{input}</Heading>
+          <Text>results</Text>
         </Box>
-      </div>
+        <SearchResults albums={albums} />
+      </Box>
     );
   } else {
     return (

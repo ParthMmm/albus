@@ -16,9 +16,9 @@ function Tags(tag) {
         rounded="xl"
         _hover={{ bg: "tomato" }}
         textDecoration="none"
-        maxW={{ sm: "80px", md: "120" }}
-        minW={{ sm: "80px", md: "100px" }}
-        d="inline-block"
+        maxW={{ base: "100px", md: "120px" }}
+        minW={{ base: "60px", md: "100px" }}
+        d="flex"
       >
         <Center>
           <Link

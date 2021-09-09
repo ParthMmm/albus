@@ -38,7 +38,7 @@ function TopAlbums() {
           "repeat(2, 1fr)",
           "repeat(5, 1fr)",
         ]}
-        gap={3}
+        gap={4}
       >
         {albums.map((album) => (
           <Album key={album.artist.mbid} thing={album} />

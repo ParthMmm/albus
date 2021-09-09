@@ -49,8 +49,8 @@ function Header() {
         px={5}
         h="12vh"
       >
-        <Flex align="center">
-          <NextLink href="/home">
+        <Flex align="center" mr={2}>
+          <NextLink href="/">
             <Heading
               fontSize={{ base: "24px", md: "36px", lg: "48px" }}
               _hover={{ color: "purple.600" }}
@@ -95,7 +95,8 @@ function Header() {
             </Menu>
           ) : (
             <>
-              <Menu d={{ sm: "flex", md: "none", lg: "none" }}>
+              {/* show on mobile */}
+              <Menu d={{ base: "flex", sm: "none", md: "none", lg: "none" }}>
                 <MenuButton
                   as={IconButton}
                   icon={<MdMenu />}
@@ -113,7 +114,10 @@ function Header() {
                   </NextLink>
                 </MenuList>
               </Menu>
-              <ButtonGroup d={{ sm: "none", md: "flex", lg: "flex" }}>
+              {/* don't show on mobile */}
+              <ButtonGroup
+                d={{ base: "none", sm: "flex", md: "flex", lg: "flex" }}
+              >
                 <NextLink href="/login" passHref>
                   <Button
                     as="a"
