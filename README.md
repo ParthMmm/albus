@@ -19,8 +19,7 @@ Find your new favorite album, and keep track of your albums.
 - Express
 - Node.js
 
-Currently, frontend is hosted on Vercel and backend on Heroku. Backend will be moved to EC2 instance with ECS cluster when dns/domain issues are resolved.
-
+Frontend is hosted on Vercel. Backend is dockerized on ECS which is running on an EC2 instance. Route 53 is used to route to a Classic Load Balancer in front of the EC2 instance.
 
 
 ## Todo
