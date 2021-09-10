@@ -17,7 +17,7 @@ export function useAction() {
 }
 
 function useProvideAction() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [user, setUser] = useState(null);
 
@@ -37,31 +37,40 @@ function useProvideAction() {
   }, []);
 
   const addListened = async (data) => {
-    const stringData = JSON.stringify(data);
     setLoading(true);
+    const stringData = JSON.stringify(data);
     const res = await axios.post(
       `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/user/addListened`,
       data,
       { headers: { Authorization: `Bearer ${user.token}` } }
     );
+    if (res.status === 200) {
+      setLoading(false);
+    }
   };
   const addWantToListen = async (data) => {
-    const stringData = JSON.stringify(data);
     setLoading(true);
+    const stringData = JSON.stringify(data);
     const res = await axios.post(
       `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/user/addWantToListen`,
       data,
       { headers: { Authorization: `Bearer ${user.token}` } }
     );
+    if (res.status === 200) {
+      setLoading(false);
+    }
   };
   const addListening = async (data) => {
-    const stringData = JSON.stringify(data);
     setLoading(true);
+    const stringData = JSON.stringify(data);
     const res = await axios.post(
       `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/user/addListening`,
       data,
       { headers: { Authorization: `Bearer ${user.token}` } }
     );
+    if (res.status === 200) {
+      setLoading(false);
+    }
   };
 
   const updateInfo = async (data) => {
@@ -80,5 +89,6 @@ function useProvideAction() {
     addWantToListen,
     addListening,
     updateInfo,
+    loading,
   };
 }

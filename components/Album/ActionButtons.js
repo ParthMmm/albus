@@ -6,7 +6,7 @@ import { useAuth } from "../../providers/authProvider";
 import { MdDone } from "react-icons/md";
 import { useRouter } from "next/router";
 import { useToast } from "@chakra-ui/react";
-
+import { BeatLoader } from "react-spinners";
 function ActionButtons() {
   const album = useAlbum();
   const action = useAction();
@@ -31,6 +31,8 @@ function ActionButtons() {
       setListening(false);
     }
     if (listened) {
+      action.addListened(albumInfo);
+      setListened(false);
       return;
     }
     setListened(true);
@@ -45,6 +47,8 @@ function ActionButtons() {
       setListened(false);
     }
     if (wantToListen) {
+      action.addWantToListen(albumInfo);
+      setWantToListen(false);
       return;
     }
     setWantToListen(true);
@@ -59,6 +63,8 @@ function ActionButtons() {
       setListened(false);
     }
     if (listening) {
+      action.addListening(albumInfo);
+      setListening(false);
       return;
     }
     setListening(true);
@@ -92,9 +98,6 @@ function ActionButtons() {
   };
 
   useEffect(() => {
-    setListening(false);
-    setWantToListen(false);
-    setListened(false);
     if (router.query.slug) {
       artist = router.query.slug[0];
       name = router.query.slug[1];
@@ -119,6 +122,11 @@ function ActionButtons() {
             <ButtonGroup>
               {listened ? (
                 <Button
+                  isLoading={action.loading}
+                  spinner={<BeatLoader size={8} color="white" />}
+                  onClick={() => {
+                    clickListened();
+                  }}
                   bg="purple.600"
                   _hover={{ background: "purple.600" }}
                   rounded="xl"
@@ -129,6 +137,8 @@ function ActionButtons() {
                 </Button>
               ) : (
                 <Button
+                  isLoading={action.loading}
+                  spinner={<BeatLoader size={8} color="white" />}
                   onClick={() => {
                     clickListened();
                   }}
@@ -145,6 +155,11 @@ function ActionButtons() {
 
               {wantToListen ? (
                 <Button
+                  isLoading={action.loading}
+                  spinner={<BeatLoader size={8} color="white" />}
+                  onClick={() => {
+                    clickWantToListen();
+                  }}
                   bg="purple.600"
                   _hover={{ background: "purple.600" }}
                   rounded="xl"
@@ -155,6 +170,8 @@ function ActionButtons() {
                 </Button>
               ) : (
                 <Button
+                  isLoading={action.loading}
+                  spinner={<BeatLoader size={8} color="white" />}
                   onClick={() => {
                     clickWantToListen();
                   }}
@@ -170,6 +187,11 @@ function ActionButtons() {
               )}
               {listening ? (
                 <Button
+                  isLoading={action.loading}
+                  spinner={<BeatLoader size={8} color="white" />}
+                  onClick={() => {
+                    clickListening();
+                  }}
                   bg="purple.600"
                   _hover={{ background: "purple.600" }}
                   rounded="xl"
@@ -180,6 +202,8 @@ function ActionButtons() {
                 </Button>
               ) : (
                 <Button
+                  isLoading={action.loading}
+                  spinner={<BeatLoader size={8} color="white" />}
                   onClick={() => {
                     clickListening();
                   }}

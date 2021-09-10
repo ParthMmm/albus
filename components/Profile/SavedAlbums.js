@@ -46,6 +46,48 @@ function SavedAlbums() {
       mt={10}
       color={{ dark: "white", light: "black" }}
     >
+      {listening ? (
+        <Box
+          d="flex"
+          justifyContent="space-between"
+          alignItems="baseline"
+          flexDir="row"
+          mt={2}
+        >
+          <Box>
+            <Heading mb={2}>listening</Heading>
+          </Box>
+          <Box>
+            {listened.length > 5 ? (
+              <NextLink
+                href={{
+                  pathname: `/profile/${auth.userInfo.user_id}/listening`,
+                }}
+              >
+                Show All
+              </NextLink>
+            ) : (
+              <></>
+            )}
+          </Box>
+        </Box>
+      ) : (
+        <></>
+      )}
+      <Grid
+        gridTemplateColumns={[
+          "repeat(2, 1fr)",
+          "repeat(2, 1fr)",
+          "repeat(5, 1fr)",
+        ]}
+        gap={3}
+      >
+        {listening ? (
+          listening.slice(0, 5).map((x) => <Album key={x._id} thing={x} />)
+        ) : (
+          <></>
+        )}
+      </Grid>
       {listened ? (
         <Box
           d="flex"
@@ -128,49 +170,6 @@ function SavedAlbums() {
       >
         {wantToListen ? (
           wantToListen.slice(0, 5).map((x) => <Album key={x._id} thing={x} />)
-        ) : (
-          <></>
-        )}
-      </Grid>
-
-      {listening ? (
-        <Box
-          d="flex"
-          justifyContent="space-between"
-          alignItems="baseline"
-          flexDir="row"
-          mt={2}
-        >
-          <Box>
-            <Heading mb={2}>listening</Heading>
-          </Box>
-          <Box>
-            {listened.length > 5 ? (
-              <NextLink
-                href={{
-                  pathname: `/profile/${auth.userInfo.user_id}/listened`,
-                }}
-              >
-                Show All
-              </NextLink>
-            ) : (
-              <></>
-            )}
-          </Box>
-        </Box>
-      ) : (
-        <></>
-      )}
-      <Grid
-        gridTemplateColumns={[
-          "repeat(2, 1fr)",
-          "repeat(2, 1fr)",
-          "repeat(5, 1fr)",
-        ]}
-        gap={3}
-      >
-        {listening ? (
-          listening.slice(0, 5).map((x) => <Album key={x._id} thing={x} />)
         ) : (
           <></>
         )}
