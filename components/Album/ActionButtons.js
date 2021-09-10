@@ -109,7 +109,7 @@ function ActionButtons() {
   }, [router.query]);
   return (
     <div>
-      <Box w="80%" mx="auto" mt={10} color="white">
+      <Box w="80%" mx="auto" mt={10} mb={5} color="white">
         <Box
           d="flex"
           justifyContent="center"

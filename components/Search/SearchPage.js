@@ -5,7 +5,7 @@ import useSWR from "swr";
 import { albumSearchFetch } from "../../utils/fetch";
 import { Heading, Box, Skeleton, Grid, Text } from "@chakra-ui/react";
 import SearchResults from "./SearchResults";
-
+import albumCheck from "../../utils/albumCheck";
 function SearchPage() {
   const router = useRouter();
   const { input } = router.query;
@@ -37,13 +37,14 @@ function SearchPage() {
   }
   if (data) {
     albums = data?.results.albummatches.album;
+    let filtered = albumCheck(albums);
     return (
       <Box w="80%" h="50rem" mx="auto" mt={10}>
         <Box mb={4}>
           <Heading>{input}</Heading>
           <Text>results</Text>
         </Box>
-        <SearchResults albums={albums} />
+        <SearchResults albums={filtered} />
       </Box>
     );
   } else {

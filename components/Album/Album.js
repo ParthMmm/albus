@@ -5,24 +5,20 @@ import { useAlbum } from "../../providers/albumProvider";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import { albumInfoFetch, albumSearchFetch } from "../../utils/fetch";
-
+import { colors } from "../../utils/randoms";
 function Album({ thing }) {
   const album = useAlbum();
   const router = useRouter();
   let properties = {};
   const { colorMode } = useColorMode();
 
-  const colors = [
-    "red.300",
-    "orange.300",
-    "yellow.300",
-    "green.300",
-    "teal.300",
-    "blue.300",
-    "cyan.300",
-    "purple.300",
-    "pink.300",
-  ];
+  const searchSubmit = () => {
+    router.push({
+      pathname: "/search",
+      query: { input: properties.artist },
+    });
+  };
+
   let randomNum = Math.floor(Math.random() * colors.length);
 
   if (thing._id && thing.mbid) {
@@ -87,7 +83,7 @@ function Album({ thing }) {
   }
 
   return (
-    <Box shadow="xl">
+    <Box rounded="xl" shadow="md">
       {" "}
       <Box
         bg={colors[randomNum]}
@@ -95,7 +91,7 @@ function Album({ thing }) {
         d="flex"
         alignItems="center"
         justifyContent="center"
-        rounded="lg"
+        rounded="xl"
         roundedBottom="none"
         w={{ base: "18vh", md: "full" }}
       >
@@ -103,6 +99,7 @@ function Album({ thing }) {
           src={properties.imageUrl}
           alt="Album Cover"
           objectFit="contain"
+          fallbackSrc="https://via.placeholder.com/174"
         />
       </Box>
       <Box
@@ -114,9 +111,9 @@ function Album({ thing }) {
         flexShrink="1"
         h="150"
         // bg={colorMode === "light" ? "#ECF0F1" : "#34495E"}
-        border="5px solid"
+        border="8px solid"
         borderColor={colors[randomNum]}
-        roundedBottom="lg"
+        roundedBottom="xl"
         w={{ base: "18vh", md: "full" }}
       >
         <NextLink
@@ -144,8 +141,13 @@ function Album({ thing }) {
           </Link>
         </NextLink>
 
-        <Text fontSize="md" fontWeight="semibold">
-          {properties.artist}
+        <Text
+          fontSize="md"
+          fontWeight="semibold"
+          _hover={{ color: "tomato" }}
+          textDecoration="purple"
+        >
+          <Link onClick={() => searchSubmit()}> {properties.artist}</Link>
         </Text>
       </Box>
     </Box>
