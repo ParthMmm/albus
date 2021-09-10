@@ -25,7 +25,7 @@ function Artist({ artist }) {
     });
   };
   return (
-    <Box shadow="lg">
+    <Box rounded="xl" shadow="md">
       <Box
         display="flex"
         justifyContent="center"

@@ -30,8 +30,6 @@ import Tracklist from "./Tracklist";
 import Wiki from "./Wiki";
 
 function AlbumInfo() {
-  const [mounted, setMounted] = useState(false);
-  const [mbid, setMBID] = useState("");
   const router = useRouter();
   const album = useAlbum();
   const action = useAction();
@@ -58,6 +56,13 @@ function AlbumInfo() {
   );
 
   let currentAlbum = {};
+
+  const searchSubmit = () => {
+    router.push({
+      pathname: "/search",
+      query: { input: currentAlbum.artist },
+    });
+  };
 
   useEffect(() => {
     if (router.query.slug) {
@@ -181,13 +186,18 @@ function AlbumInfo() {
               fontSize="xl"
               fontWeight="bold"
               lineHeight="short"
-              _hover={{ color: "purple.600" }}
+              _hover={{ color: "tomato" }}
               textDecoration="false"
             >
               <Link href={currentAlbum.url}>{currentAlbum.name}</Link>
             </Text>
-            <Text mt={2} fontSize="lg" fontWeight="semibold">
-              {currentAlbum.artist}
+            <Text
+              mt={2}
+              fontSize="lg"
+              fontWeight="semibold"
+              _hover={{ color: "tomato" }}
+            >
+              <Link onClick={() => searchSubmit()}> {currentAlbum.artist}</Link>
             </Text>
             <Flex mt={2} align="center">
               <Box as={MdPlayArrow} color="orange.400" />
@@ -237,7 +247,7 @@ function AlbumInfo() {
 
         {Array.isArray(currentAlbum.tracks) ? (
           <Box pb={10}>
-            <Box w="80%" mx="auto" mt={10}>
+            <Box w="80%" mx="auto">
               {" "}
               <Heading>tracklist</Heading>
             </Box>

@@ -3,7 +3,7 @@ import Album from "../Album/Album";
 import { useAuth } from "../../providers/authProvider";
 import { Grid, Box, Heading } from "@chakra-ui/react";
 import NextLink from "next/link";
-
+import albumCheck from "../../utils/albumCheck";
 function SavedAlbums() {
   const auth = useAuth();
 
@@ -132,6 +132,7 @@ function SavedAlbums() {
           <></>
         )}
       </Grid>
+
       {listening ? (
         <Box
           d="flex"
@@ -141,26 +142,24 @@ function SavedAlbums() {
           mt={2}
         >
           <Box>
-            <Heading mb={2} mt={2}>
-              listening
-            </Heading>
+            <Heading mb={2}>listening</Heading>
           </Box>
           <Box>
-            {listening.length > 5 ? (
+            {listened.length > 5 ? (
               <NextLink
                 href={{
-                  pathname: `/profile/${auth.userInfo.user_id}/listening`,
+                  pathname: `/profile/${auth.userInfo.user_id}/listened`,
                 }}
               >
                 Show All
               </NextLink>
             ) : (
-              <> </>
+              <></>
             )}
           </Box>
         </Box>
       ) : (
-        <> </>
+        <></>
       )}
       <Grid
         gridTemplateColumns={[
