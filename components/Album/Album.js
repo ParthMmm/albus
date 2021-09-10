@@ -32,8 +32,9 @@ function Album({ thing }) {
         dedupingInterval: 1000000,
       }
     );
+
     if (data?.error) {
-      return <div></div>;
+      return <></>;
     }
     if (data) {
       properties = {

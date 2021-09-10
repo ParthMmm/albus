@@ -28,7 +28,7 @@ function Listening({ pid }) {
       <Grid gridTemplateColumns={["repeat(5, 1fr)"]} gap={4}>
         {listening ? (
           listening.map((x) => (
-            <Box d="flex" flexDir="row" justifyContent="space-between">
+            <Box>
               <Album key={x._id} thing={x} />
             </Box>
           ))

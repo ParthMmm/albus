@@ -35,7 +35,6 @@ function Search() {
         justifyContent="center"
         alignItems="center"
         w={{ sm: "20rem", md: "36rem", lg: "48rem" }}
-        // mx={{ sm: 10, md: 10 }}
       >
         <FormControl>
           <InputGroup>
