@@ -24,9 +24,7 @@ Frontend is hosted on Vercel. Backend is dockerized on ECS which is running on a
 
 ## Todo
 
-- [ ] Improve loaders & data handling
-- [ ] Fix api issues
-- [ ] Choose profile image
+https://www.notion.so/parthm/c37b6529f9194dff8ada16e7a7a04158?v=140530fa9d1e41c08fd02b4dfc7c01a8
 
 
 
