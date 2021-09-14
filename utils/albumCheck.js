@@ -1,5 +1,9 @@
-const albumCheck = (albums) => {
+const albumImageCheck = (albums) => {
   return albums.filter((album) => album.image[2]["#text"].length > 0);
 };
 
-export default albumCheck;
+const albumMBIDCheck = (albums) => {
+  return albums.filter((album) => album.mbid?.length > 0);
+};
+
+export { albumImageCheck, albumMBIDCheck };

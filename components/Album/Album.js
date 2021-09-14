@@ -34,7 +34,7 @@ function Album({ thing }) {
     );
 
     if (data?.error) {
-      return <></>;
+      return null;
     }
     if (data) {
       properties = {
@@ -57,7 +57,7 @@ function Album({ thing }) {
     );
 
     if (data?.error) {
-      return <div></div>;
+      // return <></>;
     }
     if (data) {
       properties = {
