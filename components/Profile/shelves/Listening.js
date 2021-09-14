@@ -1,43 +1,86 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../../providers/authProvider";
-import { Grid, Box, Heading } from "@chakra-ui/react";
+import { Grid, Box, Heading, Skeleton } from "@chakra-ui/react";
 import Album from "../../Album/Album";
+import { useRouter } from "next/router";
+import { albumMBIDCheck } from "../../../utils/albumCheck";
 
-function Listening({ pid }) {
+function Listening() {
   const auth = useAuth();
+  const router = useRouter();
 
-  const [listening, setListening] = useState(null);
-
-  const fetchActions = () => {
-    if (auth.userInfo.actions?.listening) {
-      let res = auth.userInfo.actions.listening;
-      setListening(res.reverse());
-    }
-  };
-
+  let userID;
   useEffect(() => {
-    if (auth.userInfo) {
-      fetchActions();
-    } else if (pid) {
-      auth.fetchUserInfo(pid);
+    userID = router.query.pid;
+    console.log(userID);
+    if (userID) {
+      auth.fetchUserInfo(userID);
     }
-  }, []);
-  return (
-    <Box w="80%" h="50rem" mx="auto" mt={10}>
-      <Heading mb={2}>listening</Heading>
-      <Grid gridTemplateColumns={["repeat(5, 1fr)"]} gap={4}>
-        {listening ? (
-          listening.map((x) => (
-            <Box>
-              <Album key={x._id} thing={x} />
-            </Box>
-          ))
-        ) : (
-          <></>
-        )}
-      </Grid>
-    </Box>
-  );
+  }, [router.query]);
+
+  if (auth.loading) {
+    return (
+      <Box w="80%" h="50rem" mx="auto" mt={10}>
+        <Heading mb={2}>listening</Heading>
+        <Grid gridTemplateColumns={["repeat(4, 1fr)"]} gap={3}>
+          {[...Array(12)].map((_, i) => (
+            <Skeleton
+              startColor="orange.500"
+              endColor="purple.500"
+              height="25rem"
+              key={i}
+            />
+          ))}
+        </Grid>
+      </Box>
+    );
+  }
+  if (!auth.userInfo) {
+    return (
+      <Box>
+        <Skeleton
+          startColor="orange.500"
+          endColor="purple.500"
+          height="25rem"
+        />
+      </Box>
+    );
+  }
+  if (auth.userInfo && !auth.loading) {
+    let filtered = albumMBIDCheck(auth.userInfo.actions.listening);
+    return (
+      <Box w="80%" h="50rem" mx="auto" mt={10}>
+        <Heading mb={2}>listening</Heading>
+        <Grid gridTemplateColumns={["repeat(4, 1fr)"]} gap={3}>
+          {auth.userInfo.actions.listening ? (
+            filtered.map((x) => (
+              <Box>
+                <Album key={x._id} thing={x} />
+              </Box>
+            ))
+          ) : (
+            <></>
+          )}
+        </Grid>
+      </Box>
+    );
+  } else {
+    return (
+      <Box>
+        else
+        <Skeleton
+          startColor="orange.500"
+          endColor="purple.500"
+          height="25rem"
+        />
+        <Skeleton
+          startColor="orange.500"
+          endColor="purple.500"
+          height="25rem"
+        />
+      </Box>
+    );
+  }
 }
 
 export default Listening;

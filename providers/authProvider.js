@@ -3,6 +3,7 @@ import router from "next/router";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { useRouter } from "next/router";
+import useSWR from "swr";
 
 const AuthContext = createContext();
 
@@ -21,6 +22,9 @@ function useProvideAuth() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [userInfo, setUserInfo] = useState(null);
+  const [listened, setListened] = useState(null);
+  const [wantToListen, setWantToListen] = useState(null);
+  const [listening, setListening] = useState(null);
 
   const router = useRouter();
 
@@ -44,10 +48,17 @@ function useProvideAuth() {
   const handleUserInfo = async (rawUser) => {
     if (rawUser) {
       const user = await formatUserInfo(rawUser);
+
       setUserInfo(user);
+      setListened(user.actions.listened);
+      setWantToListen(user.actions.wantToListen);
+      setListening(user.actions.listening);
+
       setLoading(false);
+
       return user;
     }
+    return;
   };
 
   const readCookie = () => {
@@ -108,14 +119,16 @@ function useProvideAuth() {
 
   const fetchUserInfo = async (data) => {
     setLoading(true);
-
     const userID = { userID: data };
+
     const res = await axios.post(
       `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/fetchUserInfo`,
       userID
     );
     if (res.status === 200) {
       handleUserInfo(res.data);
+      setLoading(false);
+
       return;
     } else {
       setLoading(false);
@@ -137,6 +150,9 @@ function useProvideAuth() {
     login,
     register,
     logout,
+    listening,
+    setWantToListen,
+    listening,
   };
 }
 

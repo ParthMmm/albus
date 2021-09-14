@@ -24,7 +24,7 @@ function SavedAlbums() {
         setWantToListen(res.reverse());
       }
     }
-    if (auth.user.actions?.listening) {
+    if (auth.userInfo.actions?.listening) {
       let res = auth.userInfo.actions.listening;
       if (res.length > 0) {
         setListening(res.reverse());

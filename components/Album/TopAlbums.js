@@ -20,13 +20,20 @@ function TopAlbums() {
 
   if (error || isValidating) {
     return (
-      <Box>
+      <Grid
+        gridTemplateColumns={[
+          "repeat(2, 1fr)",
+          "repeat(2, 1fr)",
+          "repeat(5, 1fr)",
+        ]}
+        gap={4}
+      >
         <Skeleton
           startColor="orange.500"
           endColor="purple.500"
           height="25rem"
         />
-      </Box>
+      </Grid>
     );
   }
   if (data) {
