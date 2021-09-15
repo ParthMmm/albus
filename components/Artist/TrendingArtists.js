@@ -3,6 +3,7 @@ import useSWR from "swr";
 import { chartTopArtists } from "../../utils/fetch";
 import Artist from "./Artist";
 import { Box, Grid, Skeleton } from "@chakra-ui/react";
+
 function TrendingArtists() {
   const { data, error, isValidating } = useSWR(chartTopArtists, {
     revalidateOnFocus: false,

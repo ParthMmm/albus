@@ -13,6 +13,7 @@ function SearchResults({ albums }) {
         "repeat(4, 1fr)",
       ]}
       gap={4}
+      pb={10}
     >
       {albums.map((album) => (
         <>

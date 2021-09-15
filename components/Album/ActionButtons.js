@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Box, Center, Text, Button, ButtonGroup } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Text,
+  Button,
+  ButtonGroup,
+  Stack,
+} from "@chakra-ui/react";
 import { useAlbum } from "../../providers/albumProvider";
 import { useAction } from "../../providers/actionProvider";
 import { useAuth } from "../../providers/authProvider";
@@ -113,13 +120,9 @@ function ActionButtons() {
   return (
     <div>
       <Box w="80%" mx="auto" mt={10} mb={5} color="white">
-        <Box
-          d="flex"
-          justifyContent="center"
-          flexDir={{ base: "column", sm: "column", md: "row" }}
-        >
+        <Box d={{ base: "block", md: "flex" }} justifyContent="center">
           {auth.user ? (
-            <ButtonGroup>
+            <Stack direction={["column", "row"]} spacing={3}>
               {listened ? (
                 <Button
                   isLoading={action.loading}
@@ -217,7 +220,7 @@ function ActionButtons() {
                   </Text>
                 </Button>
               )}
-            </ButtonGroup>
+            </Stack>
           ) : (
             <ButtonGroup>
               <Button
