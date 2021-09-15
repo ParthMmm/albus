@@ -225,8 +225,8 @@ function AlbumInfo() {
             </Flex>
             <SimpleGrid
               mt={3}
-              columns={{ base: 3, sm: 4, md: 5, lg: 3 }}
-              row={{ base: 3, sm: 2, md: 1, lg: 4 }}
+              columns={{ base: 2, sm: 4, md: 5, lg: 3 }}
+              row={{ base: 4, sm: 2, md: 1, lg: 4 }}
               spacingY="2"
               spacingX="2"
             >
@@ -237,11 +237,14 @@ function AlbumInfo() {
               )}
             </SimpleGrid>
           </Box>
-
-          <Box>
-            {" "}
-            <Wiki summary={currentAlbum.wiki} />
-          </Box>
+          {currentAlbum.wiki ? (
+            <Box>
+              {" "}
+              <Wiki summary={currentAlbum.wiki} />
+            </Box>
+          ) : (
+            <></>
+          )}
         </Box>
         <ActionButtons name={currentAlbum.name} artist={currentAlbum.artist} />
 

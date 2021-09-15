@@ -2,10 +2,12 @@ import React from "react";
 import { Box, Text, Link, Flex, useColorMode } from "@chakra-ui/react";
 import { MdPeople, MdPlayArrow } from "react-icons/md";
 import NumberFormat from "react-number-format";
+import { colors } from "../../utils/randoms";
 
 function Track({ track }) {
   let trackItem;
   const { colorMode } = useColorMode();
+  let randomNum = Math.floor(Math.random() * colors.length);
 
   if (track) {
     trackItem = {
@@ -28,7 +30,8 @@ function Track({ track }) {
         h="150"
         borderRadius="sm"
         border="3px solid"
-        borderColor={colorMode === "dark" ? "purple.300" : "purple.600"}
+        // borderColor={colorMode === "dark" ? "purple.300" : "purple.600"}
+        borderColor={colors[randomNum]}
         rounded="xl"
       >
         {" "}

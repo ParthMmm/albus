@@ -7,16 +7,15 @@ function Tags(tag) {
   return (
     <div>
       <Tag
-        fontSize="md"
+        fontSize={{ base: "sm", md: "md" }}
         fontWeight="bold"
         bg="purple.600"
         color="white"
-        variant="solid"
         p={3}
         rounded="xl"
         _hover={{ bg: "tomato" }}
         textDecoration="none"
-        maxW={{ base: "100px", md: "120px" }}
+        maxW={{ base: "100px", md: "140px" }}
         minW={{ base: "60px", md: "100px" }}
         d="flex"
       >

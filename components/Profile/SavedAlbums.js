@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Album from "../Album/Album";
 import { useAuth } from "../../providers/authProvider";
-import { Grid, Box, Heading } from "@chakra-ui/react";
+import { Grid, Box, Heading, Text, Link } from "@chakra-ui/react";
 import NextLink from "next/link";
 import albumCheck from "../../utils/albumCheck";
 function SavedAlbums() {
@@ -58,13 +58,13 @@ function SavedAlbums() {
             <Heading mb={2}>listening</Heading>
           </Box>
           <Box>
-            {listened.length > 5 ? (
+            {listening.length > 5 ? (
               <NextLink
                 href={{
                   pathname: `/profile/${auth.userInfo.user_id}/listening`,
                 }}
               >
-                Show All
+                <Link _hover={{ color: "purple.300" }}> show all</Link>
               </NextLink>
             ) : (
               <></>
@@ -106,7 +106,7 @@ function SavedAlbums() {
                   pathname: `/profile/${auth.userInfo.user_id}/listened`,
                 }}
               >
-                Show All
+                <Link _hover={{ color: "purple.300" }}> show all</Link>
               </NextLink>
             ) : (
               <></>
@@ -150,7 +150,7 @@ function SavedAlbums() {
                   pathname: `/profile/${auth.userInfo.user_id}/wantToListen`,
                 }}
               >
-                Show All
+                <Link _hover={{ color: "purple.300" }}> show all</Link>
               </NextLink>
             ) : (
               <> </>
@@ -167,6 +167,7 @@ function SavedAlbums() {
           "repeat(5, 1fr)",
         ]}
         gap={3}
+        pb={10}
       >
         {wantToListen ? (
           wantToListen.slice(0, 5).map((x) => <Album key={x._id} thing={x} />)

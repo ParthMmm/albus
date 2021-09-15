@@ -5,7 +5,7 @@ import useSWR from "swr";
 import { albumSearchFetch } from "../../utils/fetch";
 import { Heading, Box, Skeleton, Grid, Text } from "@chakra-ui/react";
 import SearchResults from "./SearchResults";
-import albumImageCheck from "../../utils/albumCheck";
+import { albumImageCheck } from "../../utils/albumCheck";
 function SearchPage() {
   const router = useRouter();
   const { input } = router.query;
