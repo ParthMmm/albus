@@ -1,5 +1,13 @@
-import React, { useEffect } from "react";
-import { Box, Heading, Center, Text, Skeleton, Grid } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import {
+  Box,
+  Heading,
+  Center,
+  Text,
+  Skeleton,
+  Grid,
+  Button,
+} from "@chakra-ui/react";
 import { useAuth } from "../../providers/authProvider";
 import Avatar, { genConfig } from "react-nice-avatar";
 import SavedAlbums from "./SavedAlbums";
@@ -9,6 +17,7 @@ import ShareButton from "../Album/ShareButton";
 function Profile() {
   const auth = useAuth();
   const router = useRouter();
+  const [authorized, setAuthorized] = useState(false);
 
   let userID;
   useEffect(() => {
@@ -16,6 +25,10 @@ function Profile() {
     if (userID) {
       auth.fetchUserInfo(userID);
     }
+    if (auth.user?.user_id === userID) {
+      setAuthorized(true);
+    }
+    console.log(authorized);
   }, [router.query]);
 
   const config = {
@@ -110,7 +123,15 @@ function Profile() {
                 style={{ width: "8rem", height: "8rem" }}
                 {...config}
               ></Avatar>
-              <Heading mt={2}>{auth.userInfo?.username}</Heading>
+              <Heading mt={3}>{auth.userInfo?.username}</Heading>
+            </Box>
+            <Box d="flex" justifyContent="center" flexDir="column" mx="5">
+              {" "}
+              {authorized ? (
+                <Button>this is me</Button>
+              ) : (
+                <Button>follow</Button>
+              )}
             </Box>
 
             <Box d="flex" justifyContent="center" flexDir="column" mb={4}>
@@ -172,6 +193,13 @@ function Profile() {
         <Box>
           <SavedAlbums />
         </Box>
+      </>
+    );
+  }
+  if (auth.user.user_id === userID) {
+    return (
+      <>
+        <Text>its me</Text>
       </>
     );
   } else {

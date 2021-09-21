@@ -85,6 +85,7 @@ function useProvideAuth() {
 
     if (res.status === 201) {
       setError(res.data.msg);
+      console.log(res.data.msg);
     } else {
       handleUser(res.data);
       router.push("/");

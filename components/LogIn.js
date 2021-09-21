@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import {
+  FormErrorMessage,
   FormControl,
   Input,
   Button,
@@ -8,12 +9,15 @@ import {
   Heading,
   Text,
   useColorMode,
+  useToast,
 } from "@chakra-ui/react";
 import { useAuth } from "../providers/authProvider";
+import { BeatLoader } from "react-spinners";
 
 function LogIn() {
   const auth = useAuth();
   const { colorMode } = useColorMode();
+  const toast = useToast();
 
   const {
     register,
@@ -50,11 +54,11 @@ function LogIn() {
                   required: true,
                   minLength: {
                     value: 4,
-                    message: "Must be at least 4 characters",
+                    message: "username is at least 4 characters",
                   },
                   maxLength: {
                     value: 12,
-                    message: "Must be at most 12 characters",
+                    message: "username is at most 12 characters",
                   },
                 })}
                 borderRadius="sm"
@@ -63,6 +67,9 @@ function LogIn() {
                 focusBorderColor="purple.600"
                 rounded="xl"
               />
+              <FormErrorMessage mb={3}>
+                {errors.username && errors.username.message}
+              </FormErrorMessage>
             </FormControl>
 
             <FormControl isInvalid={errors.password}>
@@ -76,11 +83,11 @@ function LogIn() {
                   required: true,
                   minLength: {
                     value: 8,
-                    message: "Must be at least 8 characters",
+                    message: "password is at least 8 characters",
                   },
                   maxLength: {
                     value: 20,
-                    message: "Must be at most 20 characters",
+                    message: "password is at most 20 characters",
                   },
                 })}
                 borderRadius="sm"
@@ -89,10 +96,15 @@ function LogIn() {
                 focusBorderColor="purple.600"
                 rounded="xl"
               />
+              <FormErrorMessage mb={6}>
+                {errors.password && errors.password.message}
+              </FormErrorMessage>
             </FormControl>
+            {auth.error ? <Text color="red">{auth.error}</Text> : <></>}
 
             <Button
               isLoading={isSubmitting}
+              spinner={<BeatLoader size={8} color="white" />}
               type="submit"
               bg="tomato"
               rounded="xl"
@@ -100,6 +112,15 @@ function LogIn() {
               _hover={{ background: "purple.600" }}
               mt={5}
               mb="-6"
+              onClick={() =>
+                toast({
+                  title: "trying to log in . . .",
+                  status: "info",
+                  duration: 2000,
+                  isClosable: true,
+                  variant: "subtle",
+                })
+              }
             >
               <Text _hover={{ color: "tomato" }} color="white">
                 Submit
