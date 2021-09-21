@@ -146,11 +146,9 @@ function AlbumInfo() {
     return (
       <div>
         <Box
-          color={colorMode === "dark" ? "gray.600" : "0"}
           w="80%"
           mx="auto"
           mt={10}
-          color={colorMode === "dark" ? "white" : "black"}
           d="flex"
           flexGrow="1"
           justifyContent={{
