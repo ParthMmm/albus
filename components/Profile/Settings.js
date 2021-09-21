@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../../providers/authProvider";
 import { useForm } from "react-hook-form";
 import {
+  Center,
   FormControl,
   Input,
   Button,
@@ -16,11 +17,13 @@ import {
 import { useAction } from "../../providers/actionProvider";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
+import { BeatLoader } from "react-spinners";
 
 function Settings() {
   const auth = useAuth();
   const action = useAction();
   const router = useRouter();
+  const [authorized, setAuthorized] = useState(false);
 
   const { colorMode } = useColorMode();
   let userID;
@@ -38,7 +41,9 @@ function Settings() {
   };
 
   useEffect(() => {
-    auth.fetchUser();
+    if (auth.user) {
+      auth.fetchUser();
+    }
     if (auth.userInfo?.info) {
       reset({
         genre: auth.userInfo.info.genre,
@@ -49,9 +54,13 @@ function Settings() {
     userID = router.query.pid;
     if (userID) {
       auth.fetchUserInfo(userID);
+      if (auth.user?.user_id === userID) {
+        console.log(auth.user?.user_id, userID);
+        setAuthorized(true);
+      }
     }
   }, [router.query]);
-  if (auth.loading) {
+  if (auth.loading || !authorized) {
     <Flex
       height="60vh"
       alignItems="center"
@@ -62,7 +71,7 @@ function Settings() {
     </Flex>;
   }
 
-  if (auth.user) {
+  if (auth.user?.token && authorized) {
     return (
       <Box>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -157,6 +166,7 @@ function Settings() {
 
                 <Button
                   isLoading={isSubmitting}
+                  spinner={<BeatLoader size={8} color="white" />}
                   type="submit"
                   bg="tomato"
                   rounded="xl"
@@ -174,7 +184,14 @@ function Settings() {
       </Box>
     );
   } else {
-    return <div></div>;
+    return (
+      <Center>
+        <Flex flexDir="column" alignItems="center" justifyContent="center">
+          <Text mb={2}>you may not have permission to see this</Text>
+          <Button onClick={() => router.push("/")}>go home</Button>
+        </Flex>
+      </Center>
+    );
   }
 }
 

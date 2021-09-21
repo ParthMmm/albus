@@ -75,13 +75,15 @@ function useProvideAction() {
 
   const updateInfo = async (data) => {
     setLoading(true);
+    console.log(user.token);
     const res = await axios.post(
       `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/user/updateInfo`,
       data,
       { headers: { Authorization: `Bearer ${user.token}` } }
     );
     if (res.status === 200) {
-      router.push("/home");
+      router.push(`/profile/${user.user_id}`);
+      setLoading(false);
     }
   };
   return {

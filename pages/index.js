@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "../components/Header";
 import { Box, Heading, Center, Text } from "@chakra-ui/react";
 
@@ -8,6 +8,7 @@ import TrendingTracks from "../components/Tracks/TrendingTracks";
 import TopAlbums from "../components/Album/TopAlbums";
 
 import { colors, emojis } from "../utils/randoms";
+import Dashboard from "../components/Dashboard";
 function index() {
   const auth = useAuth();
 
@@ -18,30 +19,7 @@ function index() {
   return (
     <>
       <Header />
-      <Box
-        bg={{ dark: "white", light: "white" }}
-        w="80%"
-        h="30rem"
-        mx="auto"
-        mt={10}
-        color={{ dark: "white", light: "black" }}
-        rounded="lg"
-      >
-        <Center mb={8} h="20vh" w="40vh" p={5}>
-          {" "}
-          {auth.user?.username ? (
-            <>
-              <Heading color={colors[randomColor]} pr={2}>
-                hi, {auth.user.username}!{"  "}
-              </Heading>
-              {"  "}
-              <Heading as="span"> {emojis[randomNum]}</Heading>
-            </>
-          ) : (
-            <Heading>welcome to albus! {emojis[randomNum]} </Heading>
-          )}
-        </Center>
-      </Box>
+      <Dashboard />
 
       <Box w="80%" h="50rem" mx="auto" mt={10}>
         <Box mb={4}>

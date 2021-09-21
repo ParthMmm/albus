@@ -1,68 +1,34 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Heading,
   Center,
   Text,
   Skeleton,
-  useColorMode,
   Grid,
-  Link,
-  Flex,
-  Icon,
-  Divider,
+  Button,
 } from "@chakra-ui/react";
 import { useAuth } from "../../providers/authProvider";
 import Avatar, { genConfig } from "react-nice-avatar";
 import SavedAlbums from "./SavedAlbums";
 import { useRouter } from "next/router";
-import { FaSpotify, FaLastfmSquare, FaTwitter } from "react-icons/fa";
-import Album from "../Album/Album";
+import ShareButton from "../Album/ShareButton";
+
 function Profile() {
   const auth = useAuth();
   const router = useRouter();
-  const { colorMode } = useColorMode();
-  let lengthArr = [];
+  const [authorized, setAuthorized] = useState(false);
 
-  const latestActivity = () => {
-    if (auth.userInfo) {
-      lengthArr.push({
-        album: auth.userInfo?.actions?.listened?.at(0),
-        name: "listened",
-      });
-      lengthArr.push({
-        album: auth.userInfo?.actions?.listening?.at(0),
-        name: "listening",
-      });
-      lengthArr.push({
-        album: auth.userInfo?.actions?.wantToListen?.at(0),
-        name: "want to listen",
-      });
-      console.log(auth.userInfo);
-
-      console.log(lengthArr);
-    }
-  };
-
-  // if(randomNum === 1){
-  //   let album =
-  // }
-  // if(randomNum === 2){
-
-  // }if(randomNum === 3){
-
-  // }
   let userID;
-  let randomNum;
   useEffect(() => {
     userID = router.query.pid;
     if (userID) {
       auth.fetchUserInfo(userID);
     }
-    latestActivity();
-    randomNum = Math.floor(Math.random() * 3);
-    console.log(randomNum);
-    console.log(lengthArr[randomNum]);
+    if (auth.user?.user_id === userID) {
+      setAuthorized(true);
+    }
+    console.log(authorized);
   }, [router.query]);
 
   const config = {
@@ -137,7 +103,7 @@ function Profile() {
     return (
       <>
         <Box
-          w="25%"
+          w={{ base: "80%", md: "25%", lg: "25%" }}
           mx="auto"
           mt={10}
           color={{ dark: "white", light: "black" }}
@@ -157,7 +123,15 @@ function Profile() {
                 style={{ width: "8rem", height: "8rem" }}
                 {...config}
               ></Avatar>
-              <Heading mt={2}>{auth.userInfo?.username}</Heading>
+              <Heading mt={3}>{auth.userInfo?.username}</Heading>
+            </Box>
+            <Box d="flex" justifyContent="center" flexDir="column" mx="5">
+              {" "}
+              {authorized ? (
+                <Button>this is me</Button>
+              ) : (
+                <Button>follow</Button>
+              )}
             </Box>
 
             <Box d="flex" justifyContent="center" flexDir="column" mb={4}>
@@ -214,40 +188,18 @@ function Profile() {
               </Box>
             </Box>
           </Box>
-          {/* <Box pl="10" d="flex" mt={10} flexDir="column">
-            <Link
-              href="https://open.spotify.com/user/parth.m?si=3b7e9659fb724fce"
-              pb={3}
-            >
-              <Icon as={FaSpotify} w={6} h={6} color="#1ad860" />
-              <Text as="span" pl={2}>
-                {" "}
-                parth.m
-              </Text>
-            </Link>
-
-            <Link href="https://www.last.fm/user/Parth_M" pb={3}>
-              <Icon as={FaLastfmSquare} w={6} h={6} color="#ba0001" />
-              <Text as="span" pl={2}>
-                {" "}
-                Parth_M
-              </Text>
-            </Link>
-
-            <Link href="https://twitter.com/parthmmm">
-              <Icon as={FaTwitter} w={6} h={6} color="#1b9cef" />
-              <Text as="span" pl={2}>
-                {" "}
-                parthmmm
-              </Text>
-            </Link>
-          </Box> */}
         </Box>
 
         <Box>
-          {" "}
           <SavedAlbums />
         </Box>
+      </>
+    );
+  }
+  if (auth.user.user_id === userID) {
+    return (
+      <>
+        <Text>its me</Text>
       </>
     );
   } else {

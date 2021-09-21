@@ -58,7 +58,7 @@ function SavedAlbums() {
             <Heading mb={2}>listening</Heading>
           </Box>
           <Box>
-            {listening.length > 5 ? (
+            {listening.length > 4 ? (
               <NextLink
                 href={{
                   pathname: `/profile/${auth.userInfo.user_id}/listening`,
@@ -78,12 +78,12 @@ function SavedAlbums() {
         gridTemplateColumns={[
           "repeat(2, 1fr)",
           "repeat(2, 1fr)",
-          "repeat(5, 1fr)",
+          "repeat(4, 1fr)",
         ]}
         gap={3}
       >
         {listening ? (
-          listening.slice(0, 5).map((x) => <Album key={x._id} thing={x} />)
+          listening.slice(0, 4).map((x) => <Album key={x._id} thing={x} />)
         ) : (
           <></>
         )}
@@ -100,7 +100,7 @@ function SavedAlbums() {
             <Heading mb={2}>listened</Heading>
           </Box>
           <Box>
-            {listened.length > 5 ? (
+            {listened.length > 4 ? (
               <NextLink
                 href={{
                   pathname: `/profile/${auth.userInfo.user_id}/listened`,
@@ -120,12 +120,12 @@ function SavedAlbums() {
         gridTemplateColumns={[
           "repeat(2, 1fr)",
           "repeat(2, 1fr)",
-          "repeat(5, 1fr)",
+          "repeat(4, 1fr)",
         ]}
         gap={3}
       >
         {listened ? (
-          listened.slice(0, 5).map((x) => <Album key={x._id} thing={x} />)
+          listened.slice(0, 4).map((x) => <Album key={x._id} thing={x} />)
         ) : (
           <></>
         )}
@@ -144,7 +144,7 @@ function SavedAlbums() {
             </Heading>
           </Box>
           <Box>
-            {wantToListen.length > 5 ? (
+            {wantToListen.length > 4 ? (
               <NextLink
                 href={{
                   pathname: `/profile/${auth.userInfo.user_id}/wantToListen`,
@@ -164,13 +164,13 @@ function SavedAlbums() {
         gridTemplateColumns={[
           "repeat(2, 1fr)",
           "repeat(2, 1fr)",
-          "repeat(5, 1fr)",
+          "repeat(4, 1fr)",
         ]}
         gap={3}
         pb={10}
       >
         {wantToListen ? (
-          wantToListen.slice(0, 5).map((x) => <Album key={x._id} thing={x} />)
+          wantToListen.slice(0, 4).map((x) => <Album key={x._id} thing={x} />)
         ) : (
           <></>
         )}

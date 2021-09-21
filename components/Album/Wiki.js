@@ -4,10 +4,13 @@ import {
   Button,
   Text,
   Center,
+  Icon,
   useColorMode,
+  Spacer,
 } from "@chakra-ui/react";
 import React from "react";
-
+import { MdShare } from "react-icons/md";
+import ShareButton from "./ShareButton";
 function Wiki({ summary }) {
   const [show, setShow] = React.useState(false);
   const { colorMode } = useColorMode();
@@ -16,23 +19,15 @@ function Wiki({ summary }) {
   return (
     <>
       {summary ? (
-        <Box color={colorMode === "dark" ? "white" : "black"} s>
-          <Box flexShrink="1" m={4}>
-            <Collapse startingHeight="22rem" in={show} rounded="lg">
-              <Text
-                fontFamily="Helvetica"
-                fontSize="xl"
-                dangerouslySetInnerHTML={{ __html: summary }}
-              ></Text>
-            </Collapse>
-            <Box d="flex" flexDir="row-reverse">
-              {" "}
+        <Box color={colorMode === "dark" ? "white" : "black"}>
+          <Box d="flex" flexDir="row-reverse" m="4" justifyContent="flex-start">
+            {" "}
+            <Box pl="2">
               <Button
                 fontFamily="Helvetica"
                 fontWeight="semibold"
                 size="md"
                 onClick={handleToggle}
-                mt="1rem"
                 rounded="xl"
                 bg="gray.400"
               >
@@ -42,6 +37,16 @@ function Wiki({ summary }) {
                 </Text>
               </Button>
             </Box>
+            <ShareButton />
+          </Box>
+          <Box flexShrink="1" m={2}>
+            <Collapse startingHeight="22rem" in={show} rounded="lg">
+              <Text
+                fontFamily="Helvetica"
+                fontSize="xl"
+                dangerouslySetInnerHTML={{ __html: summary }}
+              ></Text>
+            </Collapse>
           </Box>
         </Box>
       ) : (

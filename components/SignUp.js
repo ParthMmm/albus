@@ -8,13 +8,17 @@ import {
   Flex,
   Heading,
   Text,
+  Box,
   useColorMode,
+  useToast,
 } from "@chakra-ui/react";
 import { useAuth } from "../providers/authProvider";
+import { BeatLoader } from "react-spinners";
 
 function SignUp() {
   const auth = useAuth();
   const { colorMode } = useColorMode();
+  const toast = useToast();
 
   const {
     register,
@@ -51,11 +55,11 @@ function SignUp() {
                   required: true,
                   minLength: {
                     value: 4,
-                    message: "Must be at least 4 characters",
+                    message: "username must be at least 4 characters",
                   },
                   maxLength: {
                     value: 12,
-                    message: "Must be at most 12 characters",
+                    message: "username must be at most 12 characters",
                   },
                 })}
                 borderRadius="sm"
@@ -67,7 +71,6 @@ function SignUp() {
               <FormErrorMessage mb={3}>
                 {errors.username && errors.username.message}
               </FormErrorMessage>
-              {auth.error ? <Text color="red">{auth.error}</Text> : <></>}
             </FormControl>
 
             <FormControl isInvalid={errors.password}>
@@ -81,11 +84,11 @@ function SignUp() {
                   required: true,
                   minLength: {
                     value: 8,
-                    message: "Must be at least 8 characters",
+                    message: "password must be at least 8 characters",
                   },
                   maxLength: {
                     value: 20,
-                    message: "Must be at most 20 characters",
+                    message: "password must be at most 20 characters",
                   },
                 })}
                 borderRadius="sm"
@@ -98,9 +101,11 @@ function SignUp() {
                 {errors.password && errors.password.message}
               </FormErrorMessage>
             </FormControl>
+            {auth.error ? <Text color="red">{auth.error}</Text> : <></>}
 
             <Button
               isLoading={isSubmitting}
+              spinner={<BeatLoader size={8} color="white" />}
               type="submit"
               bg="tomato"
               rounded="xl"
@@ -108,6 +113,15 @@ function SignUp() {
               _hover={{ background: "purple.600" }}
               mt={5}
               mb="-6"
+              onClick={() =>
+                toast({
+                  title: "creating account . . .",
+                  status: "info",
+                  duration: 2000,
+                  isClosable: true,
+                  variant: "subtle",
+                })
+              }
             >
               <Text _hover={{ color: "tomato" }} color="white">
                 Submit
