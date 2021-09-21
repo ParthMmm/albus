@@ -4,6 +4,7 @@ import { useAuth } from "../../providers/authProvider";
 import Avatar, { genConfig } from "react-nice-avatar";
 import SavedAlbums from "./SavedAlbums";
 import { useRouter } from "next/router";
+import ShareButton from "../Album/ShareButton";
 
 function Profile() {
   const auth = useAuth();

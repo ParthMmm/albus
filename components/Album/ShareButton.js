@@ -13,7 +13,7 @@ function ShareButton() {
   const { asPath } = useRouter();
 
   useEffect(() => {
-    setPath(asPath);
+    setPath(`${process.env.NEXT_PUBLIC_FRONTEND_SERVER}` + asPath);
   }, [asPath]);
 
   return (
@@ -23,7 +23,7 @@ function ShareButton() {
         fontWeight="semibold"
         size="md"
         rounded="xl"
-        bg="gray.400"
+        bg="0"
         onClick={() =>
           toast({
             title: "Copied to Clipboard",
@@ -34,7 +34,7 @@ function ShareButton() {
           })
         }
       >
-        <Icon as={MdShare} _hover={{ color: "tomato" }} />
+        <Icon as={MdShare} color="purple.500" _hover={{ color: "tomato" }} />
       </Button>
     </CopyToClipboard>
   );
