@@ -24,11 +24,10 @@ function Profile() {
     userID = router.query.pid;
     if (userID) {
       auth.fetchUserInfo(userID);
+      if (auth.user?.user_id === userID) {
+        setAuthorized(true);
+      }
     }
-    if (auth.user?.user_id === userID) {
-      setAuthorized(true);
-    }
-    console.log(authorized);
   }, [router.query]);
 
   const config = {
