@@ -19,13 +19,19 @@ function Dashboard() {
   let randomColor = Math.floor(Math.random() * colors.length);
   const [listening, setListening] = useState(null);
 
-  useEffect(() => {
-    if (auth.user?.user_id) {
-      auth.fetchUserInfo(auth.user.user_id);
-      setListening(auth.userInfo?.actions?.listening?.reverse());
-    }
+  const fetchActions = () => {
     if (auth.userInfo?.actions?.listening) {
-      setListening(auth.userInfo.actions.listening.reverse());
+      let res = auth.userInfo.actions.listening;
+      if (res.length > 0) {
+        setListening(res.reverse());
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (auth.user) {
+      auth.fetchUserInfo(auth.user.user_id);
+      fetchActions();
     }
   }, [auth.user]);
 
@@ -44,7 +50,7 @@ function Dashboard() {
     );
   }
 
-  if (auth.user && !auth.loading && auth.userInfo) {
+  if (auth.user && !auth.loading && !listening) {
     return (
       <Box
         w="80%"
