@@ -12,10 +12,6 @@ import Dashboard from "../components/Dashboard";
 function index() {
   const auth = useAuth();
 
-  let albums = [];
-  let randomNum = Math.floor(Math.random() * emojis.length);
-  let randomColor = Math.floor(Math.random() * colors.length);
-
   return (
     <>
       <Header />
