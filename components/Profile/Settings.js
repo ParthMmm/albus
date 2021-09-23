@@ -49,6 +49,8 @@ function Settings() {
         genre: auth.userInfo.info.genre,
         artist: auth.userInfo.info.artist,
         album: auth.userInfo.info.album,
+        spotify: auth.userInfo.info.spotify,
+        lastfm: auth.userInfo.info.lastfm,
       });
     }
     userID = router.query.pid;
@@ -81,7 +83,7 @@ function Settings() {
             justifyContent="center"
             direction="column"
           >
-            <Heading mb={8}>{auth.user.username}'s favorites</Heading>
+            <Heading mb={8}>{auth.user.username}'s profile</Heading>
 
             <Flex
               direction="column"
@@ -129,10 +131,45 @@ function Settings() {
 
                 <Input
                   mt={2}
+                  mb={6}
                   id="album"
                   placeholder="album"
                   variant="filled"
                   {...register("album")}
+                  borderRadius="sm"
+                  border={colorMode === "light" ? "2px solid" : "0px"}
+                  borderColor="gray.300"
+                  focusBorderColor="purple.600"
+                  rounded="xl"
+                />
+              </FormControl>
+
+              <FormControl>
+                <Heading fontSize="md">Spotify Username</Heading>
+
+                <Input
+                  mt={2}
+                  mb={6}
+                  id="spotify"
+                  placeholder="spotify username"
+                  variant="filled"
+                  {...register("spotify")}
+                  borderRadius="sm"
+                  border={colorMode === "light" ? "2px solid" : "0px"}
+                  borderColor="gray.300"
+                  focusBorderColor="purple.600"
+                  rounded="xl"
+                />
+              </FormControl>
+              <FormControl>
+                <Heading fontSize="md">Last.fm username</Heading>
+
+                <Input
+                  mt={2}
+                  id="lastfm"
+                  placeholder="last.fm username"
+                  variant="filled"
+                  {...register("lastfm")}
                   borderRadius="sm"
                   border={colorMode === "light" ? "2px solid" : "0px"}
                   borderColor="gray.300"

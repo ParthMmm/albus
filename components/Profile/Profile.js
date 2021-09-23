@@ -7,12 +7,14 @@ import {
   Skeleton,
   Grid,
   Button,
+  Icon,
 } from "@chakra-ui/react";
 import { useAuth } from "../../providers/authProvider";
 import Avatar, { genConfig } from "react-nice-avatar";
 import SavedAlbums from "./SavedAlbums";
 import { useRouter } from "next/router";
 import ShareButton from "../Album/ShareButton";
+import { FaSpotify, FaLastfm } from "react-icons/fa";
 
 function Profile() {
   const auth = useAuth();
@@ -102,7 +104,7 @@ function Profile() {
     return (
       <>
         <Box
-          w={{ base: "80%", md: "25%", lg: "25%" }}
+          w={{ base: "80%", md: "30%", lg: "40%" }}
           mx="auto"
           mt={10}
           color={{ dark: "white", light: "black" }}
@@ -117,72 +119,110 @@ function Profile() {
           rounded="xl"
         >
           <Box>
-            <Box p="5">
-              <Avatar
-                style={{ width: "8rem", height: "8rem" }}
-                {...config}
-              ></Avatar>
-              <Heading mt={3}>{auth.userInfo?.username}</Heading>
-            </Box>
-            <Box d="flex" justifyContent="center" flexDir="column" mx="5">
-              {" "}
-              {authorized ? (
-                <Button>this is me</Button>
-              ) : (
-                <Button>follow</Button>
-              )}
-            </Box>
-
-            <Box d="flex" justifyContent="center" flexDir="column" mb={4}>
-              <Box
-                d="flex"
-                flexDir="row"
-                justifyContent="center"
-                p={2}
-                alignItems="baseline"
-              >
-                <Box>
-                  <Text>#️⃣</Text>
-                </Box>
-
-                <Box>
-                  <Text as="span" p={2} fontWeight="bold" fontSize="lg">
-                    {auth.userInfo?.info?.genre}
-                  </Text>
+            <Box d="flex" justifyContent="space-between">
+              <Box my="5">
+                {" "}
+                <Avatar
+                  style={{ width: "8rem", height: "8rem" }}
+                  {...config}
+                ></Avatar>
+                <Heading mt={3} mb={2}>
+                  {auth.userInfo?.username}
+                </Heading>
+                <Box d="flex" alignItems="baseline" flexDir="row">
+                  {auth?.userInfo?.info?.spotify ? (
+                    <Icon as={FaSpotify} mr={2} color="#1DB954">
+                      spotify
+                    </Icon>
+                  ) : (
+                    <></>
+                  )}
+                  {auth?.userInfo?.info?.lastfm ? (
+                    <Icon as={FaLastfm} color="#c3000d ">
+                      last.fm
+                    </Icon>
+                  ) : (
+                    <></>
+                  )}
                 </Box>
               </Box>
               <Box
                 d="flex"
-                flexDir="row"
-                justifyContent="center"
-                p={2}
-                alignItems="baseline"
+                alignItems="flex-start"
+                flexDir="column"
+                justifyContent="space-evenly"
+                p={10}
               >
-                <Box>
-                  <Text>😎</Text>
-                </Box>
+                {auth.userInfo?.info?.genre ? (
+                  <Box
+                    d="flex"
+                    flexDir="row"
+                    justifyContent="center"
+                    alignItems="baseline"
+                  >
+                    <Box>
+                      <Text>#️⃣</Text>
+                    </Box>
 
-                <Box>
-                  <Text as="span" p={2} fontWeight="bold" fontSize="lg">
-                    {auth.userInfo?.info?.artist}
-                  </Text>
-                </Box>
+                    <Box>
+                      <Text as="span" mx="2" fontWeight="bold" fontSize="lg">
+                        {auth.userInfo?.info?.genre}
+                      </Text>
+                    </Box>
+                  </Box>
+                ) : (
+                  <></>
+                )}
+                {auth.userInfo?.info?.artist ? (
+                  <Box
+                    d="flex"
+                    flexDir="row"
+                    justifyContent="center"
+                    alignItems="baseline"
+                  >
+                    <Box>
+                      <Text>😎</Text>
+                    </Box>
+
+                    <Box>
+                      <Text as="span" mx="2" fontWeight="bold" fontSize="lg">
+                        {auth.userInfo?.info?.artist}
+                      </Text>
+                    </Box>
+                  </Box>
+                ) : (
+                  <></>
+                )}
+                {auth.userInfo?.info?.album ? (
+                  <Box
+                    d="flex"
+                    flexDir="row"
+                    justifyContent="center"
+                    alignItems="baseline"
+                  >
+                    <Box>
+                      <Text>💿</Text>
+                    </Box>
+
+                    <Box>
+                      <Text as="span" mx="2" fontWeight="bold" fontSize="lg">
+                        {auth.userInfo?.info?.album}
+                      </Text>
+                    </Box>
+                  </Box>
+                ) : (
+                  <></>
+                )}
               </Box>
-              <Box
-                d="flex"
-                flexDir="row"
-                justifyContent="center"
-                p={2}
-                alignItems="baseline"
-              >
-                <Box>
-                  <Text>💿</Text>
-                </Box>
 
+              <Box d="flex" mt="5">
+                {" "}
                 <Box>
-                  <Text as="span" m={2} fontWeight="bold" fontSize="lg">
-                    {auth.userInfo?.info?.album}
-                  </Text>
+                  {authorized ? (
+                    <Button>follow</Button>
+                  ) : (
+                    <Button>follow</Button>
+                  )}
                 </Box>
               </Box>
             </Box>
