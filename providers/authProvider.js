@@ -180,6 +180,8 @@ const formatUserInfo = async (data) => {
       genre: data.info.genre,
       artist: data.info.artist,
       album: data.info.album,
+      spotify: data.info.spotify,
+      lastfm: data.info.lastfm,
     },
   };
 };

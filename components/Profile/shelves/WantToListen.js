@@ -22,7 +22,15 @@ function WantToListen() {
     return (
       <Box w="80%" h="50rem" mx="auto" mt={10}>
         <Heading mb={2}>want to listen</Heading>
-        <Grid gridTemplateColumns={["repeat(4, 1fr)"]} gap={3}>
+        <Grid
+          gridTemplateColumns={[
+            "repeat(2, 1fr)",
+            "repeat(2, 1fr)",
+            "repeat(4, 1fr)",
+          ]}
+          gap={3}
+          pb={10}
+        >
           {[...Array(12)].map((_, i) => (
             <Skeleton
               startColor="orange.500"
@@ -51,7 +59,15 @@ function WantToListen() {
     return (
       <Box w="80%" h="50rem" mx="auto" mt={10}>
         <Heading mb={2}>want to listen</Heading>
-        <Grid gridTemplateColumns={["repeat(4, 1fr)"]} gap={3}>
+        <Grid
+          gridTemplateColumns={[
+            "repeat(2, 1fr)",
+            "repeat(2, 1fr)",
+            "repeat(4, 1fr)",
+          ]}
+          gap={3}
+          pb={10}
+        >
           {auth.userInfo.actions.wantToListen ? (
             filtered.map((x) => (
               <Box>
