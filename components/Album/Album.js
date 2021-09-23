@@ -84,7 +84,7 @@ function Album({ thing }) {
   }
 
   return (
-    <Box rounded="xl" shadow="md">
+    <Box rounded="xl" shadow="md" w={{ base: "18vh", md: "full" }}>
       {" "}
       <Box
         bg={colors[randomNum]}

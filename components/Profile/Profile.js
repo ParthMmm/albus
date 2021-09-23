@@ -8,13 +8,14 @@ import {
   Grid,
   Button,
   Icon,
+  Link,
 } from "@chakra-ui/react";
 import { useAuth } from "../../providers/authProvider";
 import Avatar, { genConfig } from "react-nice-avatar";
 import SavedAlbums from "./SavedAlbums";
 import { useRouter } from "next/router";
 import ShareButton from "../Album/ShareButton";
-import { FaSpotify, FaLastfm } from "react-icons/fa";
+import { FaSpotify, FaLastfmSquare } from "react-icons/fa";
 
 function Profile() {
   const auth = useAuth();
@@ -104,127 +105,141 @@ function Profile() {
     return (
       <>
         <Box
-          w={{ base: "80%", md: "30%", lg: "40%" }}
+          w={{ base: "80%", md: "40%", lg: "40%" }}
           mx="auto"
           mt={10}
           color={{ dark: "white", light: "black" }}
           d="flex"
           boxShadow="lg"
-          justifyContent="center"
-          alignItems="center"
-          flexDir="column"
+          flexFlow="column wrap"
           border="5px solid"
           borderColor="purple.600"
           borderRadius="sm"
           rounded="xl"
         >
-          <Box>
-            <Box d="flex" justifyContent="space-between">
-              <Box my="5">
-                {" "}
-                <Avatar
-                  style={{ width: "8rem", height: "8rem" }}
-                  {...config}
-                ></Avatar>
-                <Heading mt={3} mb={2}>
-                  {auth.userInfo?.username}
-                </Heading>
-                <Box d="flex" alignItems="baseline" flexDir="row">
-                  {auth?.userInfo?.info?.spotify ? (
-                    <Icon as={FaSpotify} mr={2} color="#1DB954">
-                      spotify
-                    </Icon>
-                  ) : (
-                    <></>
-                  )}
-                  {auth?.userInfo?.info?.lastfm ? (
-                    <Icon as={FaLastfm} color="#c3000d ">
-                      last.fm
-                    </Icon>
-                  ) : (
-                    <></>
-                  )}
+          <Box
+            d="flex"
+            justifyContent="space-evenly"
+            m="2"
+            flexDir={{ base: "row", sm: "row", md: "row", lg: "row" }}
+          >
+            <Box my="5">
+              {" "}
+              <Avatar
+                style={{ width: "8rem", height: "8rem" }}
+                {...config}
+              ></Avatar>
+              <Heading mt={3} mb={2}>
+                {auth.userInfo?.username}
+              </Heading>
+              <Box d="flex" alignItems="baseline" flexDir="row">
+                {auth?.userInfo?.info?.spotify ? (
+                  <Link
+                    href={`https://open.spotify.com/user/${auth?.userInfo?.info?.spotify}`}
+                  >
+                    {" "}
+                    <Icon as={FaSpotify} w={5} h={5} mr={2} color="#1DB954" />
+                  </Link>
+                ) : (
+                  <></>
+                )}
+                {auth?.userInfo?.info?.lastfm ? (
+                  <Link
+                    href={`https://www.last.fm/user/${auth?.userInfo?.info?.lastfm}`}
+                  >
+                    <Icon as={FaLastfmSquare} w={5} h={5} color="#c3000d " />
+                  </Link>
+                ) : (
+                  <></>
+                )}
+              </Box>
+            </Box>
+
+            <Box
+              d="flex"
+              alignItems="flex-start"
+              flexDir="column"
+              justifyContent="space-evenly"
+              p={10}
+            >
+              {auth.userInfo?.info?.genre ? (
+                <Box
+                  d="flex"
+                  flexDir="row"
+                  justifyContent="center"
+                  alignItems="baseline"
+                >
+                  <Box>
+                    <Text>#️⃣</Text>
+                  </Box>
+
+                  <Box>
+                    <Text as="span" mx="2" fontWeight="bold" fontSize="lg">
+                      {auth.userInfo?.info?.genre}
+                    </Text>
+                  </Box>
                 </Box>
-              </Box>
-              <Box
-                d="flex"
-                alignItems="flex-start"
-                flexDir="column"
-                justifyContent="space-evenly"
-                p={10}
-              >
-                {auth.userInfo?.info?.genre ? (
-                  <Box
-                    d="flex"
-                    flexDir="row"
-                    justifyContent="center"
-                    alignItems="baseline"
-                  >
-                    <Box>
-                      <Text>#️⃣</Text>
-                    </Box>
-
-                    <Box>
-                      <Text as="span" mx="2" fontWeight="bold" fontSize="lg">
-                        {auth.userInfo?.info?.genre}
-                      </Text>
-                    </Box>
+              ) : (
+                <></>
+              )}
+              {auth.userInfo?.info?.artist ? (
+                <Box
+                  d="flex"
+                  flexDir="row"
+                  justifyContent="center"
+                  alignItems="baseline"
+                >
+                  <Box>
+                    <Text>😎</Text>
                   </Box>
-                ) : (
-                  <></>
-                )}
-                {auth.userInfo?.info?.artist ? (
-                  <Box
-                    d="flex"
-                    flexDir="row"
-                    justifyContent="center"
-                    alignItems="baseline"
-                  >
-                    <Box>
-                      <Text>😎</Text>
-                    </Box>
 
-                    <Box>
-                      <Text as="span" mx="2" fontWeight="bold" fontSize="lg">
-                        {auth.userInfo?.info?.artist}
-                      </Text>
-                    </Box>
+                  <Box>
+                    <Text as="span" mx="2" fontWeight="bold" fontSize="lg">
+                      {auth.userInfo?.info?.artist}
+                    </Text>
                   </Box>
-                ) : (
-                  <></>
-                )}
-                {auth.userInfo?.info?.album ? (
-                  <Box
-                    d="flex"
-                    flexDir="row"
-                    justifyContent="center"
-                    alignItems="baseline"
-                  >
-                    <Box>
-                      <Text>💿</Text>
-                    </Box>
-
-                    <Box>
-                      <Text as="span" mx="2" fontWeight="bold" fontSize="lg">
-                        {auth.userInfo?.info?.album}
-                      </Text>
-                    </Box>
-                  </Box>
-                ) : (
-                  <></>
-                )}
-              </Box>
-
-              <Box d="flex" mt="5">
-                {" "}
-                <Box>
-                  {authorized ? (
-                    <Button>follow</Button>
-                  ) : (
-                    <Button>follow</Button>
-                  )}
                 </Box>
-              </Box>
+              ) : (
+                <></>
+              )}
+              {auth.userInfo?.info?.album ? (
+                <Box
+                  d="flex"
+                  flexDir="row"
+                  justifyContent="center"
+                  alignItems="baseline"
+                >
+                  <Box>
+                    <Text>💿</Text>
+                  </Box>
+
+                  <Box>
+                    <Text as="span" mx="2" fontWeight="bold" fontSize="lg">
+                      {auth.userInfo?.info?.album}
+                    </Text>
+                  </Box>
+                </Box>
+              ) : (
+                <></>
+              )}
+            </Box>
+            <Box
+              d="flex"
+              justifyContent="flex-end"
+              flexDir="row"
+              mt={5}
+              // mr={{ base: "0", md: "-4", lg: "-24" }}
+            >
+              {" "}
+              {authorized ? (
+                <Button>
+                  <Text _hover={{ color: "tomato" }}>follow</Text>
+                </Button>
+              ) : (
+                <Button>
+                  <Text _hover={{ color: "tomato" }}>follow</Text>
+                </Button>
+              )}
             </Box>
           </Box>
         </Box>
