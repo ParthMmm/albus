@@ -78,7 +78,7 @@ function Settings() {
       <Box>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Flex
-            height="60vh"
+            // height="60vh"
             alignItems="center"
             justifyContent="center"
             direction="column"

@@ -264,9 +264,7 @@ function Profile() {
           >
             {" "}
             {authorized ? (
-              <Button>
-                <Text _hover={{ color: "tomato" }}>follow</Text>
-              </Button>
+              <></>
             ) : (
               <Button>
                 <Text _hover={{ color: "tomato" }}>follow</Text>
