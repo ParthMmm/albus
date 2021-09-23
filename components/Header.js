@@ -49,7 +49,7 @@ function Header() {
         px={5}
         h="12vh"
       >
-        <Flex align="center" mr={2}>
+        <Flex alignItems="center" mr={2}>
           <NextLink href="/">
             <Heading
               fontSize={{ base: "24px", md: "36px", lg: "48px" }}

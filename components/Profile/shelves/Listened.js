@@ -21,7 +21,15 @@ function ListenedShelf() {
     return (
       <Box w="80%" h="50rem" mx="auto" mt={10}>
         <Heading mb={2}>listened</Heading>
-        <Grid gridTemplateColumns={["repeat(4, 1fr)"]} gap={3}>
+        <Grid
+          gridTemplateColumns={[
+            "repeat(2, 1fr)",
+            "repeat(2, 1fr)",
+            "repeat(4, 1fr)",
+          ]}
+          gap={3}
+          pb={10}
+        >
           {[...Array(12)].map((_, i) => (
             <Skeleton
               startColor="orange.500"
@@ -50,7 +58,15 @@ function ListenedShelf() {
     return (
       <Box w="80%" h="50rem" mx="auto" mt={10}>
         <Heading mb={2}>listened</Heading>
-        <Grid gridTemplateColumns={["repeat(4, 1fr)"]} gap={3}>
+        <Grid
+          gridTemplateColumns={[
+            "repeat(2, 1fr)",
+            "repeat(2, 1fr)",
+            "repeat(4, 1fr)",
+          ]}
+          gap={3}
+          pb={10}
+        >
           {auth.userInfo.actions.listened ? (
             filtered.map((x) => (
               <Box>
