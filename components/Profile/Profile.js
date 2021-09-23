@@ -9,6 +9,7 @@ import {
   Button,
   Icon,
   Link,
+  Image,
 } from "@chakra-ui/react";
 import { useAuth } from "../../providers/authProvider";
 import Avatar, { genConfig } from "react-nice-avatar";
@@ -105,34 +106,64 @@ function Profile() {
     return (
       <>
         <Box
+          // w={{ base: "80%", md: "40%", lg: "40%" }}
+          // mx="auto"
+          // mt={10}
+          // color={{ dark: "white", light: "black" }}
+          // d="flex"
+          // boxShadow="lg"
+          // // flexFlow="column"
+          // border="5px solid"
+          // borderColor="purple.600"
+          // borderRadius="sm"
+          // rounded="xl"
           w={{ base: "80%", md: "40%", lg: "40%" }}
           mx="auto"
           mt={10}
-          color={{ dark: "white", light: "black" }}
           d="flex"
-          boxShadow="lg"
-          flexFlow="column wrap"
+          flexGrow="1"
+          justifyContent={{
+            base: "center",
+            sm: "center",
+            md: "center",
+            lg: "space-between",
+          }}
           border="5px solid"
           borderColor="purple.600"
           borderRadius="sm"
           rounded="xl"
+          boxShadow="lg"
+          flexDir={{ base: "column", sm: "column", md: "column", lg: "row" }}
         >
           <Box
+            // d="flex"
+            // justifyContent="space-evenly"
+            // m="2"
+            // flexDir={{ base: "row", sm: "row", md: "row", lg: "row" }}
+            p="5"
             d="flex"
-            justifyContent="space-evenly"
-            m="2"
-            flexDir={{ base: "row", sm: "row", md: "row", lg: "row" }}
+            justifyContent={{ base: "center", sm: "center", md: "center" }}
+            alignItems="center"
+            // alignItems={{ base: "center", sm: "center", md: "center", lg: "" }}
+            flexShrink={{ sm: "1", md: "0" }}
+            flexFlow="column wrap"
+            // color={colorMode === "dark" ? "white" : "black"}
           >
-            <Box my="5">
+            <Box alignItems="center" justifyContent="center">
               {" "}
-              <Avatar
-                style={{ width: "8rem", height: "8rem" }}
-                {...config}
-              ></Avatar>
-              <Heading mt={3} mb={2}>
-                {auth.userInfo?.username}
-              </Heading>
-              <Box d="flex" alignItems="baseline" flexDir="row">
+              <Box mt={3} mb={2} justifyContent="center">
+                {" "}
+                <Heading>{auth.userInfo?.username}</Heading>
+              </Box>
+              <Box
+                d="flex"
+                flexDir="row"
+                justifyContent={{
+                  base: "center",
+                  sm: "center",
+                  md: "flex-start",
+                }}
+              >
                 {auth?.userInfo?.info?.spotify ? (
                   <Link
                     href={`https://open.spotify.com/user/${auth?.userInfo?.info?.spotify}`}
@@ -154,93 +185,93 @@ function Profile() {
                 )}
               </Box>
             </Box>
-
-            <Box
-              d="flex"
-              alignItems="flex-start"
-              flexDir="column"
-              justifyContent="space-evenly"
-              p={10}
-            >
-              {auth.userInfo?.info?.genre ? (
-                <Box
-                  d="flex"
-                  flexDir="row"
-                  justifyContent="center"
-                  alignItems="baseline"
-                >
-                  <Box>
-                    <Text>#️⃣</Text>
-                  </Box>
-
-                  <Box>
-                    <Text as="span" mx="2" fontWeight="bold" fontSize="lg">
-                      {auth.userInfo?.info?.genre}
-                    </Text>
-                  </Box>
+          </Box>
+          <Box
+            d="flex"
+            alignItems={{ base: "center", md: "baseline" }}
+            flexDir="column"
+            p={{ base: "1", md: "5" }}
+            justifyContent="space-evenly"
+            // p={{ base: "1", sm: "1", md: "1", lg: "10" }}
+          >
+            {auth.userInfo?.info?.genre ? (
+              <Box
+                d="flex"
+                flexDir="row"
+                justifyContent="center"
+                alignItems="baseline"
+              >
+                <Box>
+                  <Text>#️⃣</Text>
                 </Box>
-              ) : (
-                <></>
-              )}
-              {auth.userInfo?.info?.artist ? (
-                <Box
-                  d="flex"
-                  flexDir="row"
-                  justifyContent="center"
-                  alignItems="baseline"
-                >
-                  <Box>
-                    <Text>😎</Text>
-                  </Box>
 
-                  <Box>
-                    <Text as="span" mx="2" fontWeight="bold" fontSize="lg">
-                      {auth.userInfo?.info?.artist}
-                    </Text>
-                  </Box>
+                <Box>
+                  <Text as="span" mx="2" fontWeight="bold" fontSize="lg">
+                    {auth.userInfo?.info?.genre}
+                  </Text>
                 </Box>
-              ) : (
-                <></>
-              )}
-              {auth.userInfo?.info?.album ? (
-                <Box
-                  d="flex"
-                  flexDir="row"
-                  justifyContent="center"
-                  alignItems="baseline"
-                >
-                  <Box>
-                    <Text>💿</Text>
-                  </Box>
+              </Box>
+            ) : (
+              <></>
+            )}
+            {auth.userInfo?.info?.artist ? (
+              <Box
+                d="flex"
+                flexDir="row"
+                justifyContent="center"
+                alignItems="baseline"
+              >
+                <Box>
+                  <Text>😎</Text>
+                </Box>
 
-                  <Box>
-                    <Text as="span" mx="2" fontWeight="bold" fontSize="lg">
-                      {auth.userInfo?.info?.album}
-                    </Text>
-                  </Box>
+                <Box>
+                  <Text as="span" mx="2" fontWeight="bold" fontSize="lg">
+                    {auth.userInfo?.info?.artist}
+                  </Text>
                 </Box>
-              ) : (
-                <></>
-              )}
-            </Box>
-            <Box
-              d="flex"
-              justifyContent="flex-end"
-              flexDir="row"
-              mt={5}
-              // mr={{ base: "0", md: "-4", lg: "-24" }}
-            >
-              {" "}
-              {authorized ? (
-                <Button>
-                  <Text _hover={{ color: "tomato" }}>follow</Text>
-                </Button>
-              ) : (
-                <Button>
-                  <Text _hover={{ color: "tomato" }}>follow</Text>
-                </Button>
-              )}
-            </Box>
+              </Box>
+            ) : (
+              <></>
+            )}
+            {auth.userInfo?.info?.album ? (
+              <Box
+                d="flex"
+                flexDir="row"
+                justifyContent="center"
+                alignItems="baseline"
+              >
+                <Box>
+                  <Text>💿</Text>
+                </Box>
+
+                <Box>
+                  <Text as="span" mx="2" fontWeight="bold" fontSize="lg">
+                    {auth.userInfo?.info?.album}
+                  </Text>
+                </Box>
+              </Box>
+            ) : (
+              <></>
+            )}
+          </Box>
+          <Box
+            d="flex"
+            justifyContent={{ base: "center", md: "flex-end" }}
+            flexDir="row"
+            m={5}
+            // mr={{ base: "0", md: "-4", lg: "-24" }}
+          >
+            {" "}
+            {authorized ? (
+              <Button>
+                <Text _hover={{ color: "tomato" }}>follow</Text>
+              </Button>
+            ) : (
+              <Button>
+                <Text _hover={{ color: "tomato" }}>follow</Text>
+              </Button>
+            )}
           </Box>
         </Box>
 
