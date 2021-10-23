@@ -1,11 +1,13 @@
 import React from "react";
-import { Box, Text, Image, Link, useColorMode } from "@chakra-ui/react";
+import { Box, Text, Link, useColorMode } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useAlbum } from "../../providers/albumProvider";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import { albumInfoFetch, albumSearchFetch } from "../../utils/fetch";
 import { colors } from "../../utils/randoms";
+import Image from "next/image";
+
 function Album({ thing }) {
   const album = useAlbum();
   const router = useRouter();
@@ -99,7 +101,8 @@ function Album({ thing }) {
         <Image
           src={properties.imageUrl}
           alt="Album Cover"
-          objectFit="contain"
+          width={250}
+          height={250}
           fallbackSrc="https://via.placeholder.com/174"
         />
       </Box>

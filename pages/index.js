@@ -6,6 +6,7 @@ import { useAuth } from "../providers/authProvider";
 import TrendingArtists from "../components/Artist/TrendingArtists";
 import TrendingTracks from "../components/Tracks/TrendingTracks";
 import TopAlbums from "../components/Album/TopAlbums";
+import Head from "next/head";
 
 import { colors, emojis } from "../utils/randoms";
 import Dashboard from "../components/Dashboard";
@@ -14,6 +15,11 @@ function index() {
 
   return (
     <>
+      <Head>
+        <title>albus</title>
+        <meta name="description" content="albus" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <Header />
       <Dashboard />
 
