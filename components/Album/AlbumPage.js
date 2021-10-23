@@ -3,7 +3,6 @@ import {
   Heading,
   Flex,
   Text,
-  Image,
   Skeleton,
   Stack,
   Link,
@@ -28,6 +27,7 @@ import ActionButtons from "./ActionButtons";
 import Tags from "./Tags";
 import Tracklist from "./Tracklist";
 import Wiki from "./Wiki";
+import Image from "next/image";
 
 function AlbumInfo() {
   const router = useRouter();
@@ -173,8 +173,8 @@ function AlbumInfo() {
             color={colorMode === "dark" ? "white" : "black"}
           >
             <Image
-              borderRadius="full"
-              rounded="lg"
+              width={350}
+              height={350}
               src={currentAlbum.image}
               objectFit="contain"
             />
