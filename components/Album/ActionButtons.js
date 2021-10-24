@@ -122,7 +122,7 @@ function ActionButtons() {
       <Box w="80%" mx="auto" mt={10} mb={5} color="white">
         <Box d={{ base: "block", md: "flex" }} justifyContent="center">
           {auth.user ? (
-            <Stack direction={["column", "row"]} spacing={3}>
+            <Stack direction={["column", "column", "row"]} spacing={3}>
               {listened ? (
                 <Button
                   isLoading={action.loading}
@@ -222,7 +222,7 @@ function ActionButtons() {
               )}
             </Stack>
           ) : (
-            <ButtonGroup>
+            <Stack direction={["column", "column", "row"]} spacing={3}>
               <Button
                 onClick={() =>
                   toast({
@@ -281,7 +281,7 @@ function ActionButtons() {
                   listening
                 </Text>
               </Button>
-            </ButtonGroup>
+            </Stack>
           )}
         </Box>
       </Box>
