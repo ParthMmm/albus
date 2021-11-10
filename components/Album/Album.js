@@ -59,7 +59,7 @@ function Album({ thing }) {
     );
 
     if (data?.error) {
-      // return <></>;
+      return null;
     }
     if (data) {
       properties = {
@@ -85,6 +85,9 @@ function Album({ thing }) {
     };
   }
 
+  if (properties.imageUrl === undefined) {
+    return null;
+  }
   return (
     <Box rounded="xl" shadow="md" w={{ base: "18vh", md: "full" }}>
       {" "}
@@ -103,7 +106,7 @@ function Album({ thing }) {
           alt="Album Cover"
           width={250}
           height={250}
-          fallbackSrc="https://via.placeholder.com/174"
+          // fallbackSrc="https://via.placeholder.com/174"
         />
       </Box>
       <Box
