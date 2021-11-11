@@ -18,11 +18,14 @@ export function useProfile() {
 }
 
 function useProvideProfile() {
-  const [profile, setProfile] = useState(null);
+  const [profileInfo, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [listened, setListened] = useState(null);
+  const [wantToListen, setWantToListen] = useState(null);
+  const [listening, setListening] = useState(null);
 
-  const handleProfileInfo = async (rawUser) => {
+  const handleProfileInfo = async (rawProfile) => {
     if (rawProfile) {
       const profile = await formatProfileInfo(rawProfile);
 
@@ -33,7 +36,7 @@ function useProvideProfile() {
 
       setLoading(false);
 
-      return user;
+      return profile;
     }
     return;
   };
@@ -57,7 +60,7 @@ function useProvideProfile() {
   };
 
   return {
-    profile,
+    profileInfo,
     loading,
     error,
     fetchProfileInfo,

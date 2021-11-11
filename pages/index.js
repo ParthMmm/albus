@@ -13,6 +13,8 @@ import Dashboard from "../components/Dashboard";
 function index() {
   const auth = useAuth();
 
+  // auth.readCookie();
+
   return (
     <>
       <Head>
