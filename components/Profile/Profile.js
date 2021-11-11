@@ -17,6 +17,7 @@ import SavedAlbums from "./SavedAlbums";
 import { useRouter } from "next/router";
 import ShareButton from "../Album/ShareButton";
 import { FaSpotify, FaLastfmSquare } from "react-icons/fa";
+import PersonalProfile from "./PersonalProfile";
 
 function Profile() {
   const auth = useAuth();
@@ -52,6 +53,12 @@ function Profile() {
     bgColor: "#FC909F",
   };
   const myConfig = genConfig(config);
+
+  if (authorized) {
+    return <PersonalProfile />;
+  } else {
+    return <OtherProfile />;
+  }
 
   if (auth.loading) {
     return (
