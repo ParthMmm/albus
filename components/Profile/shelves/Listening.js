@@ -14,7 +14,7 @@ function Listening() {
     userID = router.query.pid;
     console.log(userID);
     if (userID) {
-      auth.fetchUserInfo(userID);
+      // auth.fetchUserInfo(userID);
     }
   }, [router.query]);
 

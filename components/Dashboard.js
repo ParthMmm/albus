@@ -20,8 +20,8 @@ function Dashboard() {
   const [listening, setListening] = useState(null);
 
   const fetchActions = () => {
-    if (auth.user?.actions?.listening) {
-      let res = auth.user.actions.listening;
+    if (auth.userInfo?.actions?.listening) {
+      let res = auth.userInfo.actions.listening;
       if (res.length > 0) {
         setListening(res.reverse());
       }
@@ -31,8 +31,7 @@ function Dashboard() {
 
   useEffect(() => {
     if (auth.user) {
-      console.log("ding");
-      auth.fetchUser();
+      auth.fetchUserInfo(auth.user.user_id);
       fetchActions();
     }
   }, [auth.user]);

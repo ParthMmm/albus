@@ -28,32 +28,33 @@ function useProvideAuth() {
 
   const router = useRouter();
 
-  // const handleUser = async (rawUser) => {
-  //   if (rawUser) {
-  //     const user = await formatUser(rawUser);
-
-  //     const userString = JSON.stringify(user);
-  //     console.log(userString);
-  //     Cookies.set("albus-auth", userString, { expires: 7 });
-  //     setUser(user);
-  //     return user;
-  //   } else {
-  //     setUser(false);
-  //     Cookies.remove("albus-auth");
-  //     setLoading(false);
-  //     return false;
-  //   }
-  // };
-
-  const handleUserInfo = async (rawUser) => {
+  const handleUser = async (rawUser) => {
     if (rawUser) {
-      console.log(rawUser);
-      const user = await formatUserInfo(rawUser);
+      const user = await formatUser(rawUser);
       const userString = JSON.stringify(user);
-      console.log(userString);
+
       Cookies.set("albus-auth", userString, { expires: 7 });
 
       setUser(user);
+
+      return user;
+    } else {
+      setUser(false);
+
+      Cookies.remove("albus-auth");
+
+      setLoading(false);
+      return false;
+    }
+  };
+
+  const handleUserInfo = async (rawUser) => {
+    if (rawUser) {
+      const user = await formatUserInfo(rawUser);
+      const userString = JSON.stringify(user);
+
+      Cookies.set("albus-userInfo", userString, { expires: 7 });
+
       setUserInfo(user);
       setListened(user.actions.listened);
       setWantToListen(user.actions.wantToListen);
@@ -73,14 +74,19 @@ function useProvideAuth() {
 
   const readCookie = () => {
     const authState = Cookies.get("albus-auth");
+    const infoState = Cookies.get("albus-userInfo");
     if (authState) {
       setLoading(false);
       const parsedUser = JSON.parse(authState);
-      console.log(parsedUser);
       setUser(parsedUser);
     } else {
       setLoading(false);
       setUser(false);
+    }
+
+    if (infoState) {
+      const parsedInfo = JSON.parse(infoState);
+      setUserInfo(parsedInfo);
     }
   };
   useEffect(() => {
@@ -96,7 +102,6 @@ function useProvideAuth() {
 
     if (res.status === 201) {
       setError(res.data.msg);
-      console.log(res.data.msg);
     } else {
       handleUserInfo(res.data);
       router.push("/");
@@ -109,11 +114,10 @@ function useProvideAuth() {
       `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/login`,
       data
     );
-    if (res.status === 201) {
+    if (res.status === 401) {
       setError(res.data.msg);
     } else {
-      handleUserInfo(res.data);
-
+      handleUser(res.data);
       router.push("/");
     }
   };
@@ -124,8 +128,14 @@ function useProvideAuth() {
       `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/user/fetchUser`,
       { headers: { Authorization: `Bearer ${user.token}` } }
     );
-    user.actions = res.data.actions;
-    user.info = res.data.info;
+
+    if (res.status === 200) {
+      handleUser(res.data);
+      setLoading(false);
+
+      return;
+    }
+
     setLoading(false);
   };
 
@@ -169,20 +179,17 @@ function useProvideAuth() {
   };
 }
 
-// const formatUser = async (data) => {
-//   return {
-//     user_id: data.id,
-//     token: data.token,
-//     username: data.username,
-//     actions: {},
-//     info: {},
-//   };
-// };
+const formatUser = async (data) => {
+  return {
+    user_id: data.id,
+    token: data.token,
+    username: data.username,
+  };
+};
 
 const formatUserInfo = async (data) => {
   return {
     user_id: data._id,
-    token: data.token,
     username: data.username,
     actions: {
       listened: data.listened,

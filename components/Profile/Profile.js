@@ -44,6 +44,12 @@ function Profile() {
   };
   const myConfig = genConfig(config);
 
+  useEffect(() => {
+    if (auth.user) {
+      setAuthorized(true);
+    }
+  }, [auth.user]);
+
   if (authorized) {
     return <PersonalProfile />;
   } else {

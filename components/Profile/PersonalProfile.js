@@ -240,9 +240,7 @@ function PersonalProfile() {
           ></Box>
         </Box>
 
-        <Box>
-          <SavedAlbums profile={auth.userInfo} />
-        </Box>
+        <Box>{/* <SavedAlbums profile={auth.userInfo} /> */}</Box>
       </>
     );
   }

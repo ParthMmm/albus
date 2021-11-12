@@ -13,7 +13,7 @@ function ListenedShelf() {
   useEffect(() => {
     userID = router.query.pid;
     if (userID) {
-      auth.fetchUserInfo(userID);
+      // auth.fetchUserInfo(userID);
     }
   }, [router.query]);
 

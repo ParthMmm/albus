@@ -55,7 +55,7 @@ function Settings() {
     }
     userID = router.query.pid;
     if (userID) {
-      auth.fetchUserInfo(userID);
+      // auth.fetchUserInfo(userID);
       if (auth.user?.user_id === userID) {
         console.log(auth.user?.user_id, userID);
         setAuthorized(true);
