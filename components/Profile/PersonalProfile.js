@@ -24,9 +24,7 @@ function PersonalProfile() {
   useEffect(() => {
     userID = router.query.pid;
     if (userID) {
-      auth.fetchUser();
-
-      console.log(userID);
+      auth.fetchUserInfo(auth.user.user_id);
     }
   }, [router.query]);
   if (auth.loading) {
@@ -240,7 +238,9 @@ function PersonalProfile() {
           ></Box>
         </Box>
 
-        <Box>{/* <SavedAlbums profile={auth.userInfo} /> */}</Box>
+        <Box>
+          <SavedAlbums profile={auth.userInfo} />
+        </Box>
       </>
     );
   }

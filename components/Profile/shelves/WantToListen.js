@@ -1,24 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../../../providers/authProvider";
+import { useProfile } from "../../../providers/profileProvider";
 import { Grid, Box, Heading, Skeleton } from "@chakra-ui/react";
 import Album from "../../Album/Album";
 import { useRouter } from "next/router";
 import { albumMBIDCheck } from "../../../utils/albumCheck";
 
 function WantToListen() {
-  const auth = useAuth();
+  const profile = useProfile();
   const router = useRouter();
 
   let userID;
   useEffect(() => {
     userID = router.query.pid;
-    console.log(userID);
     if (userID) {
-      // auth.fetchUserInfo(userID);
+      profile.fetchProfileInfo(userID);
     }
   }, [router.query]);
 
-  if (auth.loading) {
+  if (profile.loading) {
     return (
       <Box w="80%" h="50rem" mx="auto" mt={10}>
         <Heading mb={2}>want to listen</Heading>
@@ -43,7 +42,7 @@ function WantToListen() {
       </Box>
     );
   }
-  if (!auth.userInfo) {
+  if (!profile.profileInfo) {
     return (
       <Box>
         <Skeleton
@@ -54,8 +53,8 @@ function WantToListen() {
       </Box>
     );
   }
-  if (auth.userInfo && !auth.loading) {
-    let filtered = albumMBIDCheck(auth.userInfo.actions.wantToListen);
+  if (profile.profileInfo && !profile.loading) {
+    let filtered = albumMBIDCheck(profile.profileInfo.actions.wantToListen);
     return (
       <Box w="80%" h="50rem" mx="auto" mt={10}>
         <Heading mb={2}>want to listen</Heading>
@@ -68,7 +67,7 @@ function WantToListen() {
           gap={3}
           pb={10}
         >
-          {auth.userInfo.actions.wantToListen ? (
+          {profile.profileInfo.actions.wantToListen ? (
             filtered.map((x) => (
               <Box>
                 <Album key={x._id} thing={x} />

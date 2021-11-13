@@ -30,14 +30,13 @@ function OtherProfile() {
     userID = router.query.pid;
 
     if (userID) {
-      // profile.fetchProfileInfo(userID);
+      profile.fetchProfileInfo(userID);
     }
     if (auth.user) {
       setAuthorized(true);
     }
   }, [router.query]);
-  console.log(profile.profileInfo);
-  console.log(userID);
+
   if (profile.loading) {
     return (
       <>
@@ -258,7 +257,9 @@ function OtherProfile() {
           </Box>
         </Box>
 
-        <Box>{/* <SavedAlbums profile={profile.profileInfo} /> */}</Box>
+        <Box>
+          <SavedAlbums profile={profile.profileInfo} />
+        </Box>
       </>
     );
   }

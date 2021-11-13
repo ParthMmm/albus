@@ -37,6 +37,8 @@ function useProvideAuth() {
 
       setUser(user);
 
+      fetchUserInfo(user.user_id);
+
       return user;
     } else {
       setUser(false);
@@ -44,6 +46,7 @@ function useProvideAuth() {
       Cookies.remove("albus-auth");
 
       setLoading(false);
+      router.push("/");
       return false;
     }
   };
@@ -65,8 +68,9 @@ function useProvideAuth() {
       return user;
     } else {
       setUser(false);
-      Cookies.remove("albus-auth");
+      Cookies.remove("albus-userInfo");
       setLoading(false);
+
       return false;
     }
     return;
@@ -159,7 +163,7 @@ function useProvideAuth() {
 
   const logout = () => {
     handleUserInfo(false);
-    router.push("/");
+    handleUser(false);
   };
 
   return {

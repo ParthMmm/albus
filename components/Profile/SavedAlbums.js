@@ -7,8 +7,6 @@ import albumCheck from "../../utils/albumCheck";
 function SavedAlbums({ profile }) {
   const auth = useAuth();
 
-  console.log(profile);
-
   const [listened, setListened] = useState(null);
   const [wantToListen, setWantToListen] = useState(null);
   const [listening, setListening] = useState(null);
@@ -17,19 +15,23 @@ function SavedAlbums({ profile }) {
     if (profile.actions?.listened) {
       let res = profile.actions.listened;
       if (res.length > 0) {
-        setListened(res.reverse());
+        const reversed = res.reverse();
+        setListened(reversed);
       }
     }
     if (profile.actions?.wantToListen) {
       let res = profile.actions.wantToListen;
       if (res.length > 0) {
-        setWantToListen(res.reverse());
+        const reversed = res.reverse();
+        setWantToListen(reversed);
       }
     }
     if (profile.actions?.listening) {
       let res = profile.actions.listening;
       if (res.length > 0) {
-        setListening(res.reverse());
+        const reversed = res.reverse();
+
+        setListening(reversed);
       }
     }
   };

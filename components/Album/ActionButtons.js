@@ -111,7 +111,7 @@ function ActionButtons() {
     }
 
     if (auth.user) {
-      auth.fetchUser();
+      auth.fetchUserInfo(auth.user.user_id);
     }
     if (!auth.loading) {
       checkActions();
