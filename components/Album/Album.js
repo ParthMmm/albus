@@ -106,6 +106,8 @@ function Album({ thing }) {
           alt="Album Cover"
           width={250}
           height={250}
+          quality="100"
+          layout="intrinsic"
           // fallbackSrc="https://via.placeholder.com/174"
         />
       </Box>

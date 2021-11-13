@@ -42,7 +42,7 @@ function Settings() {
 
   useEffect(() => {
     if (auth.user) {
-      auth.fetchUser();
+      auth.fetchUserInfo(auth.user.user_id);
     }
     if (auth.userInfo?.info) {
       reset({
@@ -55,9 +55,7 @@ function Settings() {
     }
     userID = router.query.pid;
     if (userID) {
-      auth.fetchUserInfo(userID);
       if (auth.user?.user_id === userID) {
-        console.log(auth.user?.user_id, userID);
         setAuthorized(true);
       }
     }

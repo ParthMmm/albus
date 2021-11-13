@@ -4,7 +4,7 @@ import { useAuth } from "../../providers/authProvider";
 import { Grid, Box, Heading, Text, Link } from "@chakra-ui/react";
 import NextLink from "next/link";
 import albumCheck from "../../utils/albumCheck";
-function SavedAlbums() {
+function SavedAlbums({ profile }) {
   const auth = useAuth();
 
   const [listened, setListened] = useState(null);
@@ -12,28 +12,32 @@ function SavedAlbums() {
   const [listening, setListening] = useState(null);
 
   const fetchActions = () => {
-    if (auth.userInfo.actions?.listened) {
-      let res = auth.userInfo.actions.listened;
+    if (profile.actions?.listened) {
+      let res = profile.actions.listened;
       if (res.length > 0) {
-        setListened(res.reverse());
+        const reversed = res.reverse();
+        setListened(reversed);
       }
     }
-    if (auth.userInfo.actions?.wantToListen) {
-      let res = auth.userInfo.actions.wantToListen;
+    if (profile.actions?.wantToListen) {
+      let res = profile.actions.wantToListen;
       if (res.length > 0) {
-        setWantToListen(res.reverse());
+        const reversed = res.reverse();
+        setWantToListen(reversed);
       }
     }
-    if (auth.userInfo.actions?.listening) {
-      let res = auth.userInfo.actions.listening;
+    if (profile.actions?.listening) {
+      let res = profile.actions.listening;
       if (res.length > 0) {
-        setListening(res.reverse());
+        const reversed = res.reverse();
+
+        setListening(reversed);
       }
     }
   };
 
   useEffect(() => {
-    if (auth.userInfo) {
+    if (profile) {
       fetchActions();
     }
   });
@@ -61,7 +65,7 @@ function SavedAlbums() {
             {listening.length > 4 ? (
               <NextLink
                 href={{
-                  pathname: `/profile/${auth.userInfo.user_id}/listening`,
+                  pathname: `/profile/${profile.user_id}/listening`,
                 }}
               >
                 <Link _hover={{ color: "purple.300" }}> show all</Link>
@@ -103,7 +107,7 @@ function SavedAlbums() {
             {listened.length > 4 ? (
               <NextLink
                 href={{
-                  pathname: `/profile/${auth.userInfo.user_id}/listened`,
+                  pathname: `/profile/${profile.user_id}/listened`,
                 }}
               >
                 <Link _hover={{ color: "purple.300" }}> show all</Link>
@@ -147,7 +151,7 @@ function SavedAlbums() {
             {wantToListen.length > 4 ? (
               <NextLink
                 href={{
-                  pathname: `/profile/${auth.userInfo.user_id}/wantToListen`,
+                  pathname: `/profile/${profile.user_id}/wantToListen`,
                 }}
               >
                 <Link _hover={{ color: "purple.300" }}> show all</Link>

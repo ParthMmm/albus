@@ -23,7 +23,9 @@ function Dashboard() {
     if (auth.userInfo?.actions?.listening) {
       let res = auth.userInfo.actions.listening;
       if (res.length > 0) {
-        setListening(res.reverse());
+        const reversed = res.reverse();
+
+        setListening(reversed);
       }
     }
   };
@@ -33,7 +35,7 @@ function Dashboard() {
       auth.fetchUserInfo(auth.user.user_id);
       fetchActions();
     }
-  }, [auth.user]);
+  }, []);
 
   if (auth.loading) {
     return (

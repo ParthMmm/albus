@@ -31,16 +31,22 @@ function useProvideAuth() {
   const handleUser = async (rawUser) => {
     if (rawUser) {
       const user = await formatUser(rawUser);
-
       const userString = JSON.stringify(user);
 
       Cookies.set("albus-auth", userString, { expires: 7 });
+
       setUser(user);
+
+      fetchUserInfo(user.user_id);
+
       return user;
     } else {
       setUser(false);
+
       Cookies.remove("albus-auth");
+
       setLoading(false);
+      router.push("/");
       return false;
     }
   };
@@ -48,6 +54,9 @@ function useProvideAuth() {
   const handleUserInfo = async (rawUser) => {
     if (rawUser) {
       const user = await formatUserInfo(rawUser);
+      const userString = JSON.stringify(user);
+
+      Cookies.set("albus-userInfo", userString, { expires: 7 });
 
       setUserInfo(user);
       setListened(user.actions.listened);
@@ -57,12 +66,19 @@ function useProvideAuth() {
       setLoading(false);
 
       return user;
+    } else {
+      setUser(false);
+      Cookies.remove("albus-userInfo");
+      setLoading(false);
+
+      return false;
     }
     return;
   };
 
   const readCookie = () => {
     const authState = Cookies.get("albus-auth");
+    const infoState = Cookies.get("albus-userInfo");
     if (authState) {
       setLoading(false);
       const parsedUser = JSON.parse(authState);
@@ -70,6 +86,11 @@ function useProvideAuth() {
     } else {
       setLoading(false);
       setUser(false);
+    }
+
+    if (infoState) {
+      const parsedInfo = JSON.parse(infoState);
+      setUserInfo(parsedInfo);
     }
   };
   useEffect(() => {
@@ -85,9 +106,8 @@ function useProvideAuth() {
 
     if (res.status === 201) {
       setError(res.data.msg);
-      console.log(res.data.msg);
     } else {
-      handleUser(res.data);
+      handleUserInfo(res.data);
       router.push("/");
     }
   };
@@ -98,11 +118,10 @@ function useProvideAuth() {
       `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/login`,
       data
     );
-    if (res.status === 201) {
+    if (res.status === 401) {
       setError(res.data.msg);
     } else {
       handleUser(res.data);
-
       router.push("/");
     }
   };
@@ -113,8 +132,14 @@ function useProvideAuth() {
       `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/user/fetchUser`,
       { headers: { Authorization: `Bearer ${user.token}` } }
     );
-    user.actions = res.data.actions;
-    user.info = res.data.info;
+
+    if (res.status === 200) {
+      handleUser(res.data);
+      setLoading(false);
+
+      return;
+    }
+
     setLoading(false);
   };
 
@@ -137,8 +162,8 @@ function useProvideAuth() {
   };
 
   const logout = () => {
+    handleUserInfo(false);
     handleUser(false);
-    router.push("/");
   };
 
   return {
@@ -154,6 +179,7 @@ function useProvideAuth() {
     listening,
     setWantToListen,
     listening,
+    readCookie,
   };
 }
 
@@ -162,8 +188,6 @@ const formatUser = async (data) => {
     user_id: data.id,
     token: data.token,
     username: data.username,
-    actions: {},
-    info: {},
   };
 };
 
