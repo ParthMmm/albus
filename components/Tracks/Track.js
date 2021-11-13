@@ -44,7 +44,9 @@ function Track({ track }) {
           color={colorMode === "dark" ? "purple.300" : "purple.600"}
         >
           {" "}
-          <Link href={trackItem.url}>{trackItem.name}</Link>
+          <Link href={trackItem.url}>
+            <Text noOfLines={[2, 2, 2, 2, 2]}>{trackItem.name}</Text>
+          </Link>
         </Text>
         <Text
           fontSize="sm"

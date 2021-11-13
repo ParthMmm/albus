@@ -67,7 +67,7 @@ function useProvideAuth() {
 
       return user;
     } else {
-      setUser(false);
+      setUserInfo(false);
       Cookies.remove("albus-userInfo");
       setLoading(false);
 

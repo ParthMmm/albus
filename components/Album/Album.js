@@ -146,7 +146,7 @@ function Album({ thing }) {
             _hover={{ color: "tomato" }}
             color={colorMode === "light" ? "purple.600" : "purple.300"}
           >
-            <Text> {properties.name}</Text>
+            <Text noOfLines={[2, 2, 2, 2, 3]}> {properties.name}</Text>
           </Link>
         </NextLink>
 
@@ -156,7 +156,10 @@ function Album({ thing }) {
           _hover={{ color: "tomato" }}
           textDecoration="purple"
         >
-          <Link onClick={() => searchSubmit()}> {properties.artist}</Link>
+          <Link onClick={() => searchSubmit()} noOfLines={[2, 2, 2, 2, 3]}>
+            {" "}
+            {properties.artist}
+          </Link>
         </Text>
       </Box>
     </Box>

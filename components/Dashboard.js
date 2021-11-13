@@ -94,7 +94,7 @@ function Dashboard() {
                   "repeat(2, 1fr)",
                   "repeat(2, 1fr)",
                 ]}
-                gap={3}
+                gap={4}
               >
                 {listening.slice(0, 2).map((x) => (
                   <Album key={x._id} thing={x} />

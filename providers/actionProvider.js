@@ -75,6 +75,7 @@ function useProvideAction() {
 
   const updateInfo = async (data) => {
     setLoading(true);
+    console.log(data);
     const res = await axios.post(
       `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/user/updateInfo`,
       data,
