@@ -108,7 +108,7 @@ function useProvideAuth() {
       data
     );
 
-    if (res.status === 201) {
+    if (res.status === 400) {
       setError(res.data.msg);
       setLoading(false);
     } else {
@@ -120,17 +120,25 @@ function useProvideAuth() {
 
   const login = async (data) => {
     setLoading(true);
-    const res = await axios.post(
-      `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/login`,
-      data
-    );
-    if (res.status === 401) {
-      setError(res.data.msg);
-    } else {
-      if (handleUser(res.data)) {
-        router.push("/");
-      }
-    }
+    console.log(data);
+    // const res = await axios.post(
+    //   `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/login`,
+    //   data
+    // );
+    // console.log(res);
+    // if (res.status === 403) {
+    //   console.log(res.json());
+    //   // setError(res.data.msg);
+    //   setLoading(false);
+    // } else {
+    //   if (handleUser(res.data)) {
+    //     router.push("/");
+    //   }
+    // }
+    axios
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/login`, data)
+      .then((res) => console.log(res.json()))
+      .catch((error) => console.log(error));
   };
 
   const fetchUser = async () => {

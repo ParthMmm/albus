@@ -91,7 +91,7 @@ function SignUp() {
           <Flex alignItems="center" mr={2} pb={5}>
             <NextLink href="/">
               <Heading
-                fontSize={{ base: "24px", md: "36px", lg: "48px" }}
+                // fontSize={{ base: "24px", md: "36px", lg: "48px" }}
                 _hover={{ color: "purple.600" }}
                 color="white"
               >
@@ -101,6 +101,7 @@ function SignUp() {
                   _hover={{
                     bgGradient: "linear(to-r, #FEAC5E, #C779D0,#4BC0C8)",
                   }}
+                  fontSize="3rem"
                 >
                   albus
                 </Link>
@@ -143,10 +144,6 @@ function SignUp() {
                   focusBorderColor="purple.600"
                   rounded="xl"
                 />
-                {/* <Text>4-12 characters</Text> */}
-                {/* <FormErrorMessage mb={3}>
-                {errors.username && errors.username.message}
-              </FormErrorMessage> */}
               </FormControl>
 
               <FormControl isInvalid={errors.password}>
@@ -173,11 +170,7 @@ function SignUp() {
                   focusBorderColor="purple.600"
                   rounded="xl"
                 />
-                {/* <FormErrorMessage mb={6}>
-                {errors.password && errors.password.message}
-              </FormErrorMessage> */}
               </FormControl>
-              {/* {auth.error ? <Text color="red">{auth.error}</Text> : <></>} */}
             </Box>
             <Button
               isLoading={auth.loading}
@@ -185,21 +178,10 @@ function SignUp() {
               type="submit"
               bg="tomato"
               rounded="xl"
-              // size={["md", "lg"]}
-
+              size="lg"
               _hover={{ background: "purple.600" }}
               mt={5}
-              mb={-5}
-
-              // onClick={() =>
-              //   toast({
-              //     title: "creating account . . .",
-              //     status: "info",
-              //     duration: 2000,
-              //     isClosable: true,
-              //     variant: "subtle",
-              //   })
-              // }
+              mb="-0.625rem"
             >
               <Text _hover={{ color: "tomato" }} fontSize="1rem" color="white">
                 submit
