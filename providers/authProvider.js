@@ -29,6 +29,8 @@ function useProvideAuth() {
   const router = useRouter();
 
   const handleUser = async (rawUser) => {
+    setLoading(true);
+
     if (rawUser) {
       const user = await formatUser(rawUser);
       const userString = JSON.stringify(user);
@@ -38,7 +40,7 @@ function useProvideAuth() {
       setUser(user);
 
       fetchUserInfo(user.user_id);
-
+      setLoading(false);
       return user;
     } else {
       setUser(false);
@@ -52,6 +54,8 @@ function useProvideAuth() {
   };
 
   const handleUserInfo = async (rawUser) => {
+    setLoading(true);
+
     if (rawUser) {
       const user = await formatUserInfo(rawUser);
       const userString = JSON.stringify(user);
@@ -106,9 +110,11 @@ function useProvideAuth() {
 
     if (res.status === 201) {
       setError(res.data.msg);
+      setLoading(false);
     } else {
-      handleUserInfo(res.data);
-      router.push("/");
+      if (handleUser(res.data)) {
+        router.push("/");
+      }
     }
   };
 
@@ -121,8 +127,9 @@ function useProvideAuth() {
     if (res.status === 401) {
       setError(res.data.msg);
     } else {
-      handleUser(res.data);
-      router.push("/");
+      if (handleUser(res.data)) {
+        router.push("/");
+      }
     }
   };
 
@@ -201,11 +208,11 @@ const formatUserInfo = async (data) => {
       listening: data.listening,
     },
     info: {
-      genre: data.info.genre,
-      artist: data.info.artist,
-      album: data.info.album,
-      spotify: data.info.spotify,
-      lastfm: data.info.lastfm,
+      genre: data.info?.genre,
+      artist: data.info?.artist,
+      album: data.info?.album,
+      spotify: data.info?.spotify,
+      lastfm: data.info?.lastfm,
     },
   };
 };
