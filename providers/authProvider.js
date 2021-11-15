@@ -21,6 +21,7 @@ function useProvideAuth() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
   const [userInfo, setUserInfo] = useState(null);
   const [listened, setListened] = useState(null);
   const [wantToListen, setWantToListen] = useState(null);
@@ -104,6 +105,8 @@ function useProvideAuth() {
 
   const register = async (data) => {
     setLoading(true);
+    setMessage("");
+
     const res = await axios.post(
       `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/signup`,
       data
@@ -113,12 +116,14 @@ function useProvideAuth() {
       console.log(res.data.error);
       setError(res.data.error);
       setLoading(false);
+      setMessage("");
       return res.data.error;
     } else {
       if (handleUser(res.data)) {
-        router.push("/");
+        setMessage("success! 🎉");
         setError("");
 
+        router.push("/");
         return;
       }
     }
@@ -127,6 +132,8 @@ function useProvideAuth() {
 
   const login = async (data) => {
     setLoading(true);
+    setMessage("");
+
     const res = await axios.post(
       `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/login`,
       data
@@ -145,11 +152,15 @@ function useProvideAuth() {
       console.log(res.data.error);
       setError(res.data.error);
       setLoading(false);
+      setMessage("");
+
       return res.data.error;
     } else {
       if (handleUser(res.data)) {
-        router.push("/");
         setError("");
+        setMessage("success! 🎉");
+        router.push("/");
+
         return;
       }
     }
@@ -207,6 +218,9 @@ function useProvideAuth() {
     userInfo,
     loading,
     error,
+    message,
+    setError,
+    setMessage,
     fetchUser,
     fetchUserInfo,
     login,

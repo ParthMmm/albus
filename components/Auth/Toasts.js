@@ -16,7 +16,7 @@ import {
 import { useAuth } from "../../providers/authProvider";
 import { BeatLoader } from "react-spinners";
 import NextLink from "next/link";
-function Toasts({ errors, isSubmitSuccessful }) {
+function Toasts({ errors, isSubmitSuccessful, isDirty }) {
   const auth = useAuth();
   const { colorMode } = useColorMode();
   const toast = useToast();
@@ -27,31 +27,34 @@ function Toasts({ errors, isSubmitSuccessful }) {
   useEffect(() => {
     // console.log(auth.error);
     if (auth.error) {
+      toast.closeAll();
       toastIdRef.current = toast({
         description: auth.error,
         status: "error",
-        duration: 10000,
+        duration: 5000,
         isClosable: true,
         id,
       });
     }
     if (errors.username && errors.username.message) {
+      toast.closeAll();
       toastIdRef.current = toast({
         description: errors.username.message,
         status: "error",
-        duration: 10000,
+        duration: 5000,
         isClosable: true,
       });
     }
     if (errors.password && errors.password.message) {
+      toast.closeAll();
       toastIdRef.current = toast({
         description: errors.password.message,
         status: "error",
-        duration: 10000,
+        duration: 5000,
         isClosable: true,
       });
     }
-    if (isSubmitSuccessful) {
+    if (isSubmitSuccessful && !auth.error && auth.message) {
       toast.closeAll();
       toastIdRef.current = toast({
         description: "success! 🎉",
@@ -60,6 +63,10 @@ function Toasts({ errors, isSubmitSuccessful }) {
         isClosable: true,
       });
     }
+    return function cleanup() {
+      auth.setError("");
+      auth.setMessage("");
+    };
   }, [
     auth.error,
     errors?.username?.message,

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useFormState } from "react-hook-form";
 import {
   Box,
   FormErrorMessage,
@@ -28,14 +28,17 @@ function LogIn() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting, isSubmitSuccessful },
+    formState: { errors, isSubmitting, isSubmitSuccessful, submitCount },
     reset,
-  } = useForm();
-
+    clearErrors,
+    control,
+  } = useForm({ mode: "onSubmit", reValidateMode: "onSubmit" });
   const onSubmit = (data) => {
     auth.login(data);
+    clearErrors();
     reset();
   };
+
   // useEffect(() => {
   //   console.log(auth.error);
   //   if (auth.error) {
