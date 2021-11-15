@@ -96,6 +96,7 @@ function useProvideAuth() {
       const parsedInfo = JSON.parse(infoState);
       setUserInfo(parsedInfo);
     }
+    return;
   };
   useEffect(() => {
     readCookie();
@@ -108,23 +109,28 @@ function useProvideAuth() {
       data
     );
 
-    if (res.status === 400) {
-      setError(res.data.msg);
+    if (res.data?.error) {
+      console.log(res.data.error);
+      setError(res.data.error);
       setLoading(false);
+      return res.data.error;
     } else {
       if (handleUser(res.data)) {
         router.push("/");
+        setError("");
+
+        return;
       }
     }
+    return;
   };
 
   const login = async (data) => {
     setLoading(true);
-    console.log(data);
-    // const res = await axios.post(
-    //   `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/login`,
-    //   data
-    // );
+    const res = await axios.post(
+      `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/login`,
+      data
+    );
     // console.log(res);
     // if (res.status === 403) {
     //   console.log(res.json());
@@ -135,14 +141,25 @@ function useProvideAuth() {
     //     router.push("/");
     //   }
     // }
-    axios
-      .post(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/login`, data)
-      .then((res) => console.log(res.json()))
-      .catch((error) => console.log(error));
+    if (res.data?.error) {
+      console.log(res.data.error);
+      setError(res.data.error);
+      setLoading(false);
+      return res.data.error;
+    } else {
+      if (handleUser(res.data)) {
+        router.push("/");
+        setError("");
+        return;
+      }
+    }
+    return;
   };
 
   const fetchUser = async () => {
     setLoading(true);
+    setError("");
+
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/user/fetchUser`,
       { headers: { Authorization: `Bearer ${user.token}` } }
@@ -156,10 +173,13 @@ function useProvideAuth() {
     }
 
     setLoading(false);
+    return;
   };
 
   const fetchUserInfo = async (data) => {
     setLoading(true);
+    setError("");
+
     const userID = { userID: data };
 
     const res = await axios.post(
@@ -174,6 +194,7 @@ function useProvideAuth() {
     } else {
       setLoading(false);
     }
+    return;
   };
 
   const logout = () => {

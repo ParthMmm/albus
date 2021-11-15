@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import {
+  Box,
   FormErrorMessage,
   FormControl,
   Input,
@@ -8,20 +9,21 @@ import {
   Flex,
   Heading,
   Text,
-  Box,
-  useColorMode,
   Link,
+  useColorMode,
   useToast,
 } from "@chakra-ui/react";
-import { useAuth } from "../providers/authProvider";
+import { useAuth } from "../../providers/authProvider";
 import { BeatLoader } from "react-spinners";
 import NextLink from "next/link";
+import Toasts from "./Toasts";
 
-function SignUp() {
+function LogIn() {
   const auth = useAuth();
   const { colorMode } = useColorMode();
   const toast = useToast();
   const toastIdRef = React.useRef();
+  const id = "authToast";
 
   const {
     register,
@@ -31,53 +33,48 @@ function SignUp() {
   } = useForm();
 
   const onSubmit = (data) => {
-    auth.register(data);
+    auth.login(data);
     reset();
   };
+  // useEffect(() => {
+  //   console.log(auth.error);
+  //   if (auth.error) {
+  //     if (!toast.isActive(id)) {
+  //       toastIdRef.current = toast({
+  //         description: auth.error,
+  //         status: "error",
+  //         duration: 10000,
+  //         isClosable: true,
+  //         id,
+  //       });
+  //     }
+  //   }
+  //   if (errors.username && errors.username.message) {
+  //     toastIdRef.current = toast({
+  //       description: errors.username.message,
+  //       status: "error",
+  //       duration: 10000,
+  //       isClosable: true,
+  //     });
+  //   }
+  //   if (errors.password && errors.password.message) {
+  //     toastIdRef.current = toast({
+  //       description: errors.password.message,
+  //       status: "error",
+  //       duration: 10000,
+  //       isClosable: true,
+  //     });
+  //   }
+  //   if (isSubmitSuccessful) {
+  //     toast.closeAll();
+  //   }
+  // }, [
+  //   auth.error,
+  //   errors?.username?.message,
+  //   errors?.password?.message,
+  //   isSubmitSuccessful,
+  // ]);
 
-  useEffect(() => {
-    // if (auth.error && toastIdRef.current) {
-    //   toast.update(toastIdRef.current, {
-    //     description: auth.error,
-    //     status: "error",
-    //     duration: 5000,
-    //   });
-    //   console.log(ding);
-    // }
-    if (auth.error) {
-      toastIdRef.current = toast({
-        description: auth.error,
-        status: "error",
-        duration: 10000,
-        isClosable: true,
-      });
-    }
-    if (errors.username && errors.username.message) {
-      toastIdRef.current = toast({
-        description: errors.username.message,
-        status: "error",
-        duration: 10000,
-        isClosable: true,
-      });
-    }
-    if (errors.password && errors.password.message) {
-      toastIdRef.current = toast({
-        description: errors.password.message,
-        status: "error",
-        duration: 10000,
-        isClosable: true,
-      });
-    }
-    if (isSubmitSuccessful) {
-      toast.closeAll();
-    }
-  }, [
-    auth.error,
-    errors?.username?.message,
-    errors?.password?.message,
-    isSubmitSuccessful,
-  ]);
-  // console.log(errors);
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -116,9 +113,9 @@ function SignUp() {
             height="45%"
             justifyContent="space-evenly"
             bg={colorMode === "light" ? "#ECF0F1" : "#34495E"}
+            flexGrow="0"
           >
-            <Heading mt={-4}>Sign Up</Heading>
-
+            <Heading mt={-4}>Log In</Heading>
             <Box>
               <FormControl isInvalid={errors.username}>
                 <Input
@@ -172,26 +169,38 @@ function SignUp() {
                 />
               </FormControl>
             </Box>
-            <Button
-              isLoading={auth.loading}
-              spinner={<BeatLoader size={8} color="white" />}
-              type="submit"
-              bg="tomato"
-              rounded="xl"
-              size="lg"
-              _hover={{ background: "purple.600" }}
-              mt={5}
-              mb="-0.625rem"
-            >
-              <Text _hover={{ color: "tomato" }} fontSize="1rem" color="white">
-                submit
-              </Text>
-            </Button>
+            <Flex flexDir="column" justifyContent="center" mb={"-1.5rem"}>
+              {auth.error ? (
+                <Text textTransform="lowercase" color="#c0392b" pb={4}>
+                  {auth.error}
+                </Text>
+              ) : (
+                <></>
+              )}
+              <Button
+                isLoading={auth.loading}
+                spinner={<BeatLoader size={8} color="white" />}
+                type="submit"
+                bg="tomato"
+                rounded="xl"
+                size="lg"
+                _hover={{ background: "purple.600" }}
+              >
+                <Text
+                  _hover={{ color: "tomato" }}
+                  fontSize="1rem"
+                  color="white"
+                >
+                  submit
+                </Text>
+              </Button>
+            </Flex>
           </Flex>
+          <Toasts errors={errors} isSubmitSuccessful={isSubmitSuccessful} />
         </Flex>
       </form>
     </div>
   );
 }
 
-export default SignUp;
+export default LogIn;
