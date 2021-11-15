@@ -21,6 +21,7 @@ function useProvideAuth() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
   const [userInfo, setUserInfo] = useState(null);
   const [listened, setListened] = useState(null);
   const [wantToListen, setWantToListen] = useState(null);
@@ -29,6 +30,8 @@ function useProvideAuth() {
   const router = useRouter();
 
   const handleUser = async (rawUser) => {
+    setLoading(true);
+
     if (rawUser) {
       const user = await formatUser(rawUser);
       const userString = JSON.stringify(user);
@@ -38,7 +41,7 @@ function useProvideAuth() {
       setUser(user);
 
       fetchUserInfo(user.user_id);
-
+      setLoading(false);
       return user;
     } else {
       setUser(false);
@@ -52,6 +55,8 @@ function useProvideAuth() {
   };
 
   const handleUserInfo = async (rawUser) => {
+    setLoading(true);
+
     if (rawUser) {
       const user = await formatUserInfo(rawUser);
       const userString = JSON.stringify(user);
@@ -92,6 +97,7 @@ function useProvideAuth() {
       const parsedInfo = JSON.parse(infoState);
       setUserInfo(parsedInfo);
     }
+    return;
   };
   useEffect(() => {
     readCookie();
@@ -99,35 +105,72 @@ function useProvideAuth() {
 
   const register = async (data) => {
     setLoading(true);
+    setMessage("");
+
     const res = await axios.post(
       `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/signup`,
       data
     );
 
-    if (res.status === 201) {
-      setError(res.data.msg);
+    if (res.data?.error) {
+      console.log(res.data.error);
+      setError(res.data.error);
+      setLoading(false);
+      setMessage("");
+      return res.data.error;
     } else {
-      handleUserInfo(res.data);
-      router.push("/");
+      if (handleUser(res.data)) {
+        setMessage("success! 🎉");
+        setError("");
+
+        router.push("/");
+        return;
+      }
     }
+    return;
   };
 
   const login = async (data) => {
     setLoading(true);
+    setMessage("");
+
     const res = await axios.post(
       `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/login`,
       data
     );
-    if (res.status === 401) {
-      setError(res.data.msg);
+    // console.log(res);
+    // if (res.status === 403) {
+    //   console.log(res.json());
+    //   // setError(res.data.msg);
+    //   setLoading(false);
+    // } else {
+    //   if (handleUser(res.data)) {
+    //     router.push("/");
+    //   }
+    // }
+    if (res.data?.error) {
+      console.log(res.data.error);
+      setError(res.data.error);
+      setLoading(false);
+      setMessage("");
+
+      return res.data.error;
     } else {
-      handleUser(res.data);
-      router.push("/");
+      if (handleUser(res.data)) {
+        setError("");
+        setMessage("success! 🎉");
+        router.push("/");
+
+        return;
+      }
     }
+    return;
   };
 
   const fetchUser = async () => {
     setLoading(true);
+    setError("");
+
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/user/fetchUser`,
       { headers: { Authorization: `Bearer ${user.token}` } }
@@ -141,10 +184,13 @@ function useProvideAuth() {
     }
 
     setLoading(false);
+    return;
   };
 
   const fetchUserInfo = async (data) => {
     setLoading(true);
+    setError("");
+
     const userID = { userID: data };
 
     const res = await axios.post(
@@ -159,6 +205,7 @@ function useProvideAuth() {
     } else {
       setLoading(false);
     }
+    return;
   };
 
   const logout = () => {
@@ -171,6 +218,9 @@ function useProvideAuth() {
     userInfo,
     loading,
     error,
+    message,
+    setError,
+    setMessage,
     fetchUser,
     fetchUserInfo,
     login,
@@ -201,11 +251,11 @@ const formatUserInfo = async (data) => {
       listening: data.listening,
     },
     info: {
-      genre: data.info.genre,
-      artist: data.info.artist,
-      album: data.info.album,
-      spotify: data.info.spotify,
-      lastfm: data.info.lastfm,
+      genre: data.info?.genre,
+      artist: data.info?.artist,
+      album: data.info?.album,
+      spotify: data.info?.spotify,
+      lastfm: data.info?.lastfm,
     },
   };
 };
