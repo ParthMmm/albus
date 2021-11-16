@@ -28,6 +28,7 @@ import Tags from "./Tags";
 import Tracklist from "./Tracklist";
 import Wiki from "./Wiki";
 import Image from "next/image";
+import useAverageColor from "../../utils/useAverageColor";
 
 function AlbumInfo() {
   const router = useRouter();
@@ -38,7 +39,7 @@ function AlbumInfo() {
   const { colorMode } = useColorMode();
 
   const handleToggle = () => setShow(!show);
-  let artist, albumName;
+  let artist, albumName, color;
   let tagArray = [];
   if (router.query.slug) {
     artist = router.query.slug[0];
@@ -57,6 +58,25 @@ function AlbumInfo() {
 
   let currentAlbum = {};
 
+  if (data) {
+    currentAlbum = {
+      artist: data.album.artist,
+      name: data.album.name,
+      wiki: data.album.wiki?.content,
+      image: data.album.image[4]["#text"],
+      url: data.album.url,
+      listeners: data.album.listeners,
+      playcount: data.album.playcount,
+      tracks: data.album.tracks?.track,
+    };
+
+    data.album.tags?.tag?.map((tag) => tagArray.push([tag.name, tag.url]));
+
+    currentAlbum.tags = tagArray.sort(function (a, b) {
+      return a[0].length - b[0].length;
+    });
+  }
+
   const searchSubmit = () => {
     router.push({
       pathname: "/search",
@@ -73,6 +93,14 @@ function AlbumInfo() {
       setFetch(true);
     }
   }, [router.query.slug]);
+
+  // if (currentAlbum.image) {
+  //   color = useAverageColor(currentAlbum.image);
+  //   // console.log(color);
+  //   console.log(currentAlbum.image);
+  // }
+  color = useAverageColor(currentAlbum?.image);
+
   if (!data) {
     return (
       <>
@@ -126,25 +154,8 @@ function AlbumInfo() {
     );
   }
   if (data && !album.loading) {
-    currentAlbum = {
-      artist: data.album.artist,
-      name: data.album.name,
-      wiki: data.album.wiki?.content,
-      image: data.album.image[4]["#text"],
-      url: data.album.url,
-      listeners: data.album.listeners,
-      playcount: data.album.playcount,
-      tracks: data.album.tracks?.track,
-    };
-
-    data.album.tags?.tag?.map((tag) => tagArray.push([tag.name, tag.url]));
-
-    currentAlbum.tags = tagArray.sort(function (a, b) {
-      return a[0].length - b[0].length;
-    });
-
     return (
-      <div>
+      <>
         <Box
           w="80%"
           mx="auto"
@@ -158,16 +169,17 @@ function AlbumInfo() {
             lg: "space-between",
           }}
           border="5px solid"
-          borderColor="purple.600"
+          borderColor={color}
           borderRadius="sm"
           rounded="xl"
           boxShadow="lg"
           flexDir={{ base: "column", sm: "column", md: "column", lg: "row" }}
+          bg={colorMode === "dark" ? "componentBg" : "white"}
         >
           <Box
             p="5"
             d="flex"
-            justifyContent={{ base: "center", sm: "center", md: "center" }}
+            // justifyContent={{ base: "center", sm: "center", md: "center" }}
             flexShrink={{ sm: "1", md: "0" }}
             flexFlow="column wrap"
             color={colorMode === "dark" ? "white" : "black"}
@@ -252,12 +264,12 @@ function AlbumInfo() {
               {" "}
               <Heading>tracklist</Heading>
             </Box>
-            <Tracklist tracks={currentAlbum.tracks} />
+            <Tracklist color={color} tracks={currentAlbum.tracks} />
           </Box>
         ) : (
           <></>
         )}
-      </div>
+      </>
     );
   } else {
     return (

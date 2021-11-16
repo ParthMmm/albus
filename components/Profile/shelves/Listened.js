@@ -24,7 +24,7 @@ function ListenedShelf() {
         <Heading mb={2}>listened</Heading>
         <Grid
           gridTemplateColumns={[
-            "repeat(2, 1fr)",
+            "repeat(1, 1fr)",
             "repeat(2, 1fr)",
             "repeat(4, 1fr)",
           ]}
@@ -61,7 +61,7 @@ function ListenedShelf() {
         <Heading mb={2}>listened</Heading>
         <Grid
           gridTemplateColumns={[
-            "repeat(2, 1fr)",
+            "repeat(1, 1fr)",
             "repeat(2, 1fr)",
             "repeat(4, 1fr)",
           ]}

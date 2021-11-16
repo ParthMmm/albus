@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Text, Link, useColorMode } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useAlbum } from "../../providers/albumProvider";
@@ -7,13 +7,14 @@ import useSWR from "swr";
 import { albumInfoFetch, albumSearchFetch } from "../../utils/fetch";
 import { colors } from "../../utils/randoms";
 import Image from "next/image";
-
+import useAverageColor from "../../utils/useAverageColor";
 function Album({ thing }) {
   const album = useAlbum();
   const router = useRouter();
-  let properties = {};
-  const { colorMode } = useColorMode();
 
+  let properties = {};
+  let color;
+  const { colorMode } = useColorMode();
   const searchSubmit = () => {
     router.push({
       pathname: "/search",
@@ -84,22 +85,31 @@ function Album({ thing }) {
       url: thing.url,
     };
   }
+  color = useAverageColor(properties?.imageUrl);
 
   if (properties.imageUrl === undefined) {
     return null;
   }
+
   return (
-    <Box rounded="xl" shadow="md" w={{ base: "18vh", md: "full" }}>
+    <Box
+      shadow="md"
+      // w={{ base: "18vh", sm: "24vh", md: "100%" }}
+      d="flex"
+      flexFlow="row nowrap"
+      rounded="xl"
+    >
       {" "}
       <Box
-        bg={colors[randomNum]}
         p={5}
         d="flex"
         alignItems="center"
         justifyContent="center"
         rounded="xl"
-        roundedBottom="none"
-        w={{ base: "18vh", md: "full" }}
+        roundedRight="none"
+        bg={color}
+        borderColor={color}
+        w="50%"
       >
         <Image
           src={properties.imageUrl}
@@ -117,13 +127,13 @@ function Album({ thing }) {
         alignItems="flex-start"
         flexDirection="column"
         px="4"
-        flexShrink="1"
-        h="150"
-        // bg={colorMode === "light" ? "#ECF0F1" : "#34495E"}
-        border="8px solid"
-        borderColor={colors[randomNum]}
-        roundedBottom="xl"
-        w={{ base: "18vh", md: "full" }}
+        // flexShrink="1"
+        w="50%"
+        // h="150"
+        rounded="xl"
+        roundedLeft="none"
+        // w={{ base: "18vh", sm: "24vh", md: "full" }}
+        bg={colorMode === "dark" ? "componentBg" : "white"}
       >
         <NextLink
           href={{
@@ -141,7 +151,6 @@ function Album({ thing }) {
           <Link
             fontWeight="bold"
             lineHeight="normal"
-            // fontSize="xl"
             fontSize={{ base: "l", md: "xl" }}
             _hover={{ color: "tomato" }}
             color={colorMode === "light" ? "purple.600" : "purple.300"}

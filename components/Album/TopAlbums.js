@@ -41,11 +41,11 @@ function TopAlbums() {
     return (
       <Grid
         gridTemplateColumns={[
-          "repeat(2, 1fr)",
+          "repeat(1, 1fr)",
           "repeat(2, 1fr)",
           "repeat(5, 1fr)",
         ]}
-        gap={4}
+        gap={6}
         mx={-1}
       >
         {albums.map((album) => (

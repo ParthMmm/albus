@@ -23,7 +23,7 @@ function WantToListen() {
         <Heading mb={2}>want to listen</Heading>
         <Grid
           gridTemplateColumns={[
-            "repeat(2, 1fr)",
+            "repeat(1, 1fr)",
             "repeat(2, 1fr)",
             "repeat(4, 1fr)",
           ]}
@@ -60,7 +60,7 @@ function WantToListen() {
         <Heading mb={2}>want to listen</Heading>
         <Grid
           gridTemplateColumns={[
-            "repeat(2, 1fr)",
+            "repeat(1, 1fr)",
             "repeat(2, 1fr)",
             "repeat(4, 1fr)",
           ]}
@@ -82,7 +82,6 @@ function WantToListen() {
   } else {
     return (
       <Box>
-        else
         <Skeleton
           startColor="orange.500"
           endColor="purple.500"

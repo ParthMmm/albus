@@ -53,19 +53,20 @@ function Wiki({ summary }) {
                 fontFamily="Helvetica"
                 fontSize="xl"
                 dangerouslySetInnerHTML={{ __html: summary }}
-                // noOfLines={10}
               ></Text>
             </Collapse>
           </Box>
           {show ? (
-            <Button
-              as={MdExpandLess}
-              float="right"
-              bg="none"
-              pr={2}
-              pb={2}
-              onClick={() => handleToggle(true)}
-            />
+            <Box p={2}>
+              <Button
+                as={MdExpandLess}
+                float="right"
+                bg="none"
+                // pr={2}
+                // pb={2}
+                onClick={() => handleToggle(true)}
+              />
+            </Box>
           ) : (
             <> </>
           )}

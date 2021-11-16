@@ -37,10 +37,11 @@ function Artist({ artist }) {
         h="120"
         bg={{ dark: "gray.600", light: "0" }}
         borderRadius="sm"
-        border="3px solid"
+        // border="3px solid"
         // borderColor={colorMode === "dark" ? "purple.300" : "purple.600"}
-        borderColor={colors[randomNum]}
+        // borderColor={colors[randomNum]}
         rounded="xl"
+        bg={colorMode === "dark" ? "componentBg" : "white"}
       >
         {" "}
         <Text
@@ -48,7 +49,7 @@ function Artist({ artist }) {
           lineHeight="normal"
           fontSize="xl"
           display="block"
-          color={colorMode === "dark" ? "purple.300" : "purple.600"}
+          color={colors[randomNum]}
           _hover={{ color: "tomato" }}
         >
           {" "}

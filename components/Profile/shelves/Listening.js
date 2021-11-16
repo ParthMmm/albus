@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useProfile } from "../../../providers/profileProvider";
-import { Grid, Box, Heading, Skeleton } from "@chakra-ui/react";
+import { Grid, Box, Heading, Skeleton, Flex, Button } from "@chakra-ui/react";
 import Album from "../../Album/Album";
 import { useRouter } from "next/router";
 import { albumMBIDCheck } from "../../../utils/albumCheck";
-
+import { MdNavigateBefore } from "react-icons/md";
 function Listening() {
   const profile = useProfile();
   const router = useRouter();
@@ -21,9 +21,10 @@ function Listening() {
     return (
       <Box w="80%" h="50rem" mx="auto" mt={10}>
         <Heading mb={2}>listening</Heading>
+
         <Grid
           gridTemplateColumns={[
-            "repeat(2, 1fr)",
+            "repeat(1, 1fr)",
             "repeat(2, 1fr)",
             "repeat(4, 1fr)",
           ]}
@@ -57,10 +58,16 @@ function Listening() {
     let filtered = albumMBIDCheck(profile.profileInfo.actions.listening);
     return (
       <Box w="80%" h="50rem" mx="auto" mt={10}>
-        <Heading mb={2}>listening</Heading>
+        <Flex justifyContent="space-between" alignItems="center">
+          {" "}
+          <Heading mb={2}>listening</Heading>
+          <Button as={MdNavigateBefore} onClick={() => router.back()}>
+            back
+          </Button>
+        </Flex>{" "}
         <Grid
           gridTemplateColumns={[
-            "repeat(2, 1fr)",
+            "repeat(1, 1fr)",
             "repeat(2, 1fr)",
             "repeat(4, 1fr)",
           ]}
