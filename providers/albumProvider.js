@@ -31,11 +31,11 @@ function useProvideAlbum() {
       `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/album_id?album=${albumName}&artist=${artist}`
     );
 
-    if (res.status === 201) {
-      setError("error");
+    if (res.status === 200) {
+      setAlbumID(res.data.id);
       setLoading(false);
     } else {
-      setAlbumID(res.data.id);
+      setError("error");
       setLoading(false);
     }
   };
