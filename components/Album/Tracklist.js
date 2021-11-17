@@ -13,8 +13,6 @@ function Tracklist({ tracks, color }) {
       rounded="xl"
       boxShadow="lg"
       p={5}
-      w="80%"
-      mx="auto"
       bg={colorMode === "dark" ? "componentBg" : "white"}
     >
       <Stack spacing={4}>

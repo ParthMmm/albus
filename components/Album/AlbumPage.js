@@ -20,7 +20,7 @@ import { useAction } from "../../providers/actionProvider";
 import { useRouter } from "next/router";
 import { albumInfoFetch } from "../../utils/fetch";
 import useSWR from "swr";
-import { MdPeople, MdPlayArrow } from "react-icons/md";
+import { MdPeople, MdPlayArrow, MdAdd } from "react-icons/md";
 
 import NumberFormat from "react-number-format";
 import ActionButtons from "./ActionButtons";
@@ -29,6 +29,8 @@ import Tracklist from "./Tracklist";
 import Wiki from "./Wiki";
 import Image from "next/image";
 import useAverageColor from "../../utils/useAverageColor";
+import Reviews from "../Reviews/Reviews";
+import CreateReview from "../Reviews/CreateReview";
 
 function AlbumInfo() {
   const router = useRouter();
@@ -257,18 +259,33 @@ function AlbumInfo() {
           )}
         </Box>
         <ActionButtons name={currentAlbum.name} artist={currentAlbum.artist} />
-
-        {Array.isArray(currentAlbum.tracks) ? (
-          <Box pb={10}>
-            <Box w="80%" mx="auto">
-              {" "}
-              <Heading>tracklist</Heading>
+        <Flex
+          pb={10}
+          flexDir={{ base: "column", md: "row" }}
+          justifyContent="space-between"
+          mx={24}
+          // alignItems="center"
+        >
+          {Array.isArray(currentAlbum.tracks) ? (
+            <Box w="40%" pr={10}>
+              <Box>
+                {" "}
+                <Heading>tracklist</Heading>
+              </Box>
+              <Tracklist color={color} tracks={currentAlbum.tracks} />
             </Box>
-            <Tracklist color={color} tracks={currentAlbum.tracks} />
+          ) : (
+            <></>
+          )}
+          <Box w="60%">
+            <Flex justifyContent="space-between">
+              {" "}
+              <Heading>reviews</Heading>
+              <CreateReview />
+            </Flex>
+            <Reviews color={color} />
           </Box>
-        ) : (
-          <></>
-        )}
+        </Flex>
       </>
     );
   } else {
