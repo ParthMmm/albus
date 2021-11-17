@@ -29,10 +29,11 @@ function Track({ track }) {
         p={5}
         h="150"
         borderRadius="sm"
-        border="3px solid"
+        // border="3px solid"
         // borderColor={colorMode === "dark" ? "purple.300" : "purple.600"}
-        borderColor={colors[randomNum]}
+        // borderColor={colors[randomNum]}
         rounded="xl"
+        bg={colorMode === "dark" ? "componentBg" : "white"}
       >
         {" "}
         <Text
@@ -41,7 +42,8 @@ function Track({ track }) {
           fontSize="xl"
           display="block"
           _hover={{ color: "tomato" }}
-          color={colorMode === "dark" ? "purple.300" : "purple.600"}
+          // color={colorMode === "dark" ? "purple.300" : "purple.600"}
+          color={colors[randomNum]}
         >
           {" "}
           <Link href={trackItem.url}>

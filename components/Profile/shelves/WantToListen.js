@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useProfile } from "../../../providers/profileProvider";
-import { Grid, Box, Heading, Skeleton } from "@chakra-ui/react";
+import { Grid, Box, Heading, Skeleton, Flex } from "@chakra-ui/react";
 import Album from "../../Album/Album";
 import { useRouter } from "next/router";
 import { albumMBIDCheck } from "../../../utils/albumCheck";
+import BackButton from "./BackButton";
 
 function WantToListen() {
   const profile = useProfile();
@@ -23,8 +24,10 @@ function WantToListen() {
         <Heading mb={2}>want to listen</Heading>
         <Grid
           gridTemplateColumns={[
+            "repeat(1, 1fr)",
             "repeat(2, 1fr)",
-            "repeat(2, 1fr)",
+            "repeat(3, 1fr)",
+            "repeat(3, 1fr)",
             "repeat(4, 1fr)",
           ]}
           gap={3}
@@ -57,11 +60,19 @@ function WantToListen() {
     let filtered = albumMBIDCheck(profile.profileInfo.actions.wantToListen);
     return (
       <Box w="80%" h="50rem" mx="auto" mt={10}>
-        <Heading mb={2}>want to listen</Heading>
+        <Flex justifyContent="space-between" alignItems="center">
+          {" "}
+          <Heading mb={2}>
+            {profile.profileInfo.username}'s want to listen
+          </Heading>
+          <BackButton />
+        </Flex>
         <Grid
           gridTemplateColumns={[
+            "repeat(1, 1fr)",
             "repeat(2, 1fr)",
-            "repeat(2, 1fr)",
+            "repeat(3, 1fr)",
+            "repeat(3, 1fr)",
             "repeat(4, 1fr)",
           ]}
           gap={3}
@@ -82,7 +93,6 @@ function WantToListen() {
   } else {
     return (
       <Box>
-        else
         <Skeleton
           startColor="orange.500"
           endColor="purple.500"

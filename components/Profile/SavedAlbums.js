@@ -80,7 +80,7 @@ function SavedAlbums({ profile }) {
       )}
       <Grid
         gridTemplateColumns={[
-          "repeat(2, 1fr)",
+          "repeat(1, 1fr)",
           "repeat(2, 1fr)",
           "repeat(4, 1fr)",
         ]}
@@ -122,7 +122,7 @@ function SavedAlbums({ profile }) {
       )}
       <Grid
         gridTemplateColumns={[
-          "repeat(2, 1fr)",
+          "repeat(1, 1fr)",
           "repeat(2, 1fr)",
           "repeat(4, 1fr)",
         ]}
@@ -166,7 +166,7 @@ function SavedAlbums({ profile }) {
       )}
       <Grid
         gridTemplateColumns={[
-          "repeat(2, 1fr)",
+          "repeat(1, 1fr)",
           "repeat(2, 1fr)",
           "repeat(4, 1fr)",
         ]}

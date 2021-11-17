@@ -8,11 +8,11 @@ import {
   useColorMode,
   Spacer,
 } from "@chakra-ui/react";
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { MdShare, MdExpandLess } from "react-icons/md";
 import ShareButton from "./ShareButton";
 function Wiki({ summary }) {
-  const [show, setShow] = React.useState(false);
+  const [show, setShow] = useState(false);
   const { colorMode } = useColorMode();
   const box = useRef(null);
 
@@ -20,7 +20,7 @@ function Wiki({ summary }) {
     setShow(!show);
     if (flag) {
       // box.current.scrollIntoView({ behavior: "smooth" });
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({ top: 100, behavior: "smooth" });
     }
   };
 
@@ -48,24 +48,27 @@ function Wiki({ summary }) {
             <ShareButton />
           </Box>
           <Box flexShrink="1" m={2}>
-            <Collapse startingHeight="22rem" in={show} rounded="lg">
+            <Collapse startingHeight="21rem" in={show} rounded="lg">
               <Text
                 fontFamily="Helvetica"
-                fontSize="xl"
+                fontSize={["md", "md", "lg", "xl"]}
                 dangerouslySetInnerHTML={{ __html: summary }}
-                // noOfLines={10}
-              ></Text>
+              >
+                {/* {summary} */}
+              </Text>
             </Collapse>
           </Box>
           {show ? (
-            <Button
-              as={MdExpandLess}
-              float="right"
-              bg="none"
-              pr={2}
-              pb={2}
-              onClick={() => handleToggle(true)}
-            />
+            <Box p={2}>
+              <Button
+                as={MdExpandLess}
+                float="right"
+                bg="none"
+                // pr={2}
+                // pb={2}
+                onClick={() => handleToggle(true)}
+              />
+            </Box>
           ) : (
             <> </>
           )}

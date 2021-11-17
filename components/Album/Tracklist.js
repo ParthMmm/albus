@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Stack, Text, Link, useColorMode } from "@chakra-ui/react";
-function Tracklist({ tracks }) {
+function Tracklist({ tracks, color }) {
   const { colorMode } = useColorMode();
 
   return (
@@ -8,13 +8,14 @@ function Tracklist({ tracks }) {
       mt={1}
       color={colorMode === "dark" ? "white" : "black"}
       border="5px solid"
-      borderColor="purple.600"
+      borderColor={color}
       borderRadius="sm"
       rounded="xl"
       boxShadow="lg"
       p={5}
       w="80%"
       mx="auto"
+      bg={colorMode === "dark" ? "componentBg" : "white"}
     >
       <Stack spacing={4}>
         {tracks.map((track) => {
