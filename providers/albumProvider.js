@@ -34,7 +34,6 @@ function useProvideAlbum() {
     if (res.status === 200) {
       setAlbumID(res.data.id);
       setLoading(false);
-      console.log(res.data.id);
     } else {
       setError("error");
       setLoading(false);

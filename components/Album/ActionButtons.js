@@ -120,9 +120,6 @@ function ActionButtons() {
     if (!auth.loading) {
       checkActions();
     }
-    console.log(action.loading);
-    console.log(listening, listened, wantToListen);
-    console.log(album.albumID);
   }, [router.query]);
   return (
     <div>
