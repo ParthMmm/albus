@@ -70,7 +70,7 @@ function AlbumInfo() {
       tracks: data.album.tracks?.track,
     };
 
-    data.album.tags?.tag?.map((tag) => tagArray.push([tag.name, tag.url]));
+    data.album?.tags?.tag?.map((tag) => tagArray.push([tag.name, tag.url]));
 
     currentAlbum.tags = tagArray.sort(function (a, b) {
       return a[0].length - b[0].length;

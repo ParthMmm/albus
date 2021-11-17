@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useProfile } from "../../../providers/profileProvider";
-import { Grid, Box, Heading, Skeleton, Flex, Button } from "@chakra-ui/react";
+import { Grid, Box, Heading, Skeleton, Flex } from "@chakra-ui/react";
 import Album from "../../Album/Album";
 import { useRouter } from "next/router";
 import { albumMBIDCheck } from "../../../utils/albumCheck";
 import { MdNavigateBefore } from "react-icons/md";
+import BackButton from "./BackButton";
 function Listening() {
   const profile = useProfile();
   const router = useRouter();
@@ -16,7 +17,6 @@ function Listening() {
       profile.fetchProfileInfo(userID);
     }
   }, [router.query]);
-
   if (profile.loading) {
     return (
       <Box w="80%" h="50rem" mx="auto" mt={10}>
@@ -26,6 +26,8 @@ function Listening() {
           gridTemplateColumns={[
             "repeat(1, 1fr)",
             "repeat(2, 1fr)",
+            "repeat(3, 1fr)",
+            "repeat(3, 1fr)",
             "repeat(4, 1fr)",
           ]}
           gap={3}
@@ -60,15 +62,15 @@ function Listening() {
       <Box w="80%" h="50rem" mx="auto" mt={10}>
         <Flex justifyContent="space-between" alignItems="center">
           {" "}
-          <Heading mb={2}>listening</Heading>
-          <Button as={MdNavigateBefore} onClick={() => router.back()}>
-            back
-          </Button>
-        </Flex>{" "}
+          <Heading mb={2}>{profile.profileInfo.username}'s listening</Heading>
+          <BackButton />
+        </Flex>
         <Grid
           gridTemplateColumns={[
             "repeat(1, 1fr)",
             "repeat(2, 1fr)",
+            "repeat(3, 1fr)",
+            "repeat(3, 1fr)",
             "repeat(4, 1fr)",
           ]}
           gap={3}

@@ -109,17 +109,31 @@ function Album({ thing }) {
         roundedRight="none"
         bg={color}
         borderColor={color}
-        w="50%"
+        w="45%"
       >
-        <Image
-          src={properties.imageUrl}
-          alt="Album Cover"
-          width={250}
-          height={250}
-          quality="100"
-          layout="intrinsic"
-          // fallbackSrc="https://via.placeholder.com/174"
-        />
+        <NextLink
+          href={{
+            pathname: `/album/[...slug]`,
+            query: {
+              artist: properties.artist,
+              name: properties.name,
+            },
+          }}
+          as={`/album/${properties.artist}/${encodeURIComponent(
+            properties.name
+          )}`}
+          passHref
+        >
+          <Image
+            src={properties.imageUrl}
+            alt="Album Cover"
+            width={250}
+            height={250}
+            quality="100"
+            layout="intrinsic"
+            // fallbackSrc="https://via.placeholder.com/174"
+          />
+        </NextLink>
       </Box>
       <Box
         d="flex"
@@ -128,7 +142,7 @@ function Album({ thing }) {
         flexDirection="column"
         px="4"
         // flexShrink="1"
-        w="50%"
+        w="55%"
         // h="150"
         rounded="xl"
         roundedLeft="none"

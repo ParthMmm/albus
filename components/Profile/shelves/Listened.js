@@ -5,6 +5,7 @@ import { Grid, Box, Heading, Skeleton } from "@chakra-ui/react";
 import Album from "../../Album/Album";
 import { useRouter } from "next/router";
 import { albumMBIDCheck } from "../../../utils/albumCheck";
+import BackButton from "./BackButton";
 
 function ListenedShelf() {
   const profile = useProfile();
@@ -26,6 +27,8 @@ function ListenedShelf() {
           gridTemplateColumns={[
             "repeat(1, 1fr)",
             "repeat(2, 1fr)",
+            "repeat(3, 1fr)",
+            "repeat(3, 1fr)",
             "repeat(4, 1fr)",
           ]}
           gap={3}
@@ -58,11 +61,17 @@ function ListenedShelf() {
     let filtered = albumMBIDCheck(profile.profileInfo.actions.listened);
     return (
       <Box w="80%" h="50rem" mx="auto" mt={10}>
-        <Heading mb={2}>listened</Heading>
+        <Flex justifyContent="space-between" alignItems="center">
+          {" "}
+          <Heading mb={2}>{profile.profileInfo.username}'s listened</Heading>
+          <BackButton />
+        </Flex>{" "}
         <Grid
           gridTemplateColumns={[
             "repeat(1, 1fr)",
             "repeat(2, 1fr)",
+            "repeat(3, 1fr)",
+            "repeat(3, 1fr)",
             "repeat(4, 1fr)",
           ]}
           gap={3}
