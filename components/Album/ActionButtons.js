@@ -80,14 +80,16 @@ function ActionButtons() {
 
   const checkActions = () => {
     if (
-      auth.user.actions?.listened?.find((x) => x.mbid === `${album.albumID}`)
+      auth.userInfo.actions?.listened?.find(
+        (x) => x.mbid === `${album.albumID}`
+      )
     ) {
       setListened(true);
       setWantToListen(false);
       setListening(false);
     }
     if (
-      auth.user.actions?.wantToListen?.find(
+      auth.userInfo.actions?.wantToListen?.find(
         (x) => x.mbid === `${album.albumID}`
       )
     ) {
@@ -96,7 +98,9 @@ function ActionButtons() {
       setListening(false);
     }
     if (
-      auth.user.actions?.listening?.find((x) => x.mbid === `${album.albumID}`)
+      auth.userInfo.actions?.listening?.find(
+        (x) => x.mbid === `${album.albumID}`
+      )
     ) {
       setListening(true);
       setWantToListen(false);
@@ -116,6 +120,9 @@ function ActionButtons() {
     if (!auth.loading) {
       checkActions();
     }
+    console.log(action.loading);
+    console.log(listening, listened, wantToListen);
+    console.log(album.albumID);
   }, [router.query]);
   return (
     <div>

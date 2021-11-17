@@ -181,23 +181,18 @@ function Settings() {
                 alignItems="baseline"
               ></Flex>
               <ButtonGroup spacing="20" mt={10} mb="-6">
-                <NextLink
-                  href={{
-                    pathname: `/profile/${auth.user.user_id}`,
-                  }}
+                <Button
+                  isLoading={isSubmitting}
+                  bg="purple.600"
+                  rounded="xl"
+                  size="lg"
+                  _hover={{ background: "tomato" }}
+                  onClick={() => router.back()}
                 >
-                  <Button
-                    isLoading={isSubmitting}
-                    bg="purple.600"
-                    rounded="xl"
-                    size="lg"
-                    _hover={{ background: "tomato" }}
-                  >
-                    <Text _hover={{ color: "purple.600" }} color="white">
-                      Cancel
-                    </Text>
-                  </Button>
-                </NextLink>
+                  <Text _hover={{ color: "purple.600" }} color="white">
+                    Cancel
+                  </Text>
+                </Button>
 
                 <Button
                   isLoading={isSubmitting}
