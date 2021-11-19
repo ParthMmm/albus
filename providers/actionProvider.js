@@ -84,6 +84,7 @@ function useProvideAction() {
 
   const updateInfo = async (data) => {
     setLoading(true);
+    console.log(data);
     const res = await axios.post(
       `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/user/updateInfo`,
       data,
@@ -91,10 +92,25 @@ function useProvideAction() {
     );
     if (res.status === 200) {
       auth.fetchUserInfo(auth.user.user_id);
-      router.back();
+      // router.back();
       setLoading(false);
     }
     setLoading(false);
+  };
+
+  const createReview = async (data) => {
+    setLoading(true);
+
+    const res = await axios.post(
+      `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/user/createReview`,
+      data,
+      { headers: { Authorization: `Bearer ${auth.user.token}` } }
+    );
+    if (res.status === 200) {
+      // auth.fetchUserInfo(auth.user.user_id);
+      // router.back();
+      setLoading(false);
+    }
   };
   return {
     addListened,
@@ -102,5 +118,6 @@ function useProvideAction() {
     addListening,
     updateInfo,
     loading,
+    createReview,
   };
 }
