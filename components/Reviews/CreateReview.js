@@ -24,65 +24,32 @@ import { useForm, useFormState } from "react-hook-form";
 import { Rating, RatingView } from "react-simple-star-rating";
 import { Formik, Field, Form } from "formik";
 import { useAction } from "../../providers/actionProvider";
+import { useAlbum } from "../../providers/albumProvider";
 
 // import ReviewModal from "./ReviewModal";
 
 function CreateReview() {
   const { colorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting, isSubmitSuccessful, submitCount },
-    reset,
-    clearErrors,
-    control,
-  } = useForm({ mode: "onSubmit", reValidateMode: "onSubmit" });
-  const [rating, setRating] = useState(0); // initial rating value
 
-  // Catch Rating value
-  const handleRating = (rate) => {
-    setRating(rate);
-    // Some logic
-  };
+  const album = useAlbum();
 
-  const submitHandler = handleSubmit((data) => {
-    console.log(data);
-    reset();
-  });
-
-  // const initialRef = React.useRef();
-  // const finalRef = React.useRef();
   return (
     <>
       <Button onClick={onOpen} size="sm">
         Open Modal
       </Button>
-      <ReviewModal
-        isOpen={isOpen}
-        onClose={onClose}
-        register={register}
-        reset={reset}
-        errors={errors}
-        isSubmitting={isSubmitting}
-        isSubmitSuccessful={isSubmitSuccessful}
-        submitHandler={submitHandler}
-      />
+      <ReviewModal isOpen={isOpen} onClose={onClose} album={album?.album} />
     </>
   );
 }
 
-const ReviewModal = ({ isOpen, onClose, register, submitHandler }) => {
+const ReviewModal = ({ isOpen, onClose, album }) => {
   // const { colorMode } = useColorMode();
-  const [rating, setRating] = useState(0); // initial rating value
+  const [rating, setRating] = useState(0);
   const action = useAction();
+  const albumProvider = useAlbum();
 
-  const handleRating = (rate) => {
-    setRating(rate);
-
-    // setFieldValue("rating", rate);
-    // Some logic
-  };
   const validate = (values) => {
     const errors = {};
     if (!values.firstName) {
@@ -122,12 +89,13 @@ const ReviewModal = ({ isOpen, onClose, register, submitHandler }) => {
               rating: 0,
             }}
             onSubmit={(values, actions) => {
+              values = { ...values, album };
+
               action.createReview(values);
-              console.log(values);
               actions.setSubmitting(false);
               actions.resetForm({});
-
-              console.log(actions.isSubmitting);
+              setRating(0);
+              onClose();
             }}
           >
             <Form>
@@ -137,12 +105,11 @@ const ReviewModal = ({ isOpen, onClose, register, submitHandler }) => {
                     <Rating
                       {...field}
                       id="rating"
-                      // onClick={handleRating}
                       onClick={(rate) => {
                         setRating(rate);
                         setFieldValue("rating", rate);
                       }}
-                      ratingValue={rating} /* Rating Props */
+                      ratingValue={rating}
                     />
                     <FormErrorMessage>{errors.rating}</FormErrorMessage>
                   </FormControl>

@@ -63,6 +63,7 @@ function Header() {
         <Search />
         <Flex justifyContent="center" alignItems="center" ml={[0, null, 0]}>
           <Button
+            id="colorChange"
             as={IconButton}
             icon={colorMode === "dark" ? <IoSunnySharp /> : <IoMoonSharp />}
             onClick={toggleColorMode}
@@ -72,6 +73,7 @@ function Header() {
           {auth.user ? (
             <Menu bg={{ dark: "gray.600", light: "white" }}>
               <MenuButton
+                id="profileButton"
                 as={IconButton}
                 icon={<RiAccountCircleLine />}
                 color="purple.600"
@@ -98,6 +100,7 @@ function Header() {
               {/* show on mobile */}
               <Menu d={{ base: "flex", sm: "none", md: "none", lg: "none" }}>
                 <MenuButton
+                  id="hamburgerMenu"
                   as={IconButton}
                   icon={<MdMenu />}
                   color="purple.600"
@@ -120,6 +123,7 @@ function Header() {
               >
                 <NextLink href="/login" passHref>
                   <Button
+                    id="login"
                     as="a"
                     bg="none"
                     _hover={{ bg: "purple.600" }}
@@ -131,6 +135,7 @@ function Header() {
 
                 <NextLink href="/register" passHref>
                   <Button
+                    id="signUp"
                     as="a"
                     bg="purple.600"
                     _hover={{ bg: "purple.800" }}

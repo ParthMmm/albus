@@ -122,7 +122,7 @@ function Album({ thing }) {
           as={`/album/${properties.artist}/${encodeURIComponent(
             properties.name
           )}`}
-          passHref
+          // passHref
         >
           <Image
             src={properties.imageUrl}

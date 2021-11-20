@@ -94,13 +94,9 @@ function AlbumInfo() {
       album.getID(albumName, artist);
       setFetch(true);
     }
+    console.log(album.album, albumName, artist, album.albumID);
   }, [router.query.slug]);
 
-  // if (currentAlbum.image) {
-  //   color = useAverageColor(currentAlbum.image);
-  //   // console.log(color);
-  //   console.log(currentAlbum.image);
-  // }
   color = useAverageColor(currentAlbum?.image);
 
   if (!data) {

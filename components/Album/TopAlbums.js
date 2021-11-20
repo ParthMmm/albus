@@ -41,6 +41,7 @@ function TopAlbums() {
   }
   if (data) {
     albums = data.albums.album;
+    // console.log(albums);
     return (
       <Grid
         gridTemplateColumns={[
@@ -54,7 +55,7 @@ function TopAlbums() {
         mx={-1}
       >
         {albums.map((album) => (
-          <Album key={album.artist.mbid} thing={album} />
+          <Album key={album.name} thing={album} />
         ))}
       </Grid>
     );

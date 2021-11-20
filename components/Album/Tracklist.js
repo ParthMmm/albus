@@ -26,6 +26,7 @@ function Tracklist({ tracks, color }) {
               _hover={{ bg: "tomato" }}
               rounded="xl"
               p={2}
+              key={track.name}
             >
               <Box>
                 <Text as="span" fontSize="lg">

@@ -23,7 +23,7 @@ function TrendingArtists() {
         gap={3}
       >
         {data.artists.artist.map((artist) => (
-          <Artist key={artist.mbid} artist={artist} />
+          <Artist key={artist.url} artist={artist} />
         ))}
       </Grid>
     );
