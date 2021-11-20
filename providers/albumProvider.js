@@ -23,6 +23,7 @@ function useProvideAlbum() {
   const [error, setError] = useState("");
   const [albumID, setAlbumID] = useState("");
   const [reviews, setReviews] = useState("");
+  const [numReviews, setNumReviews] = useState(0);
 
   const handleAlbum = async (mbid, albumName, artist) => {
     if (mbid || (albumName && artist)) {
@@ -60,6 +61,7 @@ function useProvideAlbum() {
       );
       if (res.status === 200) {
         setReviews(res.data);
+        setNumReviews(res.data.length);
         setLoading(false);
         return;
       }
@@ -77,6 +79,7 @@ function useProvideAlbum() {
     albumID,
     fetchReviews,
     reviews,
+    numReviews,
   };
 }
 
