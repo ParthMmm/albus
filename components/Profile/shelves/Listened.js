@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useProfile } from "../../../providers/profileProvider";
 import { useAuth } from "../../../providers/authProvider";
-import { Grid, Box, Heading, Skeleton } from "@chakra-ui/react";
+import { Grid, Box, Heading, Skeleton, Flex } from "@chakra-ui/react";
 import Album from "../../Album/Album";
 import { useRouter } from "next/router";
 import { albumMBIDCheck } from "../../../utils/albumCheck";

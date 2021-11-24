@@ -3,7 +3,8 @@ import { Box, Stack, Text, Link, useColorMode, Flex } from "@chakra-ui/react";
 import { RatingView } from "react-simple-star-rating";
 import NextLink from "next/link";
 
-function Review({ review }) {
+function ProfileReview({ review }) {
+  console.log(review);
   return (
     <Box
       d="flex"
@@ -14,6 +15,25 @@ function Review({ review }) {
       rounded="xl"
     >
       <Box>
+        <NextLink
+          href={{
+            pathname: `/album/[...slug]`,
+            query: {
+              artist: review.album.artist,
+              name: review.album.albumName,
+            },
+          }}
+          as={`/album/${review.album.artist}/${encodeURIComponent(
+            review.album.albumName
+          )}`}
+          // passHref
+        >
+          <Text>
+            <Link>
+              {review.album.artist} - {review.album.albumName}
+            </Link>
+          </Text>
+        </NextLink>
         <RatingView ratingValue={review.rating} />
 
         <Text fontSize="lg">{review.title}</Text>
@@ -39,4 +59,4 @@ function Review({ review }) {
   );
 }
 
-export default Review;
+export default ProfileReview;

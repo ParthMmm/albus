@@ -26,7 +26,7 @@ function useProvideAuth() {
   const [listened, setListened] = useState(null);
   const [wantToListen, setWantToListen] = useState(null);
   const [listening, setListening] = useState(null);
-
+  const [reviews, setReviews] = useState(null);
   const router = useRouter();
 
   const handleUser = async (rawUser) => {
@@ -213,6 +213,22 @@ function useProvideAuth() {
     handleUser(false);
   };
 
+  const fetchUserReviews = async () => {
+    setLoading(true);
+
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/fetchUserReviews?id=${user.user_id}`
+    );
+
+    if (res.status === 200) {
+      setReviews(res.data);
+      setLoading(false);
+      return;
+    }
+    setLoading(false);
+    return;
+  };
+
   return {
     user,
     userInfo,
@@ -230,6 +246,8 @@ function useProvideAuth() {
     setWantToListen,
     listening,
     readCookie,
+    fetchUserReviews,
+    reviews,
   };
 }
 
@@ -244,6 +262,7 @@ const formatUser = async (data) => {
 const formatUserInfo = async (data) => {
   return {
     user_id: data._id,
+
     username: data.username,
     actions: {
       listened: data.listened,

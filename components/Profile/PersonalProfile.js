@@ -15,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import SavedAlbums from "./SavedAlbums";
 import { FaSpotify, FaLastfmSquare } from "react-icons/fa";
+import ProfileReviews from "./ProfileReviews";
 
 function PersonalProfile() {
   const auth = useAuth();
@@ -25,8 +26,11 @@ function PersonalProfile() {
     userID = router.query.pid;
     if (userID) {
       auth.fetchUserInfo(auth.user.user_id);
+      auth.fetchUserReviews();
     }
   }, [router.query]);
+
+  console.log(auth.reviews);
   if (auth.loading) {
     return (
       <>
@@ -238,9 +242,26 @@ function PersonalProfile() {
           ></Box>
         </Box>
 
-        <Box>
-          <SavedAlbums profile={auth.userInfo} />
+        <Box
+          d="flex"
+          justifyContent="center"
+          alignItems="flex-start"
+          mt={10}
+          mx={10}
+          flexDir={{ base: "column", md: "row" }}
+        >
+          {auth.reviews ? (
+            <Box w={{ md: "40%" }}>
+              <ProfileReviews />
+            </Box>
+          ) : (
+            <></>
+          )}
+          <Box w={{ md: "60%" }}>
+            <SavedAlbums profile={auth.userInfo} />
+          </Box>
         </Box>
+        <Box w="60%" mx="auto"></Box>
       </>
     );
   }
