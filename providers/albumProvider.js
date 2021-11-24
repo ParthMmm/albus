@@ -3,6 +3,8 @@ import router from "next/router";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { albumInfoFetch } from "../utils/fetch";
+import _ from "lodash";
+
 const AlbumContext = createContext();
 
 export function AlbumProvider({ children }) {
@@ -24,6 +26,7 @@ function useProvideAlbum() {
   const [albumID, setAlbumID] = useState("");
   const [reviews, setReviews] = useState("");
   const [numReviews, setNumReviews] = useState(0);
+  const [avgRating, setAvgRating] = useState("");
 
   const handleAlbum = async (mbid, albumName, artist) => {
     if (mbid || (albumName && artist)) {
@@ -62,6 +65,12 @@ function useProvideAlbum() {
       if (res.status === 200) {
         setReviews(res.data);
         setNumReviews(res.data.length);
+
+        let x = res.data.map((review) => {
+          return review.rating;
+        });
+
+        setAvgRating(_.round(_.mean(x)));
         setLoading(false);
         return;
       }
@@ -80,6 +89,7 @@ function useProvideAlbum() {
     fetchReviews,
     reviews,
     numReviews,
+    avgRating,
   };
 }
 

@@ -93,6 +93,8 @@ function useProvideAction() {
     if (res.status === 200) {
       auth.fetchUserInfo(auth.user.user_id);
       // router.back();
+      router.push(`/profile/${auth.user.user_id}`);
+
       setLoading(false);
     }
     setLoading(false);

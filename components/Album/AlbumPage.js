@@ -32,6 +32,8 @@ import useAverageColor from "../../utils/useAverageColor";
 import Reviews from "../Reviews/Reviews";
 import CreateReview from "../Reviews/CreateReview";
 
+import { RatingView } from "react-simple-star-rating";
+
 function AlbumInfo() {
   const router = useRouter();
   const album = useAlbum();
@@ -94,7 +96,6 @@ function AlbumInfo() {
       album.getID(albumName, artist);
       setFetch(true);
     }
-    console.log(album.album, albumName, artist, album.albumID);
   }, [router.query.slug]);
 
   color = useAverageColor(currentAlbum?.image);
@@ -231,6 +232,9 @@ function AlbumInfo() {
                 </b>
               </Text>
             </Flex>
+            <Flex mt={2} align="center">
+              <RatingView ratingValue={album.avgRating} />
+            </Flex>
             <SimpleGrid
               mt={3}
               columns={{ base: 2, sm: 4, md: 5, lg: 3 }}
@@ -274,11 +278,6 @@ function AlbumInfo() {
             <></>
           )}
           <Box w="60%">
-            <Flex justifyContent="space-between">
-              {" "}
-              <Heading>reviews</Heading>
-              <CreateReview />
-            </Flex>
             <Reviews color={color} />
           </Box>
         </Flex>

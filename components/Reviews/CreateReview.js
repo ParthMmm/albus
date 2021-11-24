@@ -28,7 +28,7 @@ import { useAlbum } from "../../providers/albumProvider";
 
 // import ReviewModal from "./ReviewModal";
 
-function CreateReview() {
+function CreateReview({ setNewReview }) {
   const { colorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -36,16 +36,20 @@ function CreateReview() {
 
   return (
     <>
-      <Button onClick={onOpen} size="sm">
+      <Button onClick={onOpen} as={MdAdd} size="sm">
         Open Modal
       </Button>
-      <ReviewModal isOpen={isOpen} onClose={onClose} album={album?.album} />
+      <ReviewModal
+        isOpen={isOpen}
+        onClose={onClose}
+        album={album?.album}
+        setNewReview={setNewReview}
+      />
     </>
   );
 }
 
-const ReviewModal = ({ isOpen, onClose, album }) => {
-  // const { colorMode } = useColorMode();
+const ReviewModal = ({ isOpen, onClose, album, setNewReview }) => {
   const [rating, setRating] = useState(0);
   const action = useAction();
   const albumProvider = useAlbum();
@@ -95,6 +99,7 @@ const ReviewModal = ({ isOpen, onClose, album }) => {
               actions.setSubmitting(false);
               actions.resetForm({});
               setRating(0);
+              setNewReview(true);
               onClose();
             }}
           >

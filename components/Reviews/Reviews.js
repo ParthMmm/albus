@@ -8,10 +8,13 @@ import {
   useColorMode,
   Button,
   HStack,
+  Heading,
 } from "@chakra-ui/react";
+import _ from "lodash";
 import Review from "./Review";
 import { useAlbum } from "../../providers/albumProvider";
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
+import CreateReview from "./CreateReview";
 function Reviews({ color }) {
   const { colorMode } = useColorMode();
   const album = useAlbum();
@@ -19,6 +22,7 @@ function Reviews({ color }) {
   const [firstIndex, setFirstIndex] = useState(0);
   const [lastIndex, setLastIndex] = useState(10);
   const [page, setPage] = useState(1);
+  const [newReview, setNewReview] = useState(false);
 
   useEffect(() => {
     album.fetchReviews();
@@ -26,7 +30,11 @@ function Reviews({ color }) {
 
   useEffect(() => {
     album.fetchReviews();
-  }, [album.reviews]);
+
+    return () => {
+      setNewReview(false);
+    };
+  }, [newReview]);
 
   const prevPage = () => {
     setFirstIndex(firstIndex - 10);
@@ -40,14 +48,14 @@ function Reviews({ color }) {
     setPage(page + 1);
   };
 
-  // if (album?.reviews) {
-  //   console.log(album?.reviews.length);
-  // console.log(firstIndex, lastIndex);
-  // }
-
   if (album.reviews) {
     return (
       <>
+        <Flex justifyContent="space-between" alignItems="center">
+          <Heading>reviews</Heading>
+          <CreateReview setNewReview={setNewReview} />
+        </Flex>
+
         <Box
           mt={1}
           color={colorMode === "dark" ? "white" : "black"}
@@ -89,7 +97,12 @@ function Reviews({ color }) {
       </>
     );
   } else {
-    return <p>loading</p>;
+    return (
+      <Flex justifyContent="space-between" alignItems="center">
+        <Heading>reviews</Heading>
+        <CreateReview />
+      </Flex>
+    );
   }
 }
 
