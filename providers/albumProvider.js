@@ -26,7 +26,7 @@ function useProvideAlbum() {
   const [albumID, setAlbumID] = useState("");
   const [reviews, setReviews] = useState("");
   const [numReviews, setNumReviews] = useState(0);
-  const [avgRating, setAvgRating] = useState("");
+  const [avgRating, setAvgRating] = useState(0);
 
   const handleAlbum = async (mbid, albumName, artist) => {
     if (mbid || (albumName && artist)) {
@@ -74,9 +74,19 @@ function useProvideAlbum() {
         setLoading(false);
         return;
       }
+      setReviews("");
+      setNumReviews(0);
+      setAvgRating(0);
       setLoading(false);
       return;
     }
+    return;
+  };
+
+  const resetReviews = () => {
+    setReviews("");
+    setNumReviews(0);
+    setAvgRating(0);
     return;
   };
 
@@ -90,6 +100,8 @@ function useProvideAlbum() {
     reviews,
     numReviews,
     avgRating,
+    setReviews,
+    resetReviews,
   };
 }
 

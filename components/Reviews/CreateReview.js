@@ -25,14 +25,21 @@ import { Rating, RatingView } from "react-simple-star-rating";
 import { Formik, Field, Form } from "formik";
 import { useAction } from "../../providers/actionProvider";
 import { useAlbum } from "../../providers/albumProvider";
+import useNewReview from "../../utils/useNewReview";
 
 // import ReviewModal from "./ReviewModal";
 
-function CreateReview({ setNewReview }) {
+function CreateReview() {
   const { colorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const album = useAlbum();
+
+  const submitHandler = () => {
+    // useNewReview(true);
+
+    console.log("submitted");
+  };
 
   return (
     <>
@@ -43,13 +50,13 @@ function CreateReview({ setNewReview }) {
         isOpen={isOpen}
         onClose={onClose}
         album={album?.album}
-        setNewReview={setNewReview}
+        submitHandler={submitHandler}
       />
     </>
   );
 }
 
-const ReviewModal = ({ isOpen, onClose, album, setNewReview }) => {
+const ReviewModal = ({ isOpen, onClose, album, submitHandler }) => {
   const [rating, setRating] = useState(0);
   const action = useAction();
   const albumProvider = useAlbum();
@@ -79,6 +86,8 @@ const ReviewModal = ({ isOpen, onClose, album, setNewReview }) => {
     return errors;
   };
 
+  // setNewReview(true);
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -99,7 +108,9 @@ const ReviewModal = ({ isOpen, onClose, album, setNewReview }) => {
               actions.setSubmitting(false);
               actions.resetForm({});
               setRating(0);
-              setNewReview(true);
+
+              // submitHandler();
+
               onClose();
             }}
           >

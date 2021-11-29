@@ -252,7 +252,7 @@ function PersonalProfile() {
         >
           {auth.reviews ? (
             <Box w={{ md: "40%" }}>
-              <ProfileReviews />
+              <ProfileReviews authProfile={true} otherProfile={false} />
             </Box>
           ) : (
             <></>

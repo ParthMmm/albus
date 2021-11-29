@@ -89,17 +89,23 @@ function AlbumInfo() {
   };
 
   useEffect(() => {
+    album.resetReviews();
+
     if (router.query.slug) {
       artist = router.query.slug[0];
       albumName = router.query.slug[1];
 
       album.getID(albumName, artist);
+      album.fetchReviews();
       setFetch(true);
     }
+
+    console.log(album.reviews);
+    console.log(router.query.slug);
   }, [router.query.slug]);
 
   color = useAverageColor(currentAlbum?.image);
-
+  // console.log(album.loading);
   if (!data) {
     return (
       <>
@@ -267,7 +273,7 @@ function AlbumInfo() {
           // alignItems="center"
         >
           {Array.isArray(currentAlbum.tracks) ? (
-            <Box w="40%" pr={10}>
+            <Box w={{ md: "40%" }} pr={{ md: 10 }}>
               <Box>
                 {" "}
                 <Heading>tracklist</Heading>
@@ -277,7 +283,7 @@ function AlbumInfo() {
           ) : (
             <></>
           )}
-          <Box w="60%">
+          <Box w={{ md: "60%" }} mt={{ base: 10, md: 0 }}>
             <Reviews color={color} />
           </Box>
         </Flex>

@@ -20,6 +20,7 @@ export function useAction() {
 function useProvideAction() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [reviewCreated, setReviewCreated] = useState(false);
   // const [user, setUser] = useState(null);
 
   const auth = useAuth();
@@ -111,6 +112,7 @@ function useProvideAction() {
     if (res.status === 200) {
       // auth.fetchUserInfo(auth.user.user_id);
       // router.back();
+      setReviewCreated(true);
       setLoading(false);
     }
   };
@@ -121,5 +123,7 @@ function useProvideAction() {
     updateInfo,
     loading,
     createReview,
+    reviewCreated,
+    setReviewCreated,
   };
 }

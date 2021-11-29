@@ -15,10 +15,12 @@ import ProfileReview from "./ProfileReview";
 import { useAlbum } from "../../providers/albumProvider";
 import { useAuth } from "../../providers/authProvider";
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
-function ProfileReviews() {
+import { useProfile } from "../../providers/profileProvider";
+function ProfileReviews({ authProfile, otherProfile }) {
   const { colorMode } = useColorMode();
   const album = useAlbum();
   const auth = useAuth();
+  const profile = useProfile();
   const [firstIndex, setFirstIndex] = useState(0);
   const [lastIndex, setLastIndex] = useState(5);
   const [page, setPage] = useState(1);
@@ -49,9 +51,17 @@ function ProfileReviews() {
     setPage(page + 1);
   };
 
-  // console.log(album.numReviews);
+  let reviews = false;
+  if (otherProfile) {
+    reviews = profile.reviews;
+  }
+  if (authProfile) {
+    reviews = auth.reviews;
+  }
+  console.log(otherProfile, authProfile);
 
-  if (auth.reviews) {
+  // console.log(album.numReviews);
+  if (reviews) {
     return (
       <>
         <Flex justifyContent="space-between" alignItems="center">
@@ -73,7 +83,7 @@ function ProfileReviews() {
           bg={colorMode === "dark" ? "componentBg" : "white"}
         >
           <Stack spacing={4}>
-            {auth.reviews.slice(firstIndex, lastIndex).map((review) => {
+            {reviews.slice(firstIndex, lastIndex).map((review) => {
               return <ProfileReview review={review} key={review._id} />;
             })}
           </Stack>
@@ -91,7 +101,7 @@ function ProfileReviews() {
             <Button as={MdNavigateBefore} onClick={() => prevPage()} />
           )}
           <Text as="span">{page}</Text>
-          {lastIndex > auth.reviews.length ? (
+          {lastIndex >= reviews.length ? (
             <Button visibility="hidden" />
           ) : (
             <Button as={MdNavigateNext} onClick={() => nextPage()} />
