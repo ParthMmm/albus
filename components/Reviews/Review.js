@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Box, Stack, Text, Link, useColorMode, Flex } from "@chakra-ui/react";
 import { RatingView } from "react-simple-star-rating";
 import NextLink from "next/link";
-
+import Moment from "react-moment";
+import "moment-timezone";
 function Review({ review }) {
   return (
     <Box
@@ -15,6 +16,10 @@ function Review({ review }) {
     >
       <Box>
         <RatingView ratingValue={review.rating} />
+        <Text fontSize="sm" color="gray.500">
+          <Moment local date={review.datePosted} format="MM/D/YY hh:mm A" />
+          {/* {review.datePosted} */}
+        </Text>
 
         <Text fontSize="lg">{review.title}</Text>
         <Text fontSize="sm">{review.reviewBody}</Text>

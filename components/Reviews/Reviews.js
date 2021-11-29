@@ -9,6 +9,7 @@ import {
   Button,
   HStack,
   Heading,
+  Select,
 } from "@chakra-ui/react";
 import _ from "lodash";
 import Review from "./Review";
@@ -28,27 +29,26 @@ function Reviews({ color }) {
   const [firstIndex, setFirstIndex] = useState(0);
   const [lastIndex, setLastIndex] = useState(10);
   const [page, setPage] = useState(1);
-  // const [newReview, setNewReview] = useState(false);
-
-  // useEffect(() => {
-  //   if(router.query.slug){
-
-  //   }
-  // }, [router.query.slug])
+  const [filter, setFilter] = useState("");
+  const [data, setData] = useState(album.reviews);
+  // console.log(data);
   useEffect(() => {
     album.fetchReviews();
-    // return () => {
-    //   album.setReviews("");
-    // };
-  }, [album.album]);
-
-  useEffect(() => {
-    album.fetchReviews();
+    if (album.reviews) {
+      setData(album.reviews);
+    }
 
     return () => {
       action.setReviewCreated(false);
+      setFilter("");
     };
   }, [action.reviewCreated]);
+
+  useEffect(() => {
+    if (album.reviews) {
+      setData(album.reviews);
+    }
+  }, [album.reviews]);
 
   const prevPage = () => {
     setFirstIndex(firstIndex - 10);
@@ -62,14 +62,79 @@ function Reviews({ color }) {
     setPage(page + 1);
   };
 
-  console.log(action.reviewCreated);
+  useEffect(() => {
+    if (data && filter === "date") {
+      const sortByDate = [...data];
+      sortByDate.sort((a, b) => {
+        return (
+          new Date(b.datePosted).getTime() - new Date(a.datePosted).getTime()
+        );
+        // console.log("1,", b.datePosted - a.datePosted);
+        console.log(
+          new Date(b.datePosted).getTime() - new Date(a.datePosted).getTime()
+        );
+        // console.log(new Date(b.datePosted).getTime());
+      });
 
-  if (album.reviews) {
+      setData(sortByDate);
+
+      console.log(sortByDate);
+      return;
+    }
+
+    if (data && filter === "datea") {
+      const sortByDate = [...data];
+      sortByDate.sort((a, b) => {
+        return (
+          new Date(a.datePosted).getTime() - new Date(b.datePosted).getTime()
+        );
+        // console.log(new Date(a.datePosted).getTime());
+        // console.log(new Date(b.datePosted).getTime());
+        console.log(
+          new Date(a.datePosted).getTime() - new Date(b.datePosted).getTime()
+        );
+      });
+      setData(sortByDate);
+
+      console.log(sortByDate);
+      return;
+    }
+
+    if (data && filter === "rating") {
+      //descending order
+      const sortByRating = [...data];
+      sortByRating.sort((a, b) => b.rating - a.rating);
+      setData(sortByRating);
+
+      // console.log(sortByRating);
+      return;
+    }
+
+    if (filter === "") {
+      setData(album.reviews);
+      console.log("aaaaa");
+      return;
+    }
+  }, [filter]);
+
+  if (data) {
     return (
       <>
         <Flex justifyContent="space-between" alignItems="center">
           <Heading>reviews</Heading>
-          <CreateReview />
+          <Flex alignItems="center" justifyContent="space-evenly">
+            <Select
+              placeholder="sort by"
+              variant="filled"
+              onChange={(e) => setFilter(e.target.value)}
+              value={filter}
+            >
+              <option value="date">date</option>
+              <option value="datea">date a</option>
+              <option value="rating">rating</option>
+            </Select>
+            <CreateReview />
+          </Flex>
         </Flex>
 
         <Box
@@ -86,7 +151,7 @@ function Reviews({ color }) {
           bg={colorMode === "dark" ? "componentBg" : "white"}
         >
           <Stack spacing={4}>
-            {album?.reviews.slice(firstIndex, lastIndex).map((review) => {
+            {data.slice(firstIndex, lastIndex).map((review) => {
               return <Review review={review} key={review._id} />;
             })}
           </Stack>
@@ -104,7 +169,7 @@ function Reviews({ color }) {
             <Button as={MdNavigateBefore} onClick={() => prevPage()} />
           )}
           <Text as="span">{page}</Text>
-          {lastIndex > album.numReviews ? (
+          {lastIndex >= album.numReviews ? (
             <Button visibility="hidden" />
           ) : (
             <Button as={MdNavigateNext} onClick={() => nextPage()} />

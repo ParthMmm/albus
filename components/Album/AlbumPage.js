@@ -96,7 +96,7 @@ function AlbumInfo() {
       albumName = router.query.slug[1];
 
       album.getID(albumName, artist);
-      album.fetchReviews();
+      album.fetchReviews(albumName, artist);
       setFetch(true);
     }
 

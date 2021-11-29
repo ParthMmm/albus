@@ -27,7 +27,7 @@ function useProvideAlbum() {
   const [reviews, setReviews] = useState("");
   const [numReviews, setNumReviews] = useState(0);
   const [avgRating, setAvgRating] = useState(0);
-
+  const [filtered, setFiltered] = useState(0);
   const handleAlbum = async (mbid, albumName, artist) => {
     if (mbid || (albumName && artist)) {
       const album = await formatAlbum(mbid, albumName, artist);
@@ -57,12 +57,18 @@ function useProvideAlbum() {
     }
     return;
   };
-  const fetchReviews = async () => {
-    if (album?.albumName && album?.artist) {
+  const fetchReviews = async (albumName, artist) => {
+    if (!albumName && !artist) {
+      albumName = album?.albumName;
+      artist = album?.artist;
+    }
+
+    if (artist && albumName) {
       const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/fetchAlbumReviews?albumName=${album.albumName}&artist=${album.artist}`
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/fetchAlbumReviews?albumName=${albumName}&artist=${artist}`
       );
       if (res.status === 200) {
+        console.log(res.data);
         setReviews(res.data);
         setNumReviews(res.data.length);
 
@@ -80,6 +86,26 @@ function useProvideAlbum() {
       setLoading(false);
       return;
     }
+    return;
+  };
+
+  const filterReviews = async (filter) => {
+    // console.log(reviews);]
+    if (reviews && filter === "date") {
+      let result = reviews.sort((a, b) => b.datePosted - a.datePosted);
+      setReviews(result);
+      setFiltered(true);
+
+      console.log(result);
+    }
+    if (reviews && filter === "rating") {
+      //descending order
+      let result = reviews.sort((a, b) => b.rating - a.rating);
+      setReviews(result);
+      setFiltered(true);
+      console.log(result);
+    }
+
     return;
   };
 
@@ -102,6 +128,8 @@ function useProvideAlbum() {
     avgRating,
     setReviews,
     resetReviews,
+    filterReviews,
+    filtered,
   };
 }
 
