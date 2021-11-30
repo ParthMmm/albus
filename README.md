@@ -7,6 +7,7 @@ Find your new favorite album, and keep track of your albums.
 - Album search
 - Log albums
 - Profiles
+- Reviews
 - Dark mode compatibility
 - Responsive design
 
