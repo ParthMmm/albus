@@ -12,7 +12,7 @@ function Tracklist({ tracks, color }) {
       borderRadius="sm"
       rounded="xl"
       boxShadow="lg"
-      p={5}
+      p={["2", "5"]}
       bg={colorMode === "dark" ? "componentBg" : "white"}
     >
       <Stack spacing={4}>

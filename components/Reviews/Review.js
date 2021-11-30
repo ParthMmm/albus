@@ -19,33 +19,30 @@ function Review({ review, profile }) {
   const { colorMode } = useColorMode();
   const [show, setShow] = useState(false);
   const [wordCount, setWordCount] = useState(0);
-  const [numLines, setNumLines] = useState(6);
-  // let wordCount = 0;
+  const [numLines, setNumLines] = useState(["3", "6"]);
   const titleRef = useRef(null);
+  const buttonRef = useRef(null);
 
   const executeScroll = (ref) =>
-    ref.current.scrollIntoView({ behavior: "smooth" });
+    ref.current.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+      inline: "center",
+    });
 
   useEffect(() => {
-    // wordCount = countWords(review.reviewBody);
     setWordCount(countWords(review.reviewBody));
-    console.log(wordCount);
-    console.log(numLines);
   }, [review]);
 
   const handleToggle = () => {
     setShow(!show);
 
-    // setTimeout(() => {
-    //   show ? setNumLines(6) : setNumLines("none");
-    // }, 100);
     show
       ? setTimeout(() => {
-          setNumLines(6);
-        }, 100)
+          setNumLines(["3", "6"]);
+        }, 200)
       : setNumLines("none");
   };
-  // wordCount > 80 ? setNumLines(6) : setNumLines("none");
 
   return (
     <Box d="flex" flexDir="column" justifyContent="space-between" rounded="xl">
@@ -90,7 +87,7 @@ function Review({ review, profile }) {
           </Text>
         ) : (
           <Box>
-            <Collapse startingHeight={150} in={show} animateOpacity>
+            <Collapse startingHeight={["50", "150"]} in={show} animateOpacity>
               {" "}
               <Text fontSize="md" mt={2} noOfLines={numLines}>
                 {review.reviewBody}
@@ -105,7 +102,7 @@ function Review({ review, profile }) {
               _hover={{ color: "tomato" }}
               onClick={() => {
                 handleToggle();
-                executeScroll(titleRef);
+                show ? executeScroll(titleRef) : null;
               }}
             ></Button>{" "}
           </Box>

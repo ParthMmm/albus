@@ -68,7 +68,6 @@ function useProvideAlbum() {
         `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/fetchAlbumReviews?albumName=${albumName}&artist=${artist}`
       );
       if (res.status === 200) {
-        console.log(res.data);
         setReviews(res.data);
         setNumReviews(res.data.length);
 
@@ -90,20 +89,16 @@ function useProvideAlbum() {
   };
 
   const filterReviews = async (filter) => {
-    // console.log(reviews);]
     if (reviews && filter === "date") {
       let result = reviews.sort((a, b) => b.datePosted - a.datePosted);
       setReviews(result);
       setFiltered(true);
-
-      console.log(result);
     }
     if (reviews && filter === "rating") {
       //descending order
       let result = reviews.sort((a, b) => b.rating - a.rating);
       setReviews(result);
       setFiltered(true);
-      console.log(result);
     }
 
     return;

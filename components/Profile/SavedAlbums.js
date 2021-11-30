@@ -43,7 +43,12 @@ function SavedAlbums({ profile }) {
   });
 
   return (
-    <Box w="80%" h="40rem" mx="auto" color={{ dark: "white", light: "black" }}>
+    <Box
+      w={{ base: "100%", md: "80%" }}
+      h="40rem"
+      mx="auto"
+      color={{ dark: "white", light: "black" }}
+    >
       {listening ? (
         <Box
           d="flex"
