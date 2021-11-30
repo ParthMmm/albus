@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Album from "../Album/Album";
 import { useAuth } from "../../providers/authProvider";
-import { Grid, Box, Heading, Text, Link } from "@chakra-ui/react";
+import { Grid, Box, Heading, Text, Link, Flex } from "@chakra-ui/react";
 import NextLink from "next/link";
 import albumCheck from "../../utils/albumCheck";
 function SavedAlbums({ profile }) {
@@ -43,13 +43,7 @@ function SavedAlbums({ profile }) {
   });
 
   return (
-    <Box
-      w="80%"
-      h="40rem"
-      mx="auto"
-      mt={10}
-      color={{ dark: "white", light: "black" }}
-    >
+    <Box w="80%" h="40rem" mx="auto" color={{ dark: "white", light: "black" }}>
       {listening ? (
         <Box
           d="flex"
@@ -68,7 +62,10 @@ function SavedAlbums({ profile }) {
                   pathname: `/profile/${profile.user_id}/listening`,
                 }}
               >
-                <Link _hover={{ color: "purple.300" }}> show all</Link>
+                <Link href="" _hover={{ color: "purple.300" }}>
+                  {" "}
+                  show all
+                </Link>
               </NextLink>
             ) : (
               <></>
@@ -82,7 +79,12 @@ function SavedAlbums({ profile }) {
         gridTemplateColumns={[
           "repeat(1, 1fr)",
           "repeat(2, 1fr)",
-          "repeat(4, 1fr)",
+          "repeat(2, 1fr)",
+        ]}
+        gridTemplateRows={[
+          "repeat(1, 1fr)",
+          "repeat(2, 1fr)",
+          "repeat(2, 1fr)",
         ]}
         gap={3}
       >
@@ -110,7 +112,10 @@ function SavedAlbums({ profile }) {
                   pathname: `/profile/${profile.user_id}/listened`,
                 }}
               >
-                <Link _hover={{ color: "purple.300" }}> show all</Link>
+                <Link href="" _hover={{ color: "purple.300" }}>
+                  {" "}
+                  show all
+                </Link>
               </NextLink>
             ) : (
               <></>
@@ -124,7 +129,12 @@ function SavedAlbums({ profile }) {
         gridTemplateColumns={[
           "repeat(1, 1fr)",
           "repeat(2, 1fr)",
-          "repeat(4, 1fr)",
+          "repeat(2, 1fr)",
+        ]}
+        gridTemplateRows={[
+          "repeat(1, 1fr)",
+          "repeat(2, 1fr)",
+          "repeat(2, 1fr)",
         ]}
         gap={3}
       >
@@ -154,7 +164,10 @@ function SavedAlbums({ profile }) {
                   pathname: `/profile/${profile.user_id}/wantToListen`,
                 }}
               >
-                <Link _hover={{ color: "purple.300" }}> show all</Link>
+                <Link href="" _hover={{ color: "purple.300" }}>
+                  {" "}
+                  show all
+                </Link>
               </NextLink>
             ) : (
               <> </>
@@ -168,7 +181,12 @@ function SavedAlbums({ profile }) {
         gridTemplateColumns={[
           "repeat(1, 1fr)",
           "repeat(2, 1fr)",
-          "repeat(4, 1fr)",
+          "repeat(2, 1fr)",
+        ]}
+        gridTemplateRows={[
+          "repeat(1, 1fr)",
+          "repeat(2, 1fr)",
+          "repeat(2, 1fr)",
         ]}
         gap={3}
         pb={10}

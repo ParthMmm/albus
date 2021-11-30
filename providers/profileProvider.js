@@ -24,6 +24,7 @@ function useProvideProfile() {
   const [listened, setListened] = useState(null);
   const [wantToListen, setWantToListen] = useState(null);
   const [listening, setListening] = useState(null);
+  const [reviews, setReviews] = useState(null);
 
   const handleProfileInfo = async (rawProfile) => {
     if (rawProfile) {
@@ -59,11 +60,29 @@ function useProvideProfile() {
     }
   };
 
+  const fetchUserReviews = async (userID) => {
+    setLoading(true);
+
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/fetchUserReviews?id=${userID}`
+    );
+
+    if (res.status === 200) {
+      setReviews(res.data);
+      setLoading(false);
+      return;
+    }
+    setLoading(false);
+    return;
+  };
+
   return {
     profileInfo,
     loading,
     error,
+    reviews,
     fetchProfileInfo,
+    fetchUserReviews,
   };
 }
 

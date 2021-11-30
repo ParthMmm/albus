@@ -53,7 +53,9 @@ function Artist({ artist }) {
           _hover={{ color: "tomato" }}
         >
           {" "}
-          <Link onClick={() => searchSubmit()}>{artistItem.name} </Link>
+          <Link href="" onClick={() => searchSubmit()}>
+            {artistItem.name}{" "}
+          </Link>
         </Text>
         <Flex mt={2} align="center">
           <Box as={MdPlayArrow} color="orange.400" />

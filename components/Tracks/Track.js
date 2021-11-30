@@ -35,30 +35,34 @@ function Track({ track }) {
         rounded="xl"
         bg={colorMode === "dark" ? "componentBg" : "white"}
       >
-        {" "}
-        <Text
-          fontWeight="bold"
-          lineHeight="normal"
-          fontSize="xl"
-          display="block"
-          _hover={{ color: "tomato" }}
-          // color={colorMode === "dark" ? "purple.300" : "purple.600"}
-          color={colors[randomNum]}
-        >
+        <Link href={trackItem.url}>
+          <Text
+            fontWeight="bold"
+            lineHeight="normal"
+            fontSize="xl"
+            display="block"
+            _hover={{ color: "tomato" }}
+            // color={colorMode === "dark" ? "purple.300" : "purple.600"}
+            color={colors[randomNum]}
+            noOfLines={[2, 2, 2, 2, 2]}
+          >
+            {trackItem.name}
+          </Text>
+        </Link>
+
+        <Link href={trackItem.artistURL}>
           {" "}
-          <Link href={trackItem.url}>
-            <Text noOfLines={[2, 2, 2, 2, 2]}>{trackItem.name}</Text>
-          </Link>
-        </Text>
-        <Text
-          fontSize="sm"
-          color={{ dark: "white", light: "black" }}
-          placeItems="center"
-          fontWeight="semibold"
-          _hover={{ color: "tomato" }}
-        >
-          <Link href={trackItem.artistURL}> {trackItem.artist}</Link>
-        </Text>
+          <Text
+            fontSize="sm"
+            color={{ dark: "white", light: "black" }}
+            placeItems="center"
+            fontWeight="semibold"
+            _hover={{ color: "tomato" }}
+          >
+            {trackItem.artist}{" "}
+          </Text>
+        </Link>
+
         {/* </NextLink> */}
         <Flex mt={2} align="center">
           <Box as={MdPlayArrow} color="orange.400" />

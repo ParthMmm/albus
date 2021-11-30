@@ -15,6 +15,7 @@ import {
   Image,
 } from "@chakra-ui/react";
 import SavedAlbums from "./SavedAlbums";
+import ProfileReviews from "./ProfileReviews";
 import { FaSpotify, FaLastfmSquare } from "react-icons/fa";
 
 function OtherProfile() {
@@ -31,6 +32,7 @@ function OtherProfile() {
 
     if (userID) {
       profile.fetchProfileInfo(userID);
+      profile.fetchUserReviews(userID);
     }
     if (auth.user) {
       setAuthorized(true);
@@ -239,7 +241,7 @@ function OtherProfile() {
               <></>
             )}
           </Box>
-          <Box
+          {/* <Box
             d="flex"
             justifyContent={{ base: "center", md: "flex-end" }}
             flexDir="row"
@@ -254,11 +256,27 @@ function OtherProfile() {
             ) : (
               <></>
             )}
-          </Box>
+          </Box> */}
         </Box>
 
-        <Box>
-          <SavedAlbums profile={profile.profileInfo} />
+        <Box
+          d="flex"
+          justifyContent="center"
+          alignItems="flex-start"
+          mt={10}
+          mx={10}
+          flexDir={{ base: "column", md: "row" }}
+        >
+          {profile.reviews ? (
+            <Box w={{ md: "40%" }}>
+              <ProfileReviews otherProfile={true} authProfile={false} />
+            </Box>
+          ) : (
+            <></>
+          )}
+          <Box w={{ md: "60%" }}>
+            <SavedAlbums profile={profile.profileInfo} />
+          </Box>
         </Box>
       </>
     );

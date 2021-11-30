@@ -20,7 +20,7 @@ import { useAction } from "../../providers/actionProvider";
 import { useRouter } from "next/router";
 import { albumInfoFetch } from "../../utils/fetch";
 import useSWR from "swr";
-import { MdPeople, MdPlayArrow } from "react-icons/md";
+import { MdPeople, MdPlayArrow, MdAdd } from "react-icons/md";
 
 import NumberFormat from "react-number-format";
 import ActionButtons from "./ActionButtons";
@@ -29,6 +29,10 @@ import Tracklist from "./Tracklist";
 import Wiki from "./Wiki";
 import Image from "next/image";
 import useAverageColor from "../../utils/useAverageColor";
+import Reviews from "../Reviews/Reviews";
+import CreateReview from "../Reviews/CreateReview";
+
+import { RatingView } from "react-simple-star-rating";
 
 function AlbumInfo() {
   const router = useRouter();
@@ -85,22 +89,23 @@ function AlbumInfo() {
   };
 
   useEffect(() => {
+    album.resetReviews();
+
     if (router.query.slug) {
       artist = router.query.slug[0];
       albumName = router.query.slug[1];
 
       album.getID(albumName, artist);
+      album.fetchReviews(albumName, artist);
       setFetch(true);
     }
+
+    console.log(album.reviews);
+    console.log(router.query.slug);
   }, [router.query.slug]);
 
-  // if (currentAlbum.image) {
-  //   color = useAverageColor(currentAlbum.image);
-  //   // console.log(color);
-  //   console.log(currentAlbum.image);
-  // }
   color = useAverageColor(currentAlbum?.image);
-
+  // console.log(album.loading);
   if (!data) {
     return (
       <>
@@ -191,23 +196,25 @@ function AlbumInfo() {
               objectFit="contain"
             />
 
-            <Text
-              mt={2}
-              fontSize="xl"
-              fontWeight="bold"
-              lineHeight="short"
-              _hover={{ color: "tomato" }}
-              textDecoration="false"
-            >
-              <Link href={currentAlbum.url}>{currentAlbum.name}</Link>
+            <Text mt={2} fontSize="xl" fontWeight="bold" lineHeight="short">
+              <Link
+                href={currentAlbum.url}
+                _hover={{ color: "tomato" }}
+                textDecoration="none"
+              >
+                {currentAlbum.name}
+              </Link>
             </Text>
-            <Text
-              mt={2}
-              fontSize="lg"
-              fontWeight="semibold"
-              _hover={{ color: "tomato" }}
-            >
-              <Link onClick={() => searchSubmit()}> {currentAlbum.artist}</Link>
+            <Text mt={2} fontSize="lg" fontWeight="semibold">
+              <Link
+                href=""
+                onClick={() => searchSubmit()}
+                _hover={{ color: "tomato" }}
+                textDecoration="none"
+              >
+                {" "}
+                {currentAlbum.artist}
+              </Link>
             </Text>
             <Flex mt={2} align="center">
               <Box as={MdPlayArrow} color="orange.400" />
@@ -233,6 +240,9 @@ function AlbumInfo() {
                 </b>
               </Text>
             </Flex>
+            <Flex mt={2} align="center">
+              <RatingView ratingValue={album.avgRating} />
+            </Flex>
             <SimpleGrid
               mt={3}
               columns={{ base: 2, sm: 4, md: 5, lg: 3 }}
@@ -257,18 +267,28 @@ function AlbumInfo() {
           )}
         </Box>
         <ActionButtons name={currentAlbum.name} artist={currentAlbum.artist} />
-
-        {Array.isArray(currentAlbum.tracks) ? (
-          <Box pb={10}>
-            <Box w="80%" mx="auto">
-              {" "}
-              <Heading>tracklist</Heading>
+        <Flex
+          pb={10}
+          flexDir={{ base: "column", md: "row" }}
+          justifyContent="space-between"
+          mx={24}
+          // alignItems="center"
+        >
+          {Array.isArray(currentAlbum.tracks) ? (
+            <Box w={{ md: "40%" }} pr={{ md: 10 }}>
+              <Box>
+                {" "}
+                <Heading>tracklist</Heading>
+              </Box>
+              <Tracklist color={color} tracks={currentAlbum.tracks} />
             </Box>
-            <Tracklist color={color} tracks={currentAlbum.tracks} />
+          ) : (
+            <></>
+          )}
+          <Box w={{ md: "60%" }} mt={{ base: 10, md: 0 }}>
+            <Reviews color={color} />
           </Box>
-        ) : (
-          <></>
-        )}
+        </Flex>
       </>
     );
   } else {

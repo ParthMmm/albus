@@ -96,6 +96,7 @@ function LogIn() {
                 color="white"
               >
                 <Link
+                  href=""
                   bgGradient="linear(to-l, #FEAC5E, #C779D0,#4BC0C8)"
                   bgClip="text"
                   _hover={{

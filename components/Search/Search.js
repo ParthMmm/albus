@@ -43,6 +43,7 @@ function Search() {
               children={<SearchIcon color="purple.600" />}
             />
             <Input
+              id="search"
               onKeyPress={(e) => handleKeypress(e)}
               value={value}
               onChange={handleChange}
