@@ -99,9 +99,6 @@ function AlbumInfo() {
       album.fetchReviews(albumName, artist);
       setFetch(true);
     }
-
-    console.log(album.reviews);
-    console.log(router.query.slug);
   }, [router.query.slug]);
 
   color = useAverageColor(currentAlbum?.image);
@@ -267,28 +264,33 @@ function AlbumInfo() {
           )}
         </Box>
         <ActionButtons name={currentAlbum.name} artist={currentAlbum.artist} />
-        <Flex
-          pb={10}
-          flexDir={{ base: "column", md: "row" }}
-          justifyContent="space-between"
-          mx={24}
-          // alignItems="center"
-        >
-          {Array.isArray(currentAlbum.tracks) ? (
-            <Box w={{ md: "40%" }} pr={{ md: 10 }}>
-              <Box>
-                {" "}
-                <Heading>tracklist</Heading>
+        <Box w="80%" mx="auto" mt={10} mb={5} color="white">
+          <Flex
+            pb={10}
+            flexDir={{ base: "column", md: "row" }}
+            justifyContent={{ base: "center", md: "space-between" }}
+            // w="100%"
+            // mx={["auto", "24"]}
+            // flexGrow="1"
+
+            // alignItems="center"
+          >
+            {Array.isArray(currentAlbum.tracks) ? (
+              <Box w={{ base: "100%", md: "40%" }} pr={{ md: 10 }}>
+                <Box>
+                  {" "}
+                  <Heading>tracklist</Heading>
+                </Box>
+                <Tracklist color={color} tracks={currentAlbum.tracks} />
               </Box>
-              <Tracklist color={color} tracks={currentAlbum.tracks} />
+            ) : (
+              <></>
+            )}
+            <Box w={{ base: "100%", md: "60%" }} mt={{ base: 10, md: 0 }}>
+              <Reviews color={color} />
             </Box>
-          ) : (
-            <></>
-          )}
-          <Box w={{ md: "60%" }} mt={{ base: 10, md: 0 }}>
-            <Reviews color={color} />
-          </Box>
-        </Flex>
+          </Flex>
+        </Box>
       </>
     );
   } else {

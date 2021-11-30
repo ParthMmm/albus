@@ -39,7 +39,7 @@ function Wiki({ summary }) {
                 rounded="xl"
                 bg="gray.400"
               >
-                <Text _hover={{ color: "tomato" }} fontWeight="semibold">
+                <Text _hover={{ color: "tomato" }}>
                   {" "}
                   show {show ? "less" : "more"}
                 </Text>
