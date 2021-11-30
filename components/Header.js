@@ -56,7 +56,7 @@ function Header() {
               _hover={{ color: "purple.600" }}
               color="white"
             >
-              <Link>albus</Link>
+              <Link href="">albus</Link>
             </Heading>
           </NextLink>
         </Flex>

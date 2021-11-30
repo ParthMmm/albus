@@ -163,6 +163,7 @@ function Album({ thing }) {
           passHref
         >
           <Link
+            href=""
             fontWeight="bold"
             lineHeight="normal"
             fontSize={{ base: "l", md: "xl" }}
@@ -179,7 +180,11 @@ function Album({ thing }) {
           _hover={{ color: "tomato" }}
           textDecoration="purple"
         >
-          <Link onClick={() => searchSubmit()} noOfLines={[2, 2, 2, 2, 3]}>
+          <Link
+            href=""
+            onClick={() => searchSubmit()}
+            noOfLines={[2, 2, 2, 2, 3]}
+          >
             {" "}
             {properties.artist}
           </Link>

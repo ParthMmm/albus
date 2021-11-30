@@ -62,7 +62,10 @@ function SavedAlbums({ profile }) {
                   pathname: `/profile/${profile.user_id}/listening`,
                 }}
               >
-                <Link _hover={{ color: "purple.300" }}> show all</Link>
+                <Link href="" _hover={{ color: "purple.300" }}>
+                  {" "}
+                  show all
+                </Link>
               </NextLink>
             ) : (
               <></>
@@ -109,7 +112,10 @@ function SavedAlbums({ profile }) {
                   pathname: `/profile/${profile.user_id}/listened`,
                 }}
               >
-                <Link _hover={{ color: "purple.300" }}> show all</Link>
+                <Link href="" _hover={{ color: "purple.300" }}>
+                  {" "}
+                  show all
+                </Link>
               </NextLink>
             ) : (
               <></>
@@ -158,7 +164,10 @@ function SavedAlbums({ profile }) {
                   pathname: `/profile/${profile.user_id}/wantToListen`,
                 }}
               >
-                <Link _hover={{ color: "purple.300" }}> show all</Link>
+                <Link href="" _hover={{ color: "purple.300" }}>
+                  {" "}
+                  show all
+                </Link>
               </NextLink>
             ) : (
               <> </>

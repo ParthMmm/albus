@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   Box,
   Flex,
@@ -9,6 +9,7 @@ import {
   Button,
   HStack,
   Heading,
+  Select,
 } from "@chakra-ui/react";
 import _ from "lodash";
 import ProfileReview from "./ProfileReview";
@@ -16,6 +17,7 @@ import { useAlbum } from "../../providers/albumProvider";
 import { useAuth } from "../../providers/authProvider";
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 import { useProfile } from "../../providers/profileProvider";
+import Review from "../Reviews/Review";
 function ProfileReviews({ authProfile, otherProfile }) {
   const { colorMode } = useColorMode();
   const album = useAlbum();
@@ -26,6 +28,16 @@ function ProfileReviews({ authProfile, otherProfile }) {
   const [page, setPage] = useState(1);
   const [newReview, setNewReview] = useState(false);
   const [numReviews, setNumReviews] = useState(0);
+  const [filter, setFilter] = useState("");
+
+  const [data, setData] = useState(auth.reviews);
+
+  const reviewRef = useRef(null);
+
+  const executeScroll = (ref) =>
+    ref.current.scrollIntoView({ behavior: "smooth" });
+
+  // const [title, setTitle] = useState(false);
   //   useEffect(() => {
   //     album.fetchReviews();
   //   }, [album.album]);
@@ -38,6 +50,18 @@ function ProfileReviews({ authProfile, otherProfile }) {
   //     };
   //   }, [newReview]);
   // console.log(auth.reviews);
+  let reviews = false;
+
+  useEffect(() => {
+    if (otherProfile) {
+      reviews = profile.reviews;
+      setData(reviews);
+    }
+    if (authProfile) {
+      reviews = auth.reviews;
+      setData(reviews);
+    }
+  }, [authProfile, otherProfile]);
 
   const prevPage = () => {
     setFirstIndex(firstIndex - 5);
@@ -51,21 +75,74 @@ function ProfileReviews({ authProfile, otherProfile }) {
     setPage(page + 1);
   };
 
-  let reviews = false;
-  if (otherProfile) {
-    reviews = profile.reviews;
-  }
-  if (authProfile) {
-    reviews = auth.reviews;
-  }
-  console.log(otherProfile, authProfile);
+  useEffect(() => {
+    if (data && filter === "newest") {
+      const sortByDate = [...data];
+      sortByDate.sort((a, b) => {
+        return (
+          new Date(b.datePosted).getTime() - new Date(a.datePosted).getTime()
+        );
+      });
+      console.log("news");
+
+      setData(sortByDate);
+      return;
+    }
+
+    if (data && filter === "oldest") {
+      const sortByDate = [...data];
+      sortByDate.sort((a, b) => {
+        return (
+          new Date(a.datePosted).getTime() - new Date(b.datePosted).getTime()
+        );
+      });
+      console.log("olds");
+      setData(sortByDate);
+      return;
+    }
+
+    if (data && filter === "rating") {
+      //descending order
+      const sortByRating = [...data];
+      sortByRating.sort((a, b) => b.rating - a.rating);
+      setData(sortByRating);
+
+      return;
+    }
+
+    if (filter === "") {
+      if (otherProfile) {
+        reviews = profile.reviews;
+        setData(reviews);
+      }
+      if (authProfile) {
+        reviews = auth.reviews;
+        setData(reviews);
+      }
+      return;
+    }
+  }, [filter]);
 
   // console.log(album.numReviews);
-  if (reviews) {
+  if (data) {
     return (
       <>
         <Flex justifyContent="space-between" alignItems="center">
-          <Heading>reviews</Heading>
+          <Heading ref={reviewRef}>reviews</Heading>
+          <Flex>
+            <Select
+              placeholder="sort by"
+              variant="filled"
+              onChange={(e) => setFilter(e.target.value)}
+              value={filter}
+              bg="none"
+              _hover={{ color: "purple.600" }}
+            >
+              <option value="newest">newest</option>
+              <option value="oldest">oldest</option>
+              <option value="rating">rating</option>
+            </Select>
+          </Flex>
           {/* <CreateReview setNewReview={setNewReview} /> */}
         </Flex>
 
@@ -83,8 +160,8 @@ function ProfileReviews({ authProfile, otherProfile }) {
           bg={colorMode === "dark" ? "componentBg" : "white"}
         >
           <Stack spacing={4}>
-            {reviews.slice(firstIndex, lastIndex).map((review) => {
-              return <ProfileReview review={review} key={review._id} />;
+            {data.slice(firstIndex, lastIndex).map((review) => {
+              return <Review review={review} key={review._id} profile={true} />;
             })}
           </Stack>
         </Box>
@@ -98,13 +175,25 @@ function ProfileReviews({ authProfile, otherProfile }) {
           {firstIndex === 0 ? (
             <Button visibility="hidden" />
           ) : (
-            <Button as={MdNavigateBefore} onClick={() => prevPage()} />
+            <Button
+              as={MdNavigateBefore}
+              onClick={() => {
+                prevPage();
+                executeScroll(reviewRef);
+              }}
+            />
           )}
           <Text as="span">{page}</Text>
-          {lastIndex >= reviews.length ? (
+          {lastIndex >= data.length ? (
             <Button visibility="hidden" />
           ) : (
-            <Button as={MdNavigateNext} onClick={() => nextPage()} />
+            <Button
+              as={MdNavigateNext}
+              onClick={() => {
+                nextPage();
+                executeScroll(reviewRef);
+              }}
+            />
           )}
         </Flex>
       </>

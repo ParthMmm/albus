@@ -42,7 +42,13 @@ function CreateReview() {
 
   return (
     <>
-      <Button onClick={onOpen} as={MdAdd} size="sm">
+      <Button
+        onClick={onOpen}
+        as={MdAdd}
+        size="md"
+        bg="none"
+        _hover={{ color: "purple.600" }}
+      >
         Open Modal
       </Button>
       <ReviewModal

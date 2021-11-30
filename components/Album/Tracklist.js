@@ -25,20 +25,23 @@ function Tracklist({ tracks, color }) {
               justifyContent="space-between"
               _hover={{ bg: "tomato" }}
               rounded="xl"
-              p={2}
+              py={2}
+              px={4}
               key={track.name}
             >
-              <Box>
+              <Box _hover={{ color: "purple.600" }}>
                 <Text as="span" fontSize="lg">
                   <b>{track["@attr"].rank}.</b>
                 </Text>
-                <Text
-                  as="span"
-                  fontSize="lg"
-                  fontWeight="semibold"
-                  _hover={{ color: "purple.600" }}
-                >
-                  <Link ml={2} fontSize="md" href={track.url}>
+                <Text as="span" fontSize="lg" fontWeight="semibold">
+                  <Link
+                    ml={2}
+                    fontSize="md"
+                    href={track.url}
+                    isExternal="true"
+                    _hover={{ color: "purple.600" }}
+                    textDecoration="none"
+                  >
                     {track.name}
                   </Link>
                 </Text>

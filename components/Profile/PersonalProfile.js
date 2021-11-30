@@ -30,7 +30,6 @@ function PersonalProfile() {
     }
   }, [router.query]);
 
-  console.log(auth.reviews);
   if (auth.loading) {
     return (
       <>

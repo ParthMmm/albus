@@ -196,23 +196,25 @@ function AlbumInfo() {
               objectFit="contain"
             />
 
-            <Text
-              mt={2}
-              fontSize="xl"
-              fontWeight="bold"
-              lineHeight="short"
-              _hover={{ color: "tomato" }}
-              textDecoration="false"
-            >
-              <Link href={currentAlbum.url}>{currentAlbum.name}</Link>
+            <Text mt={2} fontSize="xl" fontWeight="bold" lineHeight="short">
+              <Link
+                href={currentAlbum.url}
+                _hover={{ color: "tomato" }}
+                textDecoration="none"
+              >
+                {currentAlbum.name}
+              </Link>
             </Text>
-            <Text
-              mt={2}
-              fontSize="lg"
-              fontWeight="semibold"
-              _hover={{ color: "tomato" }}
-            >
-              <Link onClick={() => searchSubmit()}> {currentAlbum.artist}</Link>
+            <Text mt={2} fontSize="lg" fontWeight="semibold">
+              <Link
+                href=""
+                onClick={() => searchSubmit()}
+                _hover={{ color: "tomato" }}
+                textDecoration="none"
+              >
+                {" "}
+                {currentAlbum.artist}
+              </Link>
             </Text>
             <Flex mt={2} align="center">
               <Box as={MdPlayArrow} color="orange.400" />

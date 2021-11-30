@@ -23,7 +23,7 @@ function ShareButton() {
         fontWeight="semibold"
         size="md"
         rounded="xl"
-        bg="0"
+        bg="none"
         onClick={() =>
           toast({
             title: "Copied to Clipboard",

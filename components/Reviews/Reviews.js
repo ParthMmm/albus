@@ -63,40 +63,26 @@ function Reviews({ color }) {
   };
 
   useEffect(() => {
-    if (data && filter === "date") {
+    if (data && filter === "newest") {
       const sortByDate = [...data];
       sortByDate.sort((a, b) => {
         return (
           new Date(b.datePosted).getTime() - new Date(a.datePosted).getTime()
         );
-        // console.log("1,", b.datePosted - a.datePosted);
-        console.log(
-          new Date(b.datePosted).getTime() - new Date(a.datePosted).getTime()
-        );
-        // console.log(new Date(b.datePosted).getTime());
       });
 
       setData(sortByDate);
-
-      console.log(sortByDate);
       return;
     }
 
-    if (data && filter === "datea") {
+    if (data && filter === "oldest") {
       const sortByDate = [...data];
       sortByDate.sort((a, b) => {
         return (
           new Date(a.datePosted).getTime() - new Date(b.datePosted).getTime()
         );
-        // console.log(new Date(a.datePosted).getTime());
-        // console.log(new Date(b.datePosted).getTime());
-        console.log(
-          new Date(a.datePosted).getTime() - new Date(b.datePosted).getTime()
-        );
       });
       setData(sortByDate);
-
-      console.log(sortByDate);
       return;
     }
 
@@ -106,13 +92,11 @@ function Reviews({ color }) {
       sortByRating.sort((a, b) => b.rating - a.rating);
       setData(sortByRating);
 
-      // console.log(sortByRating);
       return;
     }
 
     if (filter === "") {
       setData(album.reviews);
-      console.log("aaaaa");
       return;
     }
   }, [filter]);
@@ -128,9 +112,11 @@ function Reviews({ color }) {
               variant="filled"
               onChange={(e) => setFilter(e.target.value)}
               value={filter}
+              bg="none"
+              _hover={{ color: "purple.600" }}
             >
-              <option value="date">date</option>
-              <option value="datea">date a</option>
+              <option value="newest">newest</option>
+              <option value="oldest">oldest</option>
               <option value="rating">rating</option>
             </Select>
             <CreateReview />
@@ -152,7 +138,9 @@ function Reviews({ color }) {
         >
           <Stack spacing={4}>
             {data.slice(firstIndex, lastIndex).map((review) => {
-              return <Review review={review} key={review._id} />;
+              return (
+                <Review review={review} key={review._id} profile={false} />
+              );
             })}
           </Stack>
         </Box>
