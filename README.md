@@ -1,6 +1,6 @@
 # Albus
 
-Find your new favorite album, and keep track of your albums.
+Find and listen to more albums you'll love, and keep track of albums you want to listen to.
 
 ## Features
 - User registration
