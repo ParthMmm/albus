@@ -35,6 +35,7 @@ function Dashboard() {
       auth.fetchUserInfo(auth.user.user_id);
       fetchActions();
     }
+    console.log(auth.user);
   }, []);
 
   if (auth.loading) {
@@ -146,7 +147,7 @@ function Dashboard() {
 
               <Grid
                 gridTemplateColumns={[
-                  "repeat(2, 1fr)",
+                  "repeat(1, 1fr)",
                   "repeat(2, 1fr)",
                   "repeat(2, 1fr)",
                 ]}

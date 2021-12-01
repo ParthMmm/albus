@@ -162,16 +162,19 @@ function Album({ thing }) {
           )}`}
           passHref
         >
-          <Link
-            href=""
-            fontWeight="bold"
-            lineHeight="normal"
-            fontSize={{ base: "l", md: "xl" }}
-            _hover={{ color: "tomato" }}
-            color={colorMode === "light" ? "purple.600" : "purple.300"}
-          >
-            <Text noOfLines={[2, 2, 2, 2, 3]}> {properties.name}</Text>
-          </Link>
+          <Text>
+            <Link
+              href=""
+              fontWeight="bold"
+              lineHeight="normal"
+              fontSize={{ base: "l", md: "xl" }}
+              _hover={{ color: "tomato" }}
+              color={colorMode === "light" ? "purple.600" : "purple.300"}
+              noOfLines={[2, 2, 2, 2, 3]}
+            >
+              {properties.name}
+            </Link>
+          </Text>
         </NextLink>
 
         <Text
@@ -184,6 +187,7 @@ function Album({ thing }) {
             href=""
             onClick={() => searchSubmit()}
             noOfLines={[2, 2, 2, 2, 3]}
+            isExternal
           >
             {" "}
             {properties.artist}

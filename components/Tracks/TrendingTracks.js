@@ -2,19 +2,19 @@ import React from "react";
 import useSWR from "swr";
 import { chartTopTracks } from "../../utils/fetch";
 import Track from "./Track";
-import { Grid, Box, Skeleton } from "@chakra-ui/react";
+import { Grid, Box, Skeleton, Heading, Text } from "@chakra-ui/react";
+import fetcher from "../../utils/fetcher";
 
 function TrendingTracks() {
-  const { data, error, isValidating } = useSWR(chartTopTracks, {
-    revalidateOnFocus: false,
-    refreshWhenOffline: false,
-    refreshWhenHidden: false,
-    refreshInterval: 0,
-    dedupingInterval: 1000000,
-  });
+  const { data, error, isValidating } = useSWR(chartTopTracks, fetcher);
+
   if (data) {
     return (
-      <div>
+      <>
+        <Box mb={4}>
+          <Heading>trending tracks</Heading>
+          <Text>this week</Text>
+        </Box>
         <Grid
           gridTemplateColumns={[
             "repeat(2, 1fr)",
@@ -27,7 +27,7 @@ function TrendingTracks() {
             <Track key={track.url} track={track} />
           ))}
         </Grid>
-      </div>
+      </>
     );
   }
   if (error || isValidating) {
@@ -41,6 +41,7 @@ function TrendingTracks() {
       </Box>
     );
   }
+  return null;
 }
 
 export default TrendingTracks;

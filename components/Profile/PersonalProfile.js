@@ -144,6 +144,7 @@ function PersonalProfile() {
                 {auth?.userInfo?.info?.spotify ? (
                   <Link
                     href={`https://open.spotify.com/user/${auth?.userInfo?.info?.spotify}`}
+                    isExternal
                   >
                     {" "}
                     <Icon as={FaSpotify} w={5} h={5} mr={2} color="#1DB954" />
@@ -154,6 +155,7 @@ function PersonalProfile() {
                 {auth?.userInfo?.info?.lastfm ? (
                   <Link
                     href={`https://www.last.fm/user/${auth?.userInfo?.info?.lastfm}`}
+                    isExternal
                   >
                     <Icon as={FaLastfmSquare} w={5} h={5} color="#c3000d " />
                   </Link>

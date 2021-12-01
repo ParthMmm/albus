@@ -38,7 +38,7 @@ function Tracklist({ tracks, color }) {
                     ml={2}
                     fontSize="md"
                     href={track.url}
-                    isExternal="true"
+                    isExternal
                     _hover={{ color: "purple.600" }}
                     textDecoration="none"
                   >

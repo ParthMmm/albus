@@ -33,6 +33,7 @@
     "react-moment": "^1.1.1",
     "react-nice-avatar": "^1.2.4",
     "react-number-format": "^4.7.3",
+    "react-select": "^5.2.1",
     "react-simple-star-rating": "^3.0.0",
     "react-spinners": "^0.11.0",
     "swr": "^0.5.6",

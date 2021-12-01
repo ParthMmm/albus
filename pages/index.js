@@ -26,23 +26,11 @@ function index() {
       <Dashboard />
 
       <Box w="80%" h="50rem" mx="auto" mt={10}>
-        <Box mb={4}>
-          <Heading>top dance albums</Heading>
-          <Text>all time</Text>
-        </Box>
         <TopAlbums />
         <Box mt={10}>
-          <Box mb={4}>
-            <Heading>trending artists</Heading>
-            <Text>this week</Text>
-          </Box>
           <TrendingArtists />
         </Box>
         <Box mt={10} pb={10}>
-          <Box mb={4}>
-            <Heading>trending tracks</Heading>
-            <Text>this week</Text>
-          </Box>
           <TrendingTracks />
         </Box>
       </Box>

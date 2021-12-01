@@ -10,4 +10,24 @@ const colors = [
   "purple.300",
   "pink.300",
 ];
-export { emojis, colors };
+
+const genres = [
+  "rock",
+  "electronic",
+  "alternative",
+  "indie",
+  "pop",
+  "metal",
+  "jazz",
+  "experimental",
+  "hip-hop",
+  "dance",
+  "house",
+  "rap",
+  "wave",
+  "progressive house",
+  "deep house",
+  "trance",
+  "techno",
+];
+export { emojis, colors, genres };

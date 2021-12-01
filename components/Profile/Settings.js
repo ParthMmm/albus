@@ -76,22 +76,35 @@ function Settings() {
       <Box>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Flex
-            // height="60vh"
+            w="100%"
             alignItems="center"
             justifyContent="center"
             direction="column"
           >
-            <Heading mb={8}>{auth.user.username}'s profile</Heading>
+            <Heading mb={8}>
+              {" "}
+              <Text
+                as="span"
+                bgGradient="linear(to-l, #FEAC5E, #C779D0,#4BC0C8)"
+                bgClip="text"
+                _hover={{
+                  bgGradient: "linear(to-r, #FEAC5E, #C779D0,#4BC0C8)",
+                }}
+              >
+                {auth.user.username}'s
+              </Text>{" "}
+              profile
+            </Heading>
 
             <Flex
               direction="column"
               bg={colorMode === "light" ? "#ECF0F1" : "#34495E"}
-              p={12}
+              p={"2.1rem"}
               rounded="xl"
               shadow="2xl"
             >
               <FormControl>
-                <Heading fontSize="md">Favorite Genre</Heading>
+                <Heading fontSize="md">favorite genre</Heading>
                 <Input
                   mt={2}
                   mb={6}
@@ -108,7 +121,7 @@ function Settings() {
               </FormControl>
 
               <FormControl>
-                <Heading fontSize="md">Favorite Artist</Heading>
+                <Heading fontSize="md">favorite artist</Heading>
                 <Input
                   mt={2}
                   mb={6}
@@ -125,7 +138,7 @@ function Settings() {
               </FormControl>
 
               <FormControl>
-                <Heading fontSize="md">Favorite Album</Heading>
+                <Heading fontSize="md">favorite album</Heading>
 
                 <Input
                   mt={2}
@@ -143,7 +156,7 @@ function Settings() {
               </FormControl>
 
               <FormControl>
-                <Heading fontSize="md">Spotify Username</Heading>
+                <Heading fontSize="md">spotify username</Heading>
 
                 <Input
                   mt={2}
@@ -160,7 +173,7 @@ function Settings() {
                 />
               </FormControl>
               <FormControl>
-                <Heading fontSize="md">Last.fm username</Heading>
+                <Heading fontSize="md">last.fm username</Heading>
 
                 <Input
                   mt={2}
@@ -180,7 +193,7 @@ function Settings() {
                 justifyContent="space-between"
                 alignItems="baseline"
               ></Flex>
-              <ButtonGroup spacing="20" mt={10} mb="-6">
+              <ButtonGroup spacing="20" mt={10}>
                 <Button
                   isLoading={isSubmitting}
                   bg="purple.600"
@@ -189,8 +202,12 @@ function Settings() {
                   _hover={{ background: "tomato" }}
                   onClick={() => router.back()}
                 >
-                  <Text _hover={{ color: "purple.600" }} color="white">
-                    Cancel
+                  <Text
+                    _hover={{ color: "purple.600" }}
+                    color="white"
+                    fontSize="1rem"
+                  >
+                    cancel
                   </Text>
                 </Button>
 
@@ -203,8 +220,12 @@ function Settings() {
                   size="lg"
                   _hover={{ background: "purple.600" }}
                 >
-                  <Text _hover={{ color: "tomato" }} color="white">
-                    Submit
+                  <Text
+                    _hover={{ color: "tomato" }}
+                    color="white"
+                    fontSize="1rem"
+                  >
+                    submit
                   </Text>
                 </Button>
               </ButtonGroup>
