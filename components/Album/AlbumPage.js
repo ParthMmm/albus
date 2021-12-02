@@ -29,7 +29,7 @@ import Tracklist from "./Tracklist";
 import Wiki from "./Wiki";
 import Image from "next/image";
 import useAverageColor from "../../utils/useAverageColor";
-import Reviews from "../Reviews/Reviews";
+import ReviewsController from "../Reviews/ReviewsController";
 import CreateReview from "../Reviews/CreateReview";
 
 import { RatingView } from "react-simple-star-rating";
@@ -287,7 +287,11 @@ function AlbumInfo() {
               <></>
             )}
             <Box w={{ base: "100%", md: "60%" }} mt={{ base: 10, md: 0 }}>
-              <Reviews color={color} />
+              <ReviewsController
+                albumName={albumName}
+                artist={artist}
+                color={color}
+              />
             </Box>
           </Flex>
         </Box>

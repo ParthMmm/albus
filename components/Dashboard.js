@@ -35,7 +35,6 @@ function Dashboard() {
       auth.fetchUserInfo(auth.user.user_id);
       fetchActions();
     }
-    console.log(auth.user);
   }, []);
 
   if (auth.loading) {

@@ -138,16 +138,7 @@ function useProvideAuth() {
       `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/login`,
       data
     );
-    // console.log(res);
-    // if (res.status === 403) {
-    //   console.log(res.json());
-    //   // setError(res.data.msg);
-    //   setLoading(false);
-    // } else {
-    //   if (handleUser(res.data)) {
-    //     router.push("/");
-    //   }
-    // }
+
     if (res.data?.error) {
       console.log(res.data.error);
       setError(res.data.error);
