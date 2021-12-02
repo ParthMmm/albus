@@ -33,9 +33,9 @@ import {
 import axios from "axios";
 import { useAuth } from "../../providers/authProvider";
 
-import useAlbumFetch from "../../utils/useAlbumFetch";
 import newReview from "../../utils/newReview";
-function ReviewsController({ color, albumName, artist }) {
+import useAverageRating from "../../utils/useAverageRating";
+function ReviewsController({ data, color, albumName, artist, isLoading }) {
   const album = useAlbum();
   const router = useRouter();
   const action = useAction();
@@ -53,10 +53,17 @@ function ReviewsController({ color, albumName, artist }) {
 
   let copyIndex;
 
-  const { isLoading, error, data } = useQuery(
-    ["fetchReviews", albumName, artist],
-    () => useAlbumFetch(albumName, artist)
-  );
+  // const a = useQuery(["fetchReviews", albumName, artist], () =>
+  //   useAlbumFetch(albumName, artist)
+  // );
+  // const { isLoading, error, data } = useQuery(
+  //   ["fetchReviews", albumName, artist],
+  //   () => useAlbumFetch(albumName, artist)
+  // );
+  // console.log(a);
+  // useAverageRating(data);
+  // letdata = a;
+  // console.log(isLoading, error, data, avgRating);
 
   if (data) {
     copyIndex = data.length;

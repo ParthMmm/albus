@@ -1,18 +1,4 @@
-import {
-  Box,
-  Heading,
-  Flex,
-  Text,
-  Skeleton,
-  Stack,
-  Link,
-  Button,
-  Collapse,
-  SimpleGrid,
-  Grid,
-  Divider,
-  useColorMode,
-} from "@chakra-ui/react";
+import { Box, Heading, Flex, Skeleton, useColorMode } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useAlbum } from "../../providers/albumProvider";
 import { useAction } from "../../providers/actionProvider";
@@ -20,65 +6,55 @@ import { useAction } from "../../providers/actionProvider";
 import { useRouter } from "next/router";
 import { albumInfoFetch } from "../../utils/fetch";
 import useSWR from "swr";
-import { MdPeople, MdPlayArrow, MdAdd } from "react-icons/md";
 
-import NumberFormat from "react-number-format";
 import ActionButtons from "./ActionButtons";
-import Tags from "./Tags";
 import Tracklist from "./Tracklist";
-import Wiki from "./Wiki";
-import Image from "next/image";
+
 import useAverageColor from "../../utils/useAverageColor";
 import ReviewsController from "../Reviews/ReviewsController";
-import CreateReview from "../Reviews/CreateReview";
+import useAverageRating from "../../utils/useAverageRating";
 
-import { RatingView } from "react-simple-star-rating";
-import useAlbumFetch from "../../utils/useAlbumFetch";
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  QueryClient,
-  QueryClientProvider,
-} from "react-query";
+import fetchAlbumReviews from "../../utils/queries/fetchAlbumReviews";
+import { useQuery } from "react-query";
+import AlbumInfo from "./AlbumInfo";
+import axios from "axios";
 
-function AlbumInfo() {
+function AlbumPage() {
   const router = useRouter();
   const album = useAlbum();
-  const action = useAction();
-  const [show, setShow] = useState(false);
-  const [fetch, setFetch] = useState(false);
-  const { colorMode } = useColorMode();
-  // const queryClient = useQueryClient();
 
-  const handleToggle = () => setShow(!show);
   let artist, albumName, color;
   let tagArray = [];
+  let avgRating;
+  let currentAlbum = {};
   if (router.query.slug) {
     artist = router.query.slug[0];
     albumName = router.query.slug[1];
   }
-  // const { reviews, isLoading, isError, avgRating } = useAlbumFetch(
-  //   albumName,
-  //   artist
-  // );
+  useEffect(() => {
+    if (router.query.slug) {
+      artist = router.query.slug[0];
+      albumName = router.query.slug[1];
 
-  // const query = useQuery();
-  let avgRating = 5;
-  // console.log(reviews, avgRating);
-
-  const { data, error, isValidating } = useSWR(
-    fetch ? `${albumInfoFetch}&album=${albumName}&artist=${artist}` : null,
-    {
-      revalidateOnFocus: false,
-      refreshWhenOffline: false,
-      refreshWhenHidden: false,
-      refreshInterval: 0,
-      dedupingInterval: 1000000,
+      album.getID(albumName, artist);
     }
+  }, [router.query.slug]);
+
+  const reviewsQuery = useQuery(["fetchReviews", albumName, artist], () =>
+    fetchAlbumReviews(albumName, artist)
   );
 
-  let currentAlbum = {};
+  const { data, error, isLoading } = useQuery(
+    ["fetchInfo", albumName, artist],
+    () =>
+      axios
+        .get(
+          `
+    ${albumInfoFetch} + &album=${albumName}&artist=${artist}`
+        )
+        .then((res) => res.data),
+    { enabled: !!albumName && !!artist }
+  );
 
   if (data) {
     currentAlbum = {
@@ -99,25 +75,9 @@ function AlbumInfo() {
     });
   }
 
-  const searchSubmit = () => {
-    router.push({
-      pathname: "/search",
-      query: { input: currentAlbum.artist },
-    });
-  };
-
-  useEffect(() => {
-    if (router.query.slug) {
-      artist = router.query.slug[0];
-      albumName = router.query.slug[1];
-
-      album.getID(albumName, artist);
-      setFetch(true);
-    }
-  }, [router.query.slug]);
-
   color = useAverageColor(currentAlbum?.image);
-  // console.log(album.loading);
+  avgRating = useAverageRating(reviewsQuery?.data);
+
   if (!data) {
     return (
       <>
@@ -148,7 +108,7 @@ function AlbumInfo() {
       </>
     );
   }
-  if (error || isValidating) {
+  if (error || isLoading) {
     return (
       <>
         <Box w="80%" mx="auto" mt={10} d="flex">
@@ -170,114 +130,14 @@ function AlbumInfo() {
       </>
     );
   }
-  if (data && !album.loading) {
+  if (data && !isLoading) {
     return (
       <>
-        <Box
-          w="80%"
-          mx="auto"
-          mt={10}
-          d="flex"
-          flexGrow="1"
-          justifyContent={{
-            base: "center",
-            sm: "center",
-            md: "center",
-            lg: "space-between",
-          }}
-          border="5px solid"
-          borderColor={color}
-          borderRadius="sm"
-          rounded="xl"
-          boxShadow="lg"
-          flexDir={{ base: "column", sm: "column", md: "column", lg: "row" }}
-          bg={colorMode === "dark" ? "componentBg" : "white"}
-        >
-          <Box
-            p="5"
-            d="flex"
-            // justifyContent={{ base: "center", sm: "center", md: "center" }}
-            flexShrink={{ sm: "1", md: "0" }}
-            flexFlow="column wrap"
-            color={colorMode === "dark" ? "white" : "black"}
-          >
-            <Image
-              width={350}
-              height={350}
-              src={currentAlbum.image}
-              objectFit="contain"
-            />
-
-            <Text mt={2} fontSize="xl" fontWeight="bold" lineHeight="short">
-              <Link
-                href={currentAlbum.url}
-                _hover={{ color: "tomato" }}
-                textDecoration="none"
-              >
-                {currentAlbum.name}
-              </Link>
-            </Text>
-            <Text mt={2} fontSize="lg" fontWeight="semibold">
-              <Link
-                href=""
-                onClick={() => searchSubmit()}
-                _hover={{ color: "tomato" }}
-                textDecoration="none"
-              >
-                {" "}
-                {currentAlbum.artist}
-              </Link>
-            </Text>
-            <Flex mt={2} align="center">
-              <Box as={MdPlayArrow} color="orange.400" />
-              <Text ml={1} fontSize="sm">
-                <b>
-                  <NumberFormat
-                    value={currentAlbum.playcount}
-                    displayType="text"
-                    thousandSeparator={true}
-                  />
-                </b>
-              </Text>
-            </Flex>
-            <Flex mt={2} align="center">
-              <Box as={MdPeople} color="orange.400" />
-              <Text ml={1} fontSize="sm">
-                <b>
-                  <NumberFormat
-                    value={currentAlbum.listeners}
-                    displayType="text"
-                    thousandSeparator={true}
-                  />
-                </b>
-              </Text>
-            </Flex>
-            <Flex mt={2} align="center">
-              <RatingView ratingValue={avgRating} />
-            </Flex>
-            <SimpleGrid
-              mt={3}
-              columns={{ base: 2, sm: 4, md: 5, lg: 3 }}
-              row={{ base: 4, sm: 2, md: 1, lg: 4 }}
-              spacingY="2"
-              spacingX="2"
-            >
-              {currentAlbum.tags ? (
-                currentAlbum.tags.map((tag) => <Tags key={tag.url} tag={tag} />)
-              ) : (
-                <></>
-              )}
-            </SimpleGrid>
-          </Box>
-          {currentAlbum.wiki ? (
-            <Box>
-              {" "}
-              <Wiki summary={currentAlbum.wiki} />
-            </Box>
-          ) : (
-            <></>
-          )}
-        </Box>
+        <AlbumInfo
+          currentAlbum={currentAlbum}
+          color={color}
+          avgRating={avgRating}
+        />
         <ActionButtons name={currentAlbum.name} artist={currentAlbum.artist} />
         <Box w="80%" mx="auto" mt={10} mb={5} color="white">
           <Flex
@@ -306,6 +166,8 @@ function AlbumInfo() {
                 albumName={albumName}
                 artist={artist}
                 color={color}
+                data={reviewsQuery.data}
+                isLoading={reviewsQuery.isLoading}
               />
             </Box>
           </Flex>
@@ -342,14 +204,6 @@ function AlbumInfo() {
       </>
     );
   }
-}
-
-function AlbumPage() {
-  return (
-    <div>
-      <AlbumInfo />
-    </div>
-  );
 }
 
 export default AlbumPage;

@@ -115,7 +115,6 @@ const ReviewModal = ({ isOpen, onClose, album }) => {
             }}
             onSubmit={(values, actions) => {
               values = { ...values, album };
-              console.log(values);
               mutation.mutate(values);
 
               actions.resetForm({});
