@@ -27,7 +27,7 @@ function useProvideAlbum() {
   const [reviews, setReviews] = useState("");
   const [numReviews, setNumReviews] = useState(0);
   const [avgRating, setAvgRating] = useState(0);
-  const [filtered, setFiltered] = useState(0);
+
   const handleAlbum = async (mbid, albumName, artist) => {
     if (mbid || (albumName && artist)) {
       const album = await formatAlbum(mbid, albumName, artist);
@@ -57,59 +57,6 @@ function useProvideAlbum() {
     }
     return;
   };
-  const fetchReviews = async (albumName, artist) => {
-    if (!albumName && !artist) {
-      albumName = album?.albumName;
-      artist = album?.artist;
-    }
-
-    if (artist && albumName) {
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/fetchAlbumReviews?albumName=${albumName}&artist=${artist}`
-      );
-      if (res.status === 200) {
-        setReviews(res.data);
-        setNumReviews(res.data.length);
-
-        let x = res.data.map((review) => {
-          return review.rating;
-        });
-
-        setAvgRating(_.round(_.mean(x)));
-        setLoading(false);
-        return;
-      }
-      setReviews("");
-      setNumReviews(0);
-      setAvgRating(0);
-      setLoading(false);
-      return;
-    }
-    return;
-  };
-
-  const filterReviews = async (filter) => {
-    if (reviews && filter === "date") {
-      let result = reviews.sort((a, b) => b.datePosted - a.datePosted);
-      setReviews(result);
-      setFiltered(true);
-    }
-    if (reviews && filter === "rating") {
-      //descending order
-      let result = reviews.sort((a, b) => b.rating - a.rating);
-      setReviews(result);
-      setFiltered(true);
-    }
-
-    return;
-  };
-
-  const resetReviews = () => {
-    setReviews("");
-    setNumReviews(0);
-    setAvgRating(0);
-    return;
-  };
 
   return {
     album,
@@ -117,14 +64,8 @@ function useProvideAlbum() {
     error,
     getID,
     albumID,
-    fetchReviews,
-    reviews,
-    numReviews,
+
     avgRating,
-    setReviews,
-    resetReviews,
-    filterReviews,
-    filtered,
   };
 }
 

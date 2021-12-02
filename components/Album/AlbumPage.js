@@ -33,6 +33,14 @@ import ReviewsController from "../Reviews/ReviewsController";
 import CreateReview from "../Reviews/CreateReview";
 
 import { RatingView } from "react-simple-star-rating";
+import useAlbumFetch from "../../utils/useAlbumFetch";
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from "react-query";
 
 function AlbumInfo() {
   const router = useRouter();
@@ -41,6 +49,7 @@ function AlbumInfo() {
   const [show, setShow] = useState(false);
   const [fetch, setFetch] = useState(false);
   const { colorMode } = useColorMode();
+  // const queryClient = useQueryClient();
 
   const handleToggle = () => setShow(!show);
   let artist, albumName, color;
@@ -49,6 +58,15 @@ function AlbumInfo() {
     artist = router.query.slug[0];
     albumName = router.query.slug[1];
   }
+  // const { reviews, isLoading, isError, avgRating } = useAlbumFetch(
+  //   albumName,
+  //   artist
+  // );
+
+  // const query = useQuery();
+  let avgRating = 5;
+  // console.log(reviews, avgRating);
+
   const { data, error, isValidating } = useSWR(
     fetch ? `${albumInfoFetch}&album=${albumName}&artist=${artist}` : null,
     {
@@ -89,14 +107,11 @@ function AlbumInfo() {
   };
 
   useEffect(() => {
-    album.resetReviews();
-
     if (router.query.slug) {
       artist = router.query.slug[0];
       albumName = router.query.slug[1];
 
       album.getID(albumName, artist);
-      album.fetchReviews(albumName, artist);
       setFetch(true);
     }
   }, [router.query.slug]);
@@ -238,7 +253,7 @@ function AlbumInfo() {
               </Text>
             </Flex>
             <Flex mt={2} align="center">
-              <RatingView ratingValue={album.avgRating} />
+              <RatingView ratingValue={avgRating} />
             </Flex>
             <SimpleGrid
               mt={3}

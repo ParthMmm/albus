@@ -10,6 +10,7 @@ import {
   HStack,
   Heading,
   Select,
+  Spinner,
 } from "@chakra-ui/react";
 import _ from "lodash";
 import Reviews from "./Reviews";
@@ -22,25 +23,39 @@ import { useRouter } from "next/router";
 import fetcher from "../../utils/fetcher";
 import useSWR, { mutate } from "swr";
 import { fetchAlbumReviews } from "../../utils/fetch";
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from "react-query";
+import axios from "axios";
+import { useAuth } from "../../providers/authProvider";
 
+import useAlbumFetch from "../../utils/useAlbumFetch";
+import newReview from "../../utils/newReview";
 function ReviewsController({ color, albumName, artist }) {
   const album = useAlbum();
   const router = useRouter();
   const action = useAction();
+  const auth = useAuth();
 
   const [firstIndex, setFirstIndex] = useState(0);
   const [lastIndex, setLastIndex] = useState(10);
   const [page, setPage] = useState(1);
   const [filter, setFilter] = useState("");
   const [copyData, setCopyData] = useState("");
+  const queryClient = useQueryClient();
+  const { colorMode } = useColorMode();
 
   const bottomRef = useRef(null);
 
   let copyIndex;
 
-  const { data, error, isValidating } = useSWR(
-    fetchAlbumReviews + `?albumName=${albumName}&artist=${artist}`,
-    fetcher
+  const { isLoading, error, data } = useQuery(
+    ["fetchReviews", albumName, artist],
+    () => useAlbumFetch(albumName, artist)
   );
 
   if (data) {
@@ -57,21 +72,22 @@ function ReviewsController({ color, albumName, artist }) {
         nextPage(Math.floor(copyIndex));
       }
     }
-    setTimeout(() => {
-      bottomRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-      });
-    }, 500);
+    if (bottomRef) {
+      setTimeout(() => {
+        bottomRef.current &&
+          bottomRef.current.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+      }, 500);
+    }
     return;
   };
 
   useEffect(() => {
-    mutate(fetchAlbumReviews + `?albumName=${albumName}&artist=${artist}`);
-    return () => {
-      action.setReviewCreated(false);
-      executeScroll();
-    };
+    action.setReviewCreated(false);
+
+    return () => executeScroll();
   }, [action.reviewCreated]);
 
   useEffect(() => {
@@ -185,8 +201,39 @@ function ReviewsController({ color, albumName, artist }) {
         </Flex>
       </>
     );
+  }
+  if (isLoading) {
+    return (
+      <>
+        <Spinner />
+      </>
+    );
   } else {
-    return <></>;
+    return (
+      <>
+        <Flex justifyContent="space-between" alignItems="center">
+          <Heading>reviews</Heading>
+          <CreateReview />
+        </Flex>
+        <Box
+          mt={1}
+          color={colorMode === "dark" ? "white" : "black"}
+          border="5px solid"
+          borderColor={color}
+          borderRadius="sm"
+          rounded="xl"
+          boxShadow="lg"
+          p={5}
+          //   w="80%"
+          //   mx="auto"
+          d="flex"
+          justifyContent="center"
+          bg={colorMode === "dark" ? "componentBg" : "white"}
+        >
+          <Text>write the first review!</Text>
+        </Box>
+      </>
+    );
   }
 }
 

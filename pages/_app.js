@@ -7,6 +7,8 @@ import theme from "../styles/theme";
 import { ErrorBoundary } from "react-error-boundary";
 import { useRouter } from "next/router";
 import { Button, Box } from "@chakra-ui/react";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 
 // import { ErrorFallback } from "../components/ErrorFallback";
 function ErrorFallback({ error, resetErrorBoundary }) {
@@ -25,24 +27,30 @@ function ErrorFallback({ error, resetErrorBoundary }) {
 }
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
+  const queryClient = new QueryClient();
+
   return (
     <ChakraProvider theme={theme}>
-      <AuthProvider>
-        <ProfileProvider>
-          <ActionProvider>
-            <AlbumProvider>
-              <ErrorBoundary
-                FallbackComponent={ErrorFallback}
-                onReset={() => {
-                  router.push("/");
-                }}
-              >
-                <Component {...pageProps} />
-              </ErrorBoundary>
-            </AlbumProvider>
-          </ActionProvider>
-        </ProfileProvider>
-      </AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <ReactQueryDevtools initialIsOpen={false} />
+
+        <AuthProvider>
+          <ProfileProvider>
+            <ActionProvider>
+              <AlbumProvider>
+                <ErrorBoundary
+                  FallbackComponent={ErrorFallback}
+                  onReset={() => {
+                    router.push("/");
+                  }}
+                >
+                  <Component {...pageProps} />
+                </ErrorBoundary>
+              </AlbumProvider>
+            </ActionProvider>
+          </ProfileProvider>
+        </AuthProvider>
+      </QueryClientProvider>
     </ChakraProvider>
   );
 }
