@@ -6,28 +6,27 @@ import NextLink from "next/link";
 import albumCheck from "../../utils/albumCheck";
 function SavedAlbums({ profile }) {
   const auth = useAuth();
-
   const [listened, setListened] = useState(null);
   const [wantToListen, setWantToListen] = useState(null);
   const [listening, setListening] = useState(null);
 
   const fetchActions = () => {
-    if (profile.actions?.listened) {
-      let res = profile.actions.listened;
+    if (profile.listened) {
+      let res = profile.listened;
       if (res.length > 0) {
         const reversed = res.reverse();
         setListened(reversed);
       }
     }
-    if (profile.actions?.wantToListen) {
-      let res = profile.actions.wantToListen;
+    if (profile.wantToListen) {
+      let res = profile.wantToListen;
       if (res.length > 0) {
         const reversed = res.reverse();
         setWantToListen(reversed);
       }
     }
-    if (profile.actions?.listening) {
-      let res = profile.actions.listening;
+    if (profile.listening) {
+      let res = profile.listening;
       if (res.length > 0) {
         const reversed = res.reverse();
 
@@ -64,7 +63,7 @@ function SavedAlbums({ profile }) {
             {listening.length > 4 ? (
               <NextLink
                 href={{
-                  pathname: `/profile/${profile.user_id}/listening`,
+                  pathname: `/profile/${profile._id}/listening`,
                 }}
               >
                 <Link href="" _hover={{ color: "purple.300" }}>
@@ -114,7 +113,7 @@ function SavedAlbums({ profile }) {
             {listened.length > 4 ? (
               <NextLink
                 href={{
-                  pathname: `/profile/${profile.user_id}/listened`,
+                  pathname: `/profile/${profile._id}/listened`,
                 }}
               >
                 <Link href="" _hover={{ color: "purple.300" }}>
@@ -166,7 +165,7 @@ function SavedAlbums({ profile }) {
             {wantToListen.length > 4 ? (
               <NextLink
                 href={{
-                  pathname: `/profile/${profile.user_id}/wantToListen`,
+                  pathname: `/profile/${profile._id}/wantToListen`,
                 }}
               >
                 <Link href="" _hover={{ color: "purple.300" }}>

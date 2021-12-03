@@ -18,7 +18,8 @@ import { useAuth } from "../../providers/authProvider";
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 import { useProfile } from "../../providers/profileProvider";
 import Review from "../Reviews/Review";
-function ProfileReviews({ authProfile, otherProfile }) {
+
+function ProfileReviews({ reviews }) {
   const { colorMode } = useColorMode();
   const album = useAlbum();
   const auth = useAuth();
@@ -30,38 +31,18 @@ function ProfileReviews({ authProfile, otherProfile }) {
   const [numReviews, setNumReviews] = useState(0);
   const [filter, setFilter] = useState("");
 
-  const [data, setData] = useState(auth.reviews);
+  const [data, setData] = useState(reviews.data);
 
   const reviewRef = useRef(null);
 
   const executeScroll = (ref) =>
     ref.current.scrollIntoView({ behavior: "smooth" });
 
-  // const [title, setTitle] = useState(false);
-  //   useEffect(() => {
-  //     album.fetchReviews();
-  //   }, [album.album]);
-
-  //   useEffect(() => {
-  //     album.fetchReviews();
-
-  //     return () => {
-  //       setNewReview(false);
-  //     };
-  //   }, [newReview]);
-  // console.log(auth.reviews);
-  let reviews = false;
+  const dataCopy = reviews.data;
 
   useEffect(() => {
-    if (otherProfile) {
-      reviews = profile.reviews;
-      setData(reviews);
-    }
-    if (authProfile) {
-      reviews = auth.reviews;
-      setData(reviews);
-    }
-  }, [authProfile, otherProfile]);
+    setData(dataCopy);
+  }, [reviews.data]);
 
   const prevPage = () => {
     setFirstIndex(firstIndex - 5);
@@ -111,19 +92,12 @@ function ProfileReviews({ authProfile, otherProfile }) {
     }
 
     if (filter === "") {
-      if (otherProfile) {
-        reviews = profile.reviews;
-        setData(reviews);
-      }
-      if (authProfile) {
-        reviews = auth.reviews;
-        setData(reviews);
-      }
+      setData(dataCopy);
+
       return;
     }
   }, [filter]);
 
-  // console.log(album.numReviews);
   if (data) {
     return (
       <>

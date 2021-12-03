@@ -49,7 +49,7 @@ function useProvideAction() {
       { headers: { Authorization: `Bearer ${auth.user.token}` } }
     );
     if (res.status === 200) {
-      auth.fetchUserInfo(auth.user.user_id);
+      // auth.fetchUserInfo(auth.user.user_id);
       setLoading(false);
     }
     setLoading(false);
@@ -63,7 +63,7 @@ function useProvideAction() {
       { headers: { Authorization: `Bearer ${auth.user.token}` } }
     );
     if (res.status === 200) {
-      auth.fetchUserInfo(auth.user.user_id);
+      // auth.fetchUserInfo(auth.user.user_id);
       setLoading(false);
     }
     setLoading(false);
@@ -77,7 +77,7 @@ function useProvideAction() {
       { headers: { Authorization: `Bearer ${auth.user.token}` } }
     );
     if (res.status === 200) {
-      auth.fetchUserInfo(auth.user.user_id);
+      // auth.fetchUserInfo(auth.user.user_id);
       setLoading(false);
     }
     setLoading(false);
@@ -92,7 +92,7 @@ function useProvideAction() {
       { headers: { Authorization: `Bearer ${auth.user.token}` } }
     );
     if (res.status === 200) {
-      auth.fetchUserInfo(auth.user.user_id);
+      // auth.fetchUserInfo(auth.user.user_id);
       // router.back();
       router.push(`/profile/${auth.user.user_id}`);
 

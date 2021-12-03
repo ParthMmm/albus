@@ -40,7 +40,7 @@ function useProvideAuth() {
 
       setUser(user);
 
-      fetchUserInfo(user.user_id);
+      // fetchUserInfo(user.user_id);
       setLoading(false);
       return user;
     } else {
@@ -178,26 +178,26 @@ function useProvideAuth() {
     return;
   };
 
-  const fetchUserInfo = async (data) => {
-    setLoading(true);
-    setError("");
+  // const fetchUserInfo = async (data) => {
+  //   setLoading(true);
+  //   setError("");
 
-    const userID = { userID: data };
+  //   const userID = { userID: data };
 
-    const res = await axios.post(
-      `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/fetchUserInfo`,
-      userID
-    );
-    if (res.status === 200) {
-      handleUserInfo(res.data);
-      setLoading(false);
+  //   const res = await axios.get(
+  //     `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/fetchUserInfo`,
+  //     userID
+  //   );
+  //   if (res.status === 200) {
+  //     handleUserInfo(res.data);
+  //     setLoading(false);
 
-      return;
-    } else {
-      setLoading(false);
-    }
-    return;
-  };
+  //     return;
+  //   } else {
+  //     setLoading(false);
+  //   }
+  //   return;
+  // };
 
   const logout = () => {
     handleUserInfo(false);
@@ -229,7 +229,7 @@ function useProvideAuth() {
     setError,
     setMessage,
     fetchUser,
-    fetchUserInfo,
+    // fetchUserInfo,
     login,
     register,
     logout,

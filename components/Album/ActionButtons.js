@@ -14,6 +14,7 @@ import { MdDone } from "react-icons/md";
 import { useRouter } from "next/router";
 import { useToast } from "@chakra-ui/react";
 import { BeatLoader } from "react-spinners";
+
 function ActionButtons() {
   const album = useAlbum();
   const action = useAction();
@@ -115,7 +116,7 @@ function ActionButtons() {
     }
 
     if (auth.user) {
-      auth.fetchUserInfo(auth.user.user_id);
+      // auth.fetchUserInfo(auth.user.user_id);
     }
     if (!auth.loading && auth.user) {
       checkActions();

@@ -44,6 +44,8 @@ function Review({ review, profile }) {
       : setNumLines("none");
   };
 
+  // console.log(review);
+
   return (
     <Box d="flex" flexDir="column" justifyContent="space-between" rounded="xl">
       <Box>

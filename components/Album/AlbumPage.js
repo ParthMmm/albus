@@ -15,13 +15,14 @@ import ReviewsController from "../Reviews/ReviewsController";
 import useAverageRating from "../../utils/useAverageRating";
 
 import fetchAlbumReviews from "../../utils/queries/fetchAlbumReviews";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import AlbumInfo from "./AlbumInfo";
 import axios from "axios";
 
 function AlbumPage() {
   const router = useRouter();
   const album = useAlbum();
+  const queryClient = useQueryClient();
 
   let artist, albumName, color;
   let tagArray = [];

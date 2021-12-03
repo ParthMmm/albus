@@ -17,29 +17,36 @@ import {
 import SavedAlbums from "./SavedAlbums";
 import ProfileReviews from "./ProfileReviews";
 import { FaSpotify, FaLastfmSquare } from "react-icons/fa";
+import { useQuery } from "react-query";
+import fetchUserReviews from "../../utils/queries/fetchUserReviews";
+import fetchUserInfo from "../../utils/queries/fetchUser";
 
 function OtherProfile() {
   const auth = useAuth();
-
-  const profile = useProfile();
-
   const router = useRouter();
   const [authorized, setAuthorized] = useState(false);
 
-  let userID;
   useEffect(() => {
-    userID = router.query.pid;
-
-    if (userID) {
-      profile.fetchProfileInfo(userID);
-      profile.fetchUserReviews(userID);
-    }
     if (auth.user) {
       setAuthorized(true);
     }
   }, [router.query]);
 
-  if (profile.loading) {
+  const user = useQuery(
+    ["fetchUserInfo", router.query.pid],
+    () => fetchUserInfo(router.query.pid),
+    { enabled: !!router.query.pid }
+  );
+
+  const reviews = useQuery(
+    ["fetchUserReviews", router.query.pid],
+    () => fetchUserReviews(router.query.pid),
+    {
+      enabled: !!router.query.pid,
+    }
+  );
+
+  if (user.isLoading) {
     return (
       <>
         <Box w="80%" mx="auto" mt={10} d="flex">
@@ -65,7 +72,7 @@ function OtherProfile() {
       </>
     );
   }
-  if (!profile.profileInfo) {
+  if (!user.data) {
     return (
       <>
         <Box w="80%" mx="auto" mt={10} d="flex">
@@ -88,21 +95,10 @@ function OtherProfile() {
     );
   }
 
-  if (profile.profileInfo && !profile.loading) {
+  if (user.data && !user.isLoading) {
     return (
       <>
         <Box
-          // w={{ base: "80%", md: "40%", lg: "40%" }}
-          // mx="auto"
-          // mt={10}
-          // color={{ dark: "white", light: "black" }}
-          // d="flex"
-          // boxShadow="lg"
-          // // flexFlow="column"
-          // border="5px solid"
-          // borderColor="purple.600"
-          // borderRadius="sm"
-          // rounded="xl"
           w={{ base: "80%", md: "40%", lg: "40%" }}
           mx="auto"
           mt={10}
@@ -122,24 +118,18 @@ function OtherProfile() {
           flexDir={{ base: "column", sm: "column", md: "column", lg: "row" }}
         >
           <Box
-            // d="flex"
-            // justifyContent="space-evenly"
-            // m="2"
-            // flexDir={{ base: "row", sm: "row", md: "row", lg: "row" }}
             p="5"
             d="flex"
             justifyContent={{ base: "center", sm: "center", md: "center" }}
             alignItems="center"
-            // alignItems={{ base: "center", sm: "center", md: "center", lg: "" }}
             flexShrink={{ sm: "1", md: "0" }}
             flexFlow="column wrap"
-            // color={colorMode === "dark" ? "white" : "black"}
           >
             <Box alignItems="center" justifyContent="center">
               {" "}
               <Box mt={3} mb={2} justifyContent="center">
                 {" "}
-                <Heading>{profile.profileInfo?.username}</Heading>
+                <Heading>{user.data?.username}</Heading>
               </Box>
               <Box
                 d="flex"
@@ -150,9 +140,9 @@ function OtherProfile() {
                   md: "flex-start",
                 }}
               >
-                {profile?.profileInfo?.info?.spotify ? (
+                {user?.data?.info?.spotify ? (
                   <Link
-                    href={`https://open.spotify.com/user/${profile?.profileInfo?.info?.spotify}`}
+                    href={`https://open.spotify.com/user/${user?.data?.info?.spotify}`}
                   >
                     {" "}
                     <Icon as={FaSpotify} w={5} h={5} mr={2} color="#1DB954" />
@@ -160,9 +150,9 @@ function OtherProfile() {
                 ) : (
                   <></>
                 )}
-                {profile?.profileInfo?.info?.lastfm ? (
+                {user?.data?.info?.lastfm ? (
                   <Link
-                    href={`https://www.last.fm/user/${profile?.profileInfo?.info?.lastfm}`}
+                    href={`https://www.last.fm/user/${user?.data?.info?.lastfm}`}
                   >
                     <Icon as={FaLastfmSquare} w={5} h={5} color="#c3000d " />
                   </Link>
@@ -180,7 +170,7 @@ function OtherProfile() {
             justifyContent="space-evenly"
             // p={{ base: "1", sm: "1", md: "1", lg: "10" }}
           >
-            {profile.profileInfo?.info?.genre ? (
+            {user.data?.info?.genre ? (
               <Box
                 d="flex"
                 flexDir="row"
@@ -193,14 +183,14 @@ function OtherProfile() {
 
                 <Box>
                   <Text as="span" mx="2" fontWeight="bold" fontSize="lg">
-                    {profile.profileInfo?.info?.genre}
+                    {user.data?.info?.genre}
                   </Text>
                 </Box>
               </Box>
             ) : (
               <></>
             )}
-            {profile.profileInfo?.info?.artist ? (
+            {user.data?.info?.artist ? (
               <Box
                 d="flex"
                 flexDir="row"
@@ -213,14 +203,14 @@ function OtherProfile() {
 
                 <Box>
                   <Text as="span" mx="2" fontWeight="bold" fontSize="lg">
-                    {profile.profileInfo?.info?.artist}
+                    {user.data?.info?.artist}
                   </Text>
                 </Box>
               </Box>
             ) : (
               <></>
             )}
-            {profile.profileInfo?.info?.album ? (
+            {user.data?.info?.album ? (
               <Box
                 d="flex"
                 flexDir="row"
@@ -233,7 +223,7 @@ function OtherProfile() {
 
                 <Box>
                   <Text as="span" mx="2" fontWeight="bold" fontSize="lg">
-                    {profile.profileInfo?.info?.album}
+                    {user.data?.info?.album}
                   </Text>
                 </Box>
               </Box>
@@ -241,22 +231,6 @@ function OtherProfile() {
               <></>
             )}
           </Box>
-          {/* <Box
-            d="flex"
-            justifyContent={{ base: "center", md: "flex-end" }}
-            flexDir="row"
-            m={5}
-            // mr={{ base: "0", md: "-4", lg: "-24" }}
-          >
-            {" "}
-            {authorized ? (
-              <Button>
-                <Text _hover={{ color: "tomato" }}>follow</Text>
-              </Button>
-            ) : (
-              <></>
-            )}
-          </Box> */}
         </Box>
 
         <Box
@@ -267,24 +241,17 @@ function OtherProfile() {
           mx={10}
           flexDir={{ base: "column", md: "row" }}
         >
-          {profile.reviews ? (
+          {user.data.reviews ? (
             <Box w={{ md: "40%" }}>
-              <ProfileReviews otherProfile={true} authProfile={false} />
+              <ProfileReviews reviews={reviews} />
             </Box>
           ) : (
             <></>
           )}
           <Box w={{ md: "60%" }}>
-            <SavedAlbums profile={profile.profileInfo} />
+            <SavedAlbums profile={user.data} />
           </Box>
         </Box>
-      </>
-    );
-  }
-  if (auth.user.user_id === userID) {
-    return (
-      <>
-        <Text>its me</Text>
       </>
     );
   } else {
