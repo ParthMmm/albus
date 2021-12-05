@@ -12,6 +12,7 @@ const addListenedPost = `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/user/addLi
 const addWantToListenPost = `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/user/addWantToListen`;
 const addListeningPost = `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/user/addListening`;
 const userInfoFetch = `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/fetchUserInfo`;
+const checkActionsFetch = `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/user/checkActions`;
 
 export {
   tagTopAlbumsFetch,
@@ -24,6 +25,7 @@ export {
   addWantToListenPost,
   addListeningPost,
   userInfoFetch,
+  checkActionsFetch,
 };
 
 // https://ws.audioscrobbler.com/2.0/?method=tag.gettopalbums&format=json&limit=10&tag=dance&api_key=9fad01c4307703006aa5ebe8aded58bc

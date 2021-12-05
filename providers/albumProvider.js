@@ -57,6 +57,43 @@ function useProvideAlbum() {
     }
     return;
   };
+  const fetchReviews = async (albumName, artist) => {
+    if (!albumName && !artist) {
+      albumName = album?.albumName;
+      artist = album?.artist;
+    }
+
+    if (artist && albumName) {
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/fetchAlbumReviews?albumName=${albumName}&artist=${artist}`
+      );
+      if (res.status === 200) {
+        setReviews(res.data);
+        setNumReviews(res.data.length);
+
+        let x = res.data.map((review) => {
+          return review.rating;
+        });
+
+        setAvgRating(_.round(_.mean(x)));
+        setLoading(false);
+        return;
+      }
+      setReviews("");
+      setNumReviews(0);
+      setAvgRating(0);
+      setLoading(false);
+      return;
+    }
+    return;
+  };
+
+  const resetReviews = () => {
+    setReviews("");
+    setNumReviews(0);
+    setAvgRating(0);
+    return;
+  };
 
   return {
     album,
@@ -64,8 +101,12 @@ function useProvideAlbum() {
     error,
     getID,
     albumID,
-
+    fetchReviews,
+    reviews,
+    numReviews,
     avgRating,
+    setReviews,
+    resetReviews,
   };
 }
 

@@ -7,7 +7,7 @@ async function fetchAlbumReviews(albumName, artist) {
     albumReviewsFetch + `?albumName=${albumName}&artist=${artist}`
   );
 
-  console.log(data);
+  // console.log(data);
 
   return data;
 }

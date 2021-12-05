@@ -18,6 +18,7 @@ import fetchAlbumReviews from "../../utils/queries/fetchAlbumReviews";
 import { useQuery, useQueryClient } from "react-query";
 import AlbumInfo from "./AlbumInfo";
 import axios from "axios";
+import fetchAlbumID from "../../utils/queries/fetchAlbumID";
 
 function AlbumPage() {
   const router = useRouter();
@@ -43,6 +44,10 @@ function AlbumPage() {
 
   const reviewsQuery = useQuery(["fetchReviews", albumName, artist], () =>
     fetchAlbumReviews(albumName, artist)
+  );
+
+  const idQuery = useQuery(["fetchAlbumID", albumName, artist], () =>
+    fetchAlbumID(albumName, artist)
   );
 
   const { data, error, isLoading } = useQuery(
@@ -139,7 +144,11 @@ function AlbumPage() {
           color={color}
           avgRating={avgRating}
         />
-        <ActionButtons name={currentAlbum.name} artist={currentAlbum.artist} />
+        <ActionButtons
+          name={currentAlbum.name}
+          artist={currentAlbum.artist}
+          id={idQuery.data}
+        />
         <Box w="80%" mx="auto" mt={10} mb={5} color="white">
           <Flex
             pb={10}

@@ -17,7 +17,7 @@ import SavedAlbums from "./SavedAlbums";
 import { FaSpotify, FaLastfmSquare } from "react-icons/fa";
 import ProfileReviews from "./ProfileReviews";
 import fetchUserInfo from "../../utils/queries/fetchUser";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import fetchUserReviews from "../../utils/queries/fetchUserReviews";
 
 function PersonalProfile() {
