@@ -8,7 +8,7 @@ import {
 } from "../fetch";
 
 function addListened(data, token) {
-  console.log(data, token);
+  // console.log(data, token);
   const { res } = axios.post(`${addListenedPost}`, data, {
     headers: { Authorization: `Bearer ${token}` },
   });
@@ -34,16 +34,13 @@ function addListening(data, token) {
 }
 
 function checkAction(id, token) {
-  // const { res } = axios.get(`${checkActions} + ?mbid={data}`), {};
-  console.log(id, token);
-  // const { res } = axios.get(`${checkActions} + ?mbid=${data}`, {
-  //   headers: { Authorization: `Bearer ${token}` },
-  // });
-  const { data } = axios.get(checkActionsFetch + `?mbid=${id}`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  console.log(data);
-  return data;
+  return axios
+    .get(checkActionsFetch + `?mbid=${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    .then((res) => res.data);
+
+  // return data;
 }
 
 export { addListened, addWantToListen, addListening, checkAction };
