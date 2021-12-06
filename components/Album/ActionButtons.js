@@ -135,26 +135,6 @@ function ActionButtons({ name, artist, id }) {
     listenedMutation.isLoading ||
     wantToListenMutation.isLoading;
 
-  // console.log(actionLoading);
-  // console.log(
-  //   "loaders",
-  //   listeningMutation.isLoading,
-  //   listenedMutation.isLoading,
-  //   wantToListenMutation.isLoading
-  // );
-  // listeningMutation.isLoading ||
-  // listenedMutation.isLoading ||
-  // wantToListenMutation.isLoading;
-
-  // console.log(actionLoading);
-  // console.log(
-  //   listenedMutation.data,
-  //   listeningMutation.data,
-  //   wantToListenMutation.data
-  // );
-
-  // const mutation = useMutation();
-
   const clickListened = () => {
     if (wantToListen) {
       setWantToListen(false);
@@ -213,84 +193,6 @@ function ActionButtons({ name, artist, id }) {
     listeningMutation.mutate(albumInfo);
   };
 
-  const checkActions = () => {
-    if (!actionLoading) {
-      if (
-        user.data?.listened?.find((x) => {
-          return x.mbid === id || (x.albumName === name && x.artist === artist);
-        })
-      ) {
-        console.log("listened");
-        setListened(true);
-        setWantToListen(false);
-        setListening(false);
-        return;
-      }
-      if (
-        user.data?.wantToListen?.find((x) => {
-          return x.mbid === id || (x.albumName === name && x.artist === artist);
-        })
-      ) {
-        // console.log("wantToListen");
-
-        setWantToListen(true);
-        setListened(false);
-        setListening(false);
-        return;
-      }
-      if (
-        user.data?.listening?.find((x) => {
-          return x.mbid === id || (x.albumName === name && x.artist === artist);
-        })
-      ) {
-        // console.log("listening");
-
-        setListening(true);
-        setWantToListen(false);
-        setListened(false);
-        return;
-      }
-    }
-  };
-
-  // console.log(listened, wantToListen, listening);
-
-  // console.log(
-  //   "listening",
-  //   user.data?.listening?.find((x) => {
-  //     return x.mbid === id || (x.albumName === name && x.artist === artist);
-  //   })
-  // );
-  // console.log(
-  //   "listened",
-  //   user.data?.listened?.find((x) => {
-  //     return x.mbid === id || (x.albumName === name && x.artist === artist);
-  //   })
-  // );
-  // console.log(
-  //   "wantToListen",
-  //   user.data?.wantToListen?.find((x) => {
-  //     return x.mbid === id || (x.albumName === name && x.artist === artist);
-  //   })
-  // );
-  // console.log(`${album.albumID}`);
-  // console.log(albumInfo);
-
-  // console.log(user.data.listened);
-  // console.log(listened, wantToListen, listening);
-  // useEffect(() => {
-  //   if (router.query.slug) {
-  //     artist = router.query.slug[0];
-  //     name = router.query.slug[1];
-  //   }
-
-  //   // if (!auth.loading && auth.user) {
-  //   //   checkActions();
-  //   // }
-  // }, [user]);
-  // useEffect(() => {
-  //   checkActions();
-  // });
   if (id) {
     return (
       <div>

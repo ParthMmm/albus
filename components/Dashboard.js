@@ -12,6 +12,8 @@ import { colors, emojis } from "../utils/randoms";
 
 import { useAuth } from "../providers/authProvider";
 import Album from "./Album/Album";
+import fetchUserInfo from "../utils/queries/fetchUser";
+import { useQuery } from "react-query";
 
 function Dashboard() {
   const auth = useAuth();
@@ -19,25 +21,32 @@ function Dashboard() {
   let randomColor = Math.floor(Math.random() * colors.length);
   const [listening, setListening] = useState(null);
 
-  const fetchActions = () => {
-    if (auth.userInfo?.actions?.listening) {
-      let res = auth.userInfo.actions.listening;
-      if (res.length > 0) {
-        const reversed = res.reverse();
+  // const fetchActions = () => {
+  //   if (auth.userInfo?.actions?.listening) {
+  //     let res = auth.userInfo.actions.listening;
+  //     if (res.length > 0) {
+  //       const reversed = res.reverse();
 
-        setListening(reversed);
-      }
-    }
-  };
+  //       setListening(reversed);
+  //     }
+  //   }
+  // };
+  // const user = 1;
 
-  useEffect(() => {
-    if (auth.user) {
-      // auth.fetchUserInfo(auth.user.user_id);
-      fetchActions();
-    }
-  }, []);
+  const user = useQuery(
+    ["fetchUserInfo", auth?.user?.user_id],
+    () => fetchUserInfo(auth.user?.user_id),
+    { enabled: !!auth?.user?.user_id }
+  );
 
-  if (auth.loading) {
+  // useEffect(() => {
+  //   if (auth.user) {
+  //     // auth.fetchUserInfo(auth.user.user_id);
+  //     fetchActions();
+  //   }
+  // }, []);
+  console.log(user.data);
+  if (user.isLoading) {
     return (
       <>
         <Box w="80%" mx="auto" mt={10} d="flex">
@@ -52,7 +61,7 @@ function Dashboard() {
     );
   }
 
-  if (auth.user && !auth.loading && !listening) {
+  if (auth.user && !user.isLoading && !user.data.listening) {
     return (
       <Box
         w="80%"
@@ -83,32 +92,10 @@ function Dashboard() {
             <Heading>welcome to albus! {emojis[randomNum]} </Heading>
           )}
         </Center>
-        <Box>
-          {listening?.length >= 2 ? (
-            <>
-              <Heading mb={2}>🎧 currently listening</Heading>
-
-              <Grid
-                gridTemplateColumns={[
-                  "repeat(1, 1fr)",
-                  "repeat(2, 1fr)",
-                  "repeat(2, 1fr)",
-                ]}
-                gap={4}
-              >
-                {listening.slice(0, 2).map((x) => (
-                  <Album key={x._id} thing={x} />
-                ))}
-              </Grid>
-            </>
-          ) : (
-            <></>
-          )}
-        </Box>
       </Box>
     );
   }
-  if (auth.user && !auth.loading && listening) {
+  if (auth.user && !user.isLoading && user.data.listening) {
     return (
       <Box
         w="80%"
@@ -140,7 +127,7 @@ function Dashboard() {
           )}
         </Center>
         <Box>
-          {listening?.length >= 2 ? (
+          {user.data.listening?.length >= 2 ? (
             <>
               <Heading mb={2}>🎧 currently listening</Heading>
 
@@ -152,7 +139,7 @@ function Dashboard() {
                 ]}
                 gap={3}
               >
-                {listening.slice(0, 2).map((x) => (
+                {user.data.listening.slice(0, 2).map((x) => (
                   <Album key={x._id} thing={x} />
                 ))}
               </Grid>

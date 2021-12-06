@@ -11,6 +11,7 @@ import {
   SimpleGrid,
   Grid,
   Divider,
+  Center,
   useColorMode,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
@@ -147,13 +148,16 @@ function AlbumInfo({ currentAlbum, color, avgRating }) {
           )}
         </SimpleGrid>
       </Box>
+
       {currentAlbum.wiki ? (
         <Box>
           {" "}
           <Wiki summary={currentAlbum.wiki} />
         </Box>
       ) : (
-        <></>
+        <Center p={10}>
+          <Text>🤔 📝</Text>
+        </Center>
       )}
     </Box>
   );

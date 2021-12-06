@@ -83,23 +83,23 @@ function useProvideAction() {
     setLoading(false);
   };
 
-  const updateInfo = async (data) => {
-    setLoading(true);
-    console.log(data);
-    const res = await axios.post(
-      `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/user/updateInfo`,
-      data,
-      { headers: { Authorization: `Bearer ${auth.user.token}` } }
-    );
-    if (res.status === 200) {
-      // auth.fetchUserInfo(auth.user.user_id);
-      // router.back();
-      router.push(`/profile/${auth.user.user_id}`);
+  // const updateInfo = async (data) => {
+  //   setLoading(true);
+  //   console.log(data);
+  //   const res = await axios.post(
+  //     `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/user/updateInfo`,
+  //     data,
+  //     { headers: { Authorization: `Bearer ${auth.user.token}` } }
+  //   );
+  //   if (res.status === 200) {
+  //     // auth.fetchUserInfo(auth.user.user_id);
+  //     // router.back();
+  //     router.push(`/profile/${auth.user.user_id}`);
 
-      setLoading(false);
-    }
-    setLoading(false);
-  };
+  //     setLoading(false);
+  //   }
+  //   setLoading(false);
+  // };
 
   const createReview = async (data) => {
     setLoading(true);
@@ -120,7 +120,7 @@ function useProvideAction() {
     addListened,
     addWantToListen,
     addListening,
-    updateInfo,
+    // updateInfo,
     loading,
     createReview,
     reviewCreated,

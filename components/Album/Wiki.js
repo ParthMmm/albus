@@ -75,7 +75,7 @@ function Wiki({ summary }) {
         </Box>
       ) : (
         <Center p={10}>
-          <Text>no summary </Text>
+          <Text>🤔 📝</Text>{" "}
         </Center>
       )}
     </>

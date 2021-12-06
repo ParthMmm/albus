@@ -43,4 +43,16 @@ function checkAction(id, token) {
   // return data;
 }
 
-export { addListened, addWantToListen, addListening, checkAction };
+async function updateInfo(data, token) {
+  const { res } = await axios.post(
+    `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/user/updateInfo`,
+    data,
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+
+  console.log(res);
+
+  return;
+}
+
+export { addListened, addWantToListen, addListening, checkAction, updateInfo };
