@@ -4,7 +4,7 @@ import { userInfoFetch } from "../fetch";
 async function fetchUserInfo(userID) {
   const { data } = await axios.get(userInfoFetch + `?userID=${userID}`);
 
-  // console.log(userInfoFetch);
+  console.log(userInfoFetch);
   //   console.log(data);
   //   const { data } = await axios.get(userInfoFetch + `?userID=${userID}`);
 
