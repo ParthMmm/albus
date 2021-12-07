@@ -68,10 +68,7 @@ function ActionButtons({ name, artist, id }) {
         queryClient.invalidateQueries(["fetchUserInfo", auth.user.user_id]);
         // queryClient.invalidateQueries(["checkActions", id, auth.user.token]);
 
-        console.log("yoop");
         if (user.isSuccess) {
-          console.log("invalidate actions");
-
           // queryClient.invalidateQueries(["checkActions", id, auth.user.token]);
           queryClient.setQueryData(["checkActions", id, auth.user.token], {
             listened: false,
@@ -92,10 +89,7 @@ function ActionButtons({ name, artist, id }) {
         queryClient.invalidateQueries(["fetchUserInfo", auth.user.user_id]);
         // queryClient.invalidateQueries(["checkActions", id, auth.user.token]);
 
-        console.log("yoop2");
         if (user.isSuccess) {
-          console.log("invalidate actions");
-
           // queryClient.invalidateQueries(["checkActions", id, auth.user.token]);
           queryClient.setQueryData(["checkActions", id, auth.user.token], {
             listened: !listened,
@@ -116,9 +110,7 @@ function ActionButtons({ name, artist, id }) {
         queryClient.invalidateQueries(["fetchUserInfo", auth.user.user_id]);
         // queryClient.invalidateQueries(["checkActions", id, auth.user.token]);
 
-        console.log("yoop3");
         if (user.isSuccess) {
-          console.log("invalidate actions");
           // queryClient.invalidateQueries(["checkActions", id, auth.user.token]);
           queryClient.setQueryData(["checkActions", id, auth.user.token], {
             listened: false,
@@ -196,7 +188,7 @@ function ActionButtons({ name, artist, id }) {
   if (id) {
     return (
       <div>
-        <Box w="80%" mx="auto" mt={10} mb={5} color="white">
+        <Box w="80%" mx="auto" mt={10} mb={5}>
           <Box d={{ base: "block", md: "flex" }} justifyContent="center">
             {auth.user ? (
               <Stack direction={["column", "column", "row"]} spacing={3}>
@@ -372,7 +364,13 @@ function ActionButtons({ name, artist, id }) {
       </Box>
     );
   } else {
-    return <Text>sorry no id</Text>;
+    return (
+      <Box w="80%" mx="auto" mt={10} mb={5} color="white">
+        <Box d={{ base: "block", md: "flex" }} justifyContent="center">
+          <Text>sorry no id</Text>
+        </Box>{" "}
+      </Box>
+    );
   }
 }
 

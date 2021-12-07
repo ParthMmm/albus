@@ -12,7 +12,6 @@ import {
   Select,
 } from "@chakra-ui/react";
 import _ from "lodash";
-import ProfileReview from "./ProfileReview";
 import { useAlbum } from "../../providers/albumProvider";
 import { useAuth } from "../../providers/authProvider";
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
@@ -64,7 +63,6 @@ function ProfileReviews({ reviews }) {
           new Date(b.datePosted).getTime() - new Date(a.datePosted).getTime()
         );
       });
-      console.log("news");
 
       setData(sortByDate);
       return;
@@ -77,7 +75,6 @@ function ProfileReviews({ reviews }) {
           new Date(a.datePosted).getTime() - new Date(b.datePosted).getTime()
         );
       });
-      console.log("olds");
       setData(sortByDate);
       return;
     }

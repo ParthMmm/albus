@@ -1,13 +1,15 @@
 import React from "react";
 import useSWR from "swr";
-import { chartTopTracks } from "../../utils/fetch";
 import Track from "./Track";
 import { Grid, Box, Skeleton, Heading, Text } from "@chakra-ui/react";
 import fetcher from "../../utils/fetcher";
+import { fetchTopTracks } from "../../utils/queries/fetchTop";
+import { useQuery } from "react-query";
 
 function TrendingTracks() {
-  const { data, error, isValidating } = useSWR(chartTopTracks, fetcher);
-
+  const { data, error, isLoading } = useQuery("chartTopTracks", () =>
+    fetchTopTracks()
+  );
   if (data) {
     return (
       <>
@@ -30,7 +32,7 @@ function TrendingTracks() {
       </>
     );
   }
-  if (error || isValidating) {
+  if (error || isLoading) {
     return (
       <Box>
         <Skeleton

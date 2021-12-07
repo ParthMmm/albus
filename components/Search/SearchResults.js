@@ -5,8 +5,6 @@ import useSWR from "swr";
 import { albumSearchFetch } from "../../utils/fetch";
 import { Heading, Box, Skeleton, Grid, Text } from "@chakra-ui/react";
 function SearchResults({ albums }) {
-  console.log(albums);
-
   return (
     <Grid
       gridTemplateColumns={[

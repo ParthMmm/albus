@@ -14,12 +14,9 @@ import {
   Center,
   useColorMode,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-import { useAlbum } from "../../providers/albumProvider";
-import { useAction } from "../../providers/actionProvider";
+import React from "react";
 
 import { useRouter } from "next/router";
-import useSWR from "swr";
 import { MdPeople, MdPlayArrow, MdAdd } from "react-icons/md";
 
 import NumberFormat from "react-number-format";
@@ -28,10 +25,7 @@ import Tags from "./Tags";
 import Tracklist from "./Tracklist";
 import Wiki from "./Wiki";
 import Image from "next/image";
-import useAverageColor from "../../utils/useAverageColor";
-import ReviewsController from "../Reviews/ReviewsController";
-import CreateReview from "../Reviews/CreateReview";
-import useAverageRating from "../../utils/useAverageRating";
+
 import { RatingView } from "react-simple-star-rating";
 import {
   useQuery,
@@ -40,6 +34,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "react-query";
+import ShareButton from "./ShareButton";
 function AlbumInfo({ currentAlbum, color, avgRating }) {
   const { colorMode } = useColorMode();
   const router = useRouter();
@@ -155,9 +150,10 @@ function AlbumInfo({ currentAlbum, color, avgRating }) {
           <Wiki summary={currentAlbum.wiki} />
         </Box>
       ) : (
-        <Center p={10}>
-          <Text>🤔 📝</Text>
-        </Center>
+        <Box d="flex" flexDir="row-reverse" m="4" justifyContent="flex-start">
+          {" "}
+          <ShareButton />
+        </Box>
       )}
     </Box>
   );

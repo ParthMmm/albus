@@ -21,31 +21,12 @@ function Dashboard() {
   let randomColor = Math.floor(Math.random() * colors.length);
   const [listening, setListening] = useState(null);
 
-  // const fetchActions = () => {
-  //   if (auth.userInfo?.actions?.listening) {
-  //     let res = auth.userInfo.actions.listening;
-  //     if (res.length > 0) {
-  //       const reversed = res.reverse();
-
-  //       setListening(reversed);
-  //     }
-  //   }
-  // };
-  // const user = 1;
-
   const user = useQuery(
     ["fetchUserInfo", auth?.user?.user_id],
     () => fetchUserInfo(auth.user?.user_id),
     { enabled: !!auth?.user?.user_id }
   );
 
-  // useEffect(() => {
-  //   if (auth.user) {
-  //     // auth.fetchUserInfo(auth.user.user_id);
-  //     fetchActions();
-  //   }
-  // }, []);
-  console.log(user.data);
   if (user.isLoading) {
     return (
       <>
