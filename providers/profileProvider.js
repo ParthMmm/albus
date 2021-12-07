@@ -46,9 +46,8 @@ function useProvideProfile() {
     setLoading(true);
     const userID = { userID: data };
 
-    const res = await axios.post(
-      `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/fetchUserInfo`,
-      userID
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/fetchUserInfo?id=${userID}`
     );
     if (res.status === 200) {
       handleProfileInfo(res.data);

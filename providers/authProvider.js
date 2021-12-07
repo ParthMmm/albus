@@ -40,7 +40,6 @@ function useProvideAuth() {
 
       setUser(user);
 
-      fetchUserInfo(user.user_id);
       setLoading(false);
       return user;
     } else {
@@ -138,16 +137,7 @@ function useProvideAuth() {
       `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/login`,
       data
     );
-    // console.log(res);
-    // if (res.status === 403) {
-    //   console.log(res.json());
-    //   // setError(res.data.msg);
-    //   setLoading(false);
-    // } else {
-    //   if (handleUser(res.data)) {
-    //     router.push("/");
-    //   }
-    // }
+
     if (res.data?.error) {
       console.log(res.data.error);
       setError(res.data.error);
@@ -187,46 +177,9 @@ function useProvideAuth() {
     return;
   };
 
-  const fetchUserInfo = async (data) => {
-    setLoading(true);
-    setError("");
-
-    const userID = { userID: data };
-
-    const res = await axios.post(
-      `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/fetchUserInfo`,
-      userID
-    );
-    if (res.status === 200) {
-      handleUserInfo(res.data);
-      setLoading(false);
-
-      return;
-    } else {
-      setLoading(false);
-    }
-    return;
-  };
-
   const logout = () => {
     handleUserInfo(false);
     handleUser(false);
-  };
-
-  const fetchUserReviews = async () => {
-    setLoading(true);
-
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/fetchUserReviews?id=${user.user_id}`
-    );
-
-    if (res.status === 200) {
-      setReviews(res.data);
-      setLoading(false);
-      return;
-    }
-    setLoading(false);
-    return;
   };
 
   return {
@@ -238,7 +191,6 @@ function useProvideAuth() {
     setError,
     setMessage,
     fetchUser,
-    fetchUserInfo,
     login,
     register,
     logout,
@@ -246,8 +198,6 @@ function useProvideAuth() {
     setWantToListen,
     listening,
     readCookie,
-    fetchUserReviews,
-    reviews,
   };
 }
 

@@ -18,15 +18,22 @@ import { useAction } from "../../providers/actionProvider";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { BeatLoader } from "react-spinners";
-
+import { useQuery, useQueryClient, useMutation, Mutation } from "react-query";
+import fetchUserInfo from "../../utils/queries/fetchUser";
+import { updateInfo } from "../../utils/queries/addActions";
 function Settings() {
   const auth = useAuth();
-  const action = useAction();
   const router = useRouter();
   const [authorized, setAuthorized] = useState(false);
+  const queryClient = useQueryClient();
 
   const { colorMode } = useColorMode();
-  let userID;
+
+  const user = useQuery(
+    ["fetchUserInfo", auth?.user?.user_id],
+    () => fetchUserInfo(auth?.user?.user_id),
+    { enabled: !!auth?.user?.user_id }
+  );
 
   const {
     register,
@@ -36,30 +43,40 @@ function Settings() {
   } = useForm();
 
   const onSubmit = (data) => {
-    action.updateInfo(data);
+    updateMutation.mutate(data);
     reset();
+    // queryClient.invalidateQueries(["fetchUserInfo", auth.user.user_id]);
   };
 
+  const updateMutation = useMutation(
+    (data) => {
+      updateInfo(data, auth.user.token);
+    },
+    {
+      onSuccess: () => {
+        console.log("mutation succ");
+        queryClient.invalidateQueries(["fetchUserInfo", auth.user.user_id]);
+        router.push(`/profile/${auth.user.user_id}`);
+      },
+    }
+  );
+
   useEffect(() => {
-    if (auth.user) {
-      auth.fetchUserInfo(auth.user.user_id);
-    }
-    if (auth.userInfo?.info) {
-      reset({
-        genre: auth.userInfo.info.genre,
-        artist: auth.userInfo.info.artist,
-        album: auth.userInfo.info.album,
-        spotify: auth.userInfo.info.spotify,
-        lastfm: auth.userInfo.info.lastfm,
-      });
-    }
-    userID = router.query.pid;
-    if (userID) {
-      if (auth.user?.user_id === userID) {
+    if (router.query.pid) {
+      if (auth.user?.user_id === router.query.pid) {
         setAuthorized(true);
       }
     }
-  }, [router.query]);
+    if (user.data?.info) {
+      reset({
+        genre: user.data.info.genre,
+        artist: user.data.info.artist,
+        album: user.data.info.album,
+        spotify: user.data.info.spotify,
+        lastfm: user.data.info.lastfm,
+      });
+    }
+  }, [user.data]);
   if (auth.loading || !authorized) {
     <Flex
       height="60vh"

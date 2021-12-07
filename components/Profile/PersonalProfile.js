@@ -16,21 +16,29 @@ import {
 import SavedAlbums from "./SavedAlbums";
 import { FaSpotify, FaLastfmSquare } from "react-icons/fa";
 import ProfileReviews from "./ProfileReviews";
+import fetchUserInfo from "../../utils/queries/fetchUser";
+import { useQuery } from "react-query";
+import fetchUserReviews from "../../utils/queries/fetchUserReviews";
 
 function PersonalProfile() {
   const auth = useAuth();
   const router = useRouter();
 
-  let userID;
-  useEffect(() => {
-    userID = router.query.pid;
-    if (userID) {
-      auth.fetchUserInfo(auth.user.user_id);
-      auth.fetchUserReviews();
-    }
-  }, [router.query]);
+  const user = useQuery(
+    ["fetchUserInfo", router.query.pid],
+    () => fetchUserInfo(router.query.pid),
+    { enabled: !!router.query.pid }
+  );
 
-  if (auth.loading) {
+  const reviews = useQuery(
+    ["fetchUserReviews", router.query.pid],
+    () => fetchUserReviews(router.query.pid),
+    {
+      enabled: !!router.query.pid,
+    }
+  );
+
+  if (user.isLoading || reviews.isLoading) {
     return (
       <>
         <Box w="80%" mx="auto" mt={10} d="flex">
@@ -56,7 +64,7 @@ function PersonalProfile() {
       </>
     );
   }
-  if (!auth.userInfo) {
+  if (!user.data) {
     return (
       <>
         <Box w="80%" mx="auto" mt={10} d="flex">
@@ -79,21 +87,10 @@ function PersonalProfile() {
     );
   }
 
-  if (auth.userInfo && !auth.loading) {
+  if (user.data && !user.isLoading) {
     return (
       <>
         <Box
-          // w={{ base: "80%", md: "40%", lg: "40%" }}
-          // mx="auto"
-          // mt={10}
-          // color={{ dark: "white", light: "black" }}
-          // d="flex"
-          // boxShadow="lg"
-          // // flexFlow="column"
-          // border="5px solid"
-          // borderColor="purple.600"
-          // borderRadius="sm"
-          // rounded="xl"
           w={{ base: "80%", md: "40%", lg: "40%" }}
           mx="auto"
           mt={10}
@@ -113,24 +110,18 @@ function PersonalProfile() {
           flexDir={{ base: "column", sm: "column", md: "column", lg: "row" }}
         >
           <Box
-            // d="flex"
-            // justifyContent="space-evenly"
-            // m="2"
-            // flexDir={{ base: "row", sm: "row", md: "row", lg: "row" }}
             p="5"
             d="flex"
             justifyContent={{ base: "center", sm: "center", md: "center" }}
             alignItems="center"
-            // alignItems={{ base: "center", sm: "center", md: "center", lg: "" }}
             flexShrink={{ sm: "1", md: "0" }}
             flexFlow="column wrap"
-            // color={colorMode === "dark" ? "white" : "black"}
           >
             <Box alignItems="center" justifyContent="center">
               {" "}
               <Box mt={3} mb={2} justifyContent="center">
                 {" "}
-                <Heading>{auth.userInfo?.username}</Heading>
+                <Heading>{user.data?.username}</Heading>
               </Box>
               <Box
                 d="flex"
@@ -141,9 +132,9 @@ function PersonalProfile() {
                   md: "flex-start",
                 }}
               >
-                {auth?.userInfo?.info?.spotify ? (
+                {user?.data?.info?.spotify ? (
                   <Link
-                    href={`https://open.spotify.com/user/${auth?.userInfo?.info?.spotify}`}
+                    href={`https://open.spotify.com/user/${user?.data?.info?.spotify}`}
                     isExternal
                   >
                     {" "}
@@ -152,9 +143,9 @@ function PersonalProfile() {
                 ) : (
                   <></>
                 )}
-                {auth?.userInfo?.info?.lastfm ? (
+                {user?.data?.info?.lastfm ? (
                   <Link
-                    href={`https://www.last.fm/user/${auth?.userInfo?.info?.lastfm}`}
+                    href={`https://www.last.fm/user/${user?.data?.info?.lastfm}`}
                     isExternal
                   >
                     <Icon as={FaLastfmSquare} w={5} h={5} color="#c3000d " />
@@ -173,7 +164,7 @@ function PersonalProfile() {
             justifyContent="space-evenly"
             // p={{ base: "1", sm: "1", md: "1", lg: "10" }}
           >
-            {auth.userInfo?.info?.genre ? (
+            {user.data?.info?.genre ? (
               <Box
                 d="flex"
                 flexDir="row"
@@ -186,14 +177,14 @@ function PersonalProfile() {
 
                 <Box>
                   <Text as="span" mx="2" fontWeight="bold" fontSize="lg">
-                    {auth.userInfo?.info?.genre}
+                    {user.data?.info?.genre}
                   </Text>
                 </Box>
               </Box>
             ) : (
               <></>
             )}
-            {auth.userInfo?.info?.artist ? (
+            {user.data?.info?.artist ? (
               <Box
                 d="flex"
                 flexDir="row"
@@ -206,14 +197,14 @@ function PersonalProfile() {
 
                 <Box>
                   <Text as="span" mx="2" fontWeight="bold" fontSize="lg">
-                    {auth.userInfo?.info?.artist}
+                    {user.data?.info?.artist}
                   </Text>
                 </Box>
               </Box>
             ) : (
               <></>
             )}
-            {auth.userInfo?.info?.album ? (
+            {user.data?.info?.album ? (
               <Box
                 d="flex"
                 flexDir="row"
@@ -226,7 +217,7 @@ function PersonalProfile() {
 
                 <Box>
                   <Text as="span" mx="2" fontWeight="bold" fontSize="lg">
-                    {auth.userInfo?.info?.album}
+                    {user.data?.info?.album}
                   </Text>
                 </Box>
               </Box>
@@ -251,15 +242,15 @@ function PersonalProfile() {
           mx={10}
           flexDir={{ base: "column", md: "row" }}
         >
-          {auth.reviews ? (
+          {user.data.reviews ? (
             <Box w={{ md: "40%" }}>
-              <ProfileReviews authProfile={true} otherProfile={false} />
+              <ProfileReviews reviews={reviews} />
             </Box>
           ) : (
             <></>
           )}
           <Box w={{ md: "60%" }}>
-            <SavedAlbums profile={auth.userInfo} />
+            <SavedAlbums profile={user.data} />
           </Box>
         </Box>
         <Box w="60%" mx="auto"></Box>

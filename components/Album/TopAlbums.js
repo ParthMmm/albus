@@ -14,6 +14,7 @@ import Album from "./Album";
 import fetcher from "../../utils/fetcher";
 import { genres } from "../../utils/randoms";
 import _ from "lodash";
+import { useQuery } from "react-query";
 function TopAlbums() {
   let albums = [];
   const [filter, setFilter] = useState("dance");
@@ -23,12 +24,12 @@ function TopAlbums() {
     let x = Math.floor(Math.random() * genres.length);
     setRandomNum(x);
   }, []);
-  const { data, error, isValidating } = useSWR(
+  const { data, error, isLoading } = useSWR(
     tagTopAlbumsFetch + `&tag=${genres[randomNum]}`,
     fetcher
   );
 
-  if (error || isValidating) {
+  if (error || isLoading) {
     return (
       <>
         <Heading>

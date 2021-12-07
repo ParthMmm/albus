@@ -4,9 +4,14 @@ import { chartTopArtists } from "../../utils/fetch";
 import Artist from "./Artist";
 import { Box, Grid, Skeleton, Heading, Text } from "@chakra-ui/react";
 import fetcher from "../../utils/fetcher";
-
+import { useQuery } from "react-query";
+import { fetchTopArtists } from "../../utils/queries/fetchTop";
 function TrendingArtists() {
-  const { data, error, isValidating } = useSWR(chartTopArtists, fetcher);
+  // const { data, error, isValidating } = useSWR(chartTopArtists, fetcher);
+
+  const { data, error, isLoading } = useQuery("chartTopArtists", () =>
+    fetchTopArtists()
+  );
 
   if (data) {
     return (
@@ -30,7 +35,7 @@ function TrendingArtists() {
       </>
     );
   }
-  if (error || isValidating) {
+  if (error || isLoading) {
     return (
       <Box>
         <Skeleton

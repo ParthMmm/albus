@@ -37,9 +37,6 @@ function Artist({ artist }) {
         h="120"
         bg={{ dark: "gray.600", light: "0" }}
         borderRadius="sm"
-        // border="3px solid"
-        // borderColor={colorMode === "dark" ? "purple.300" : "purple.600"}
-        // borderColor={colors[randomNum]}
         rounded="xl"
         bg={colorMode === "dark" ? "componentBg" : "white"}
       >
@@ -54,7 +51,7 @@ function Artist({ artist }) {
         >
           {" "}
           <Link href="" onClick={() => searchSubmit()}>
-            {artistItem.name}{" "}
+            {artistItem.name}
           </Link>
         </Text>
         <Flex mt={2} align="center">

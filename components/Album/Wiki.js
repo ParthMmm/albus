@@ -74,9 +74,25 @@ function Wiki({ summary }) {
           )}
         </Box>
       ) : (
-        <Center p={10}>
-          <Text>no summary </Text>
-        </Center>
+        <Box d="flex" flexDir="row-reverse" m="4" justifyContent="flex-start">
+          {" "}
+          <Box pl="2" ref={box}>
+            <Button
+              fontFamily="Helvetica"
+              fontWeight="semibold"
+              size="md"
+              onClick={() => handleToggle()}
+              rounded="xl"
+              bg="gray.400"
+            >
+              <Text _hover={{ color: "tomato" }}>
+                {" "}
+                show {show ? "less" : "more"}
+              </Text>
+            </Button>
+          </Box>
+          <ShareButton />
+        </Box>
       )}
     </>
   );

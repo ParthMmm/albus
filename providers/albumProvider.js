@@ -27,7 +27,7 @@ function useProvideAlbum() {
   const [reviews, setReviews] = useState("");
   const [numReviews, setNumReviews] = useState(0);
   const [avgRating, setAvgRating] = useState(0);
-  const [filtered, setFiltered] = useState(0);
+
   const handleAlbum = async (mbid, albumName, artist) => {
     if (mbid || (albumName && artist)) {
       const album = await formatAlbum(mbid, albumName, artist);
@@ -88,22 +88,6 @@ function useProvideAlbum() {
     return;
   };
 
-  const filterReviews = async (filter) => {
-    if (reviews && filter === "date") {
-      let result = reviews.sort((a, b) => b.datePosted - a.datePosted);
-      setReviews(result);
-      setFiltered(true);
-    }
-    if (reviews && filter === "rating") {
-      //descending order
-      let result = reviews.sort((a, b) => b.rating - a.rating);
-      setReviews(result);
-      setFiltered(true);
-    }
-
-    return;
-  };
-
   const resetReviews = () => {
     setReviews("");
     setNumReviews(0);
@@ -123,8 +107,6 @@ function useProvideAlbum() {
     avgRating,
     setReviews,
     resetReviews,
-    filterReviews,
-    filtered,
   };
 }
 

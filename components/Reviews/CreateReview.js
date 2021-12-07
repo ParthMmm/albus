@@ -25,20 +25,21 @@ import { Rating, RatingView } from "react-simple-star-rating";
 import { Formik, Field, Form } from "formik";
 import { useAction } from "../../providers/actionProvider";
 import { useAlbum } from "../../providers/albumProvider";
-
+import newReview from "../../utils/newReview";
+import axios from "axios";
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from "react-query";
 // import ReviewModal from "./ReviewModal";
-
+import { useAuth } from "../../providers/authProvider";
 function CreateReview() {
   const { colorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
-
   const album = useAlbum();
-
-  const submitHandler = () => {
-    // useNewReview(true);
-
-    console.log("submitted");
-  };
 
   return (
     <>
@@ -51,56 +52,62 @@ function CreateReview() {
       >
         Open Modal
       </Button>
-      <ReviewModal
-        isOpen={isOpen}
-        onClose={onClose}
-        album={album?.album}
-        submitHandler={submitHandler}
-      />
+      <ReviewModal isOpen={isOpen} onClose={onClose} album={album?.album} />
     </>
   );
 }
 
-const ReviewModal = ({ isOpen, onClose, album, submitHandler }) => {
+const ReviewModal = ({ isOpen, onClose, album }) => {
   const [rating, setRating] = useState(0);
   const action = useAction();
-  const albumProvider = useAlbum();
+  const queryClient = useQueryClient();
+  const auth = useAuth();
+
+  const mutation = useMutation(
+    (values) => {
+      newReview(values, auth.user.token);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries([
+          "fetchReviews",
+          album.albumName,
+          album.artist,
+        ]);
+        action.setReviewCreated(true);
+      },
+    }
+  );
 
   const validate = (values) => {
     const errors = {};
-    if (!values.firstName) {
-      errors.firstName = "Required";
-    } else if (values.firstName.length > 15) {
-      errors.firstName = "Must be 15 characters or less";
-    }
 
-    if (!values.lastName) {
-      errors.lastName = "Required";
-    } else if (values.lastName.length > 20) {
-      errors.lastName = "Must be 20 characters or less";
+    if (!values.rating) {
+      errors.rating = "required";
     }
-
-    if (!values.email) {
-      errors.email = "Required";
-    } else if (
-      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-    ) {
-      errors.email = "Invalid email address";
+    if (!values.title) {
+      errors.title = "required";
+    }
+    if (!values.reviewBody) {
+      errors.reviewBody = "required";
     }
 
     return errors;
   };
-
-  // setNewReview(true);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>write a review</ModalHeader>
-        <ModalCloseButton />
+        <ModalCloseButton
+          onClick={() => {
+            setRating(0);
+          }}
+        />
         <ModalBody>
           <Formik
+            validate={validate}
             initialValues={{
               title: "",
               reviewBody: "",
@@ -108,21 +115,19 @@ const ReviewModal = ({ isOpen, onClose, album, submitHandler }) => {
             }}
             onSubmit={(values, actions) => {
               values = { ...values, album };
+              mutation.mutate(values);
 
-              action.createReview(values);
-              actions.setSubmitting(false);
               actions.resetForm({});
-              setRating(0);
 
-              // submitHandler();
+              setRating(0);
 
               onClose();
             }}
           >
             <Form>
               <Field name="rating" type="number">
-                {({ field, form: { setFieldValue, errors } }) => (
-                  <FormControl>
+                {({ field, form: { setFieldValue, errors, touched } }) => (
+                  <FormControl isInvalid={errors.rating && touched.rating}>
                     <Rating
                       {...field}
                       id="rating"
@@ -147,7 +152,7 @@ const ReviewModal = ({ isOpen, onClose, album, submitHandler }) => {
                       id="title"
                       placeholder="enter title here"
                     />
-                    <FormErrorMessage>{form.errors.name}</FormErrorMessage>
+                    <FormErrorMessage>{form.errors.title}</FormErrorMessage>
                   </FormControl>
                 )}
               </Field>
@@ -155,7 +160,9 @@ const ReviewModal = ({ isOpen, onClose, album, submitHandler }) => {
               <Field name="reviewBody">
                 {({ field, form }) => (
                   <FormControl
-                    isInvalid={form.errors.review && form.touched.review}
+                    isInvalid={
+                      form.errors.reviewBody && form.touched.reviewBody
+                    }
                     mt={4}
                   >
                     <Textarea
@@ -163,7 +170,9 @@ const ReviewModal = ({ isOpen, onClose, album, submitHandler }) => {
                       id="reviewBody"
                       placeholder="enter review here"
                     />
-                    <FormErrorMessage>{form.errors.review}</FormErrorMessage>
+                    <FormErrorMessage>
+                      {form.errors.reviewBody}
+                    </FormErrorMessage>
                   </FormControl>
                 )}
               </Field>
@@ -174,7 +183,10 @@ const ReviewModal = ({ isOpen, onClose, album, submitHandler }) => {
                   colorScheme="blue"
                   mr={3}
                   variant="ghost"
-                  onClick={onClose}
+                  onClick={() => {
+                    setRating(0);
+                    onClose();
+                  }}
                 >
                   cancel
                 </Button>

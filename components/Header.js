@@ -26,7 +26,7 @@ function Header() {
   const { colorMode, toggleColorMode } = useColorMode();
   useEffect(() => {
     if (auth.user) {
-      auth.fetchUserInfo(auth.user.user_id);
+      // auth.fetchUserInfo(auth.user.user_id);
     }
   }, []);
 

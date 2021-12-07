@@ -6,18 +6,19 @@ import { useRouter } from "next/router";
 import { albumMBIDCheck } from "../../../utils/albumCheck";
 import { MdNavigateBefore } from "react-icons/md";
 import BackButton from "./BackButton";
+import { useQuery, useQueryClient } from "react-query";
+import fetchUserInfo from "../../../utils/queries/fetchUser";
+
 function Listening() {
-  const profile = useProfile();
   const router = useRouter();
 
-  let userID;
-  useEffect(() => {
-    userID = router.query.pid;
-    if (userID) {
-      profile.fetchProfileInfo(userID);
-    }
-  }, [router.query]);
-  if (profile.loading) {
+  const profile = useQuery(
+    ["fetchUserInfo", router.query.pid],
+    () => fetchUserInfo(router.query.pid),
+    { enabled: !!router.query.pid }
+  );
+
+  if (profile.isLoading) {
     return (
       <Box w="80%" h="50rem" mx="auto" mt={10}>
         <Heading mb={2}>listening</Heading>
@@ -45,7 +46,7 @@ function Listening() {
       </Box>
     );
   }
-  if (!profile.profileInfo) {
+  if (!profile.data) {
     return (
       <Box>
         <Skeleton
@@ -56,13 +57,13 @@ function Listening() {
       </Box>
     );
   }
-  if (profile.profileInfo && !profile.loading) {
-    let filtered = albumMBIDCheck(profile.profileInfo.actions.listening);
+  if (profile.data && !profile.isLoading) {
+    let filtered = albumMBIDCheck(profile.data.listening);
     return (
       <Box w="80%" h="50rem" mx="auto" mt={10}>
         <Flex justifyContent="space-between" alignItems="center">
           {" "}
-          <Heading mb={2}>{profile.profileInfo.username}'s listening</Heading>
+          <Heading mb={2}>{profile.data.username}'s listening</Heading>
           <BackButton />
         </Flex>
         <Grid
@@ -76,7 +77,7 @@ function Listening() {
           gap={3}
           pb={10}
         >
-          {profile.profileInfo.actions.listening ? (
+          {profile.data.listening ? (
             filtered.map((x) => (
               <Box>
                 <Album key={x._id} thing={x} />
