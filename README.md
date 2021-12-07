@@ -14,6 +14,7 @@ Find and listen to more albums you'll love, and keep track of albums you want to
 
 ## Built With
 - React
+- React-Query
 - Next.js
 - Chakra UI
 - MongoDB
