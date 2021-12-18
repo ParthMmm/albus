@@ -4,15 +4,15 @@ Find and listen to more albums you'll love, and keep track of albums you want to
 
 ## How I worked on this project
 
-- I used feature branches and Pull Requests: [https://github.com/ParthMmm/albus/pull/23]
-- I used Notion to track my tasks :[https://parthm.notion.site/c37b6529f9194dff8ada16e7a7a04158?v=140530fa9d1e41c08fd02b4dfc7c01a8]
+- I used feature branches and Pull Requests: [pr](https://github.com/ParthMmm/albus/pull/23)
+- I used Notion to track my tasks: [notion](https://parthm.notion.site/c37b6529f9194dff8ada16e7a7a04158?v=140530fa9d1e41c08fd02b4dfc7c01a8)
 
 ## How to navigate this project
 
-- State with React Context: [https://github.com/ParthMmm/albus/tree/main/providers]
-- Next.js pages for routing: [https://github.com/ParthMmm/albus/tree/main/pages]
-- All the application's components: [https://github.com/ParthMmm/albus/tree/main/components]
-- Node.js & Express backend: [https://github.com/ParthMmm/albus-backend]
+- State with React Context: [providers](https://github.com/ParthMmm/albus/tree/main/providers)
+- Next.js pages for routing: [pages](https://github.com/ParthMmm/albus/tree/main/pages)
+- All the application's components: [components](https://github.com/ParthMmm/albus/tree/main/components)
+- Node.js & Express backend: [backend](https://github.com/ParthMmm/albus-backend)
 
 ## Why I built the project this way
 
