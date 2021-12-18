@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
-import router from "next/router";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { useRouter } from "next/router";
-import useSWR from "swr";
 
 const AuthContext = createContext();
 

@@ -1,8 +1,6 @@
-import React, { useState, useEffect, useContext, createContext } from "react";
-import router from "next/router";
-import Cookies from "js-cookie";
+import React, { useState, useContext, createContext } from "react";
+
 import axios from "axios";
-import { albumInfoFetch } from "../utils/fetch";
 import _ from "lodash";
 
 const AlbumContext = createContext();
