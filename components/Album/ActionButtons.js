@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Center,
@@ -7,24 +7,24 @@ import {
   ButtonGroup,
   Stack,
   Spinner,
-} from "@chakra-ui/react";
-import { useAlbum } from "../../providers/albumProvider";
-import { useAction } from "../../providers/actionProvider";
-import { useAuth } from "../../providers/authProvider";
-import { MdDone } from "react-icons/md";
-import { useRouter } from "next/router";
-import { useToast } from "@chakra-ui/react";
-import { BeatLoader } from "react-spinners";
-import fetchUserInfo from "../../utils/queries/fetchUser";
-import { useQuery, useMutation, useQueryClient } from "react-query";
+} from '@chakra-ui/react';
+import { useAlbum } from '../../providers/albumProvider';
+import { useAction } from '../../providers/actionProvider';
+import { useAuth } from '../../providers/authProvider';
+import { MdDone } from 'react-icons/md';
+import { useRouter } from 'next/router';
+import { useToast } from '@chakra-ui/react';
+import { BeatLoader } from 'react-spinners';
+import fetchUserInfo from '../../utils/queries/fetchUser';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
 import {
   addListened,
   addWantToListen,
   addListening,
   checkAction,
-} from "../../utils/queries/addActions";
-import { checkActionsFetch } from "../../utils/fetch";
-import axios from "axios";
+} from '../../utils/queries/addActions';
+import { checkActionsFetch } from '../../utils/fetch';
+import axios from 'axios';
 function ActionButtons({ name, artist, id }) {
   const album = useAlbum();
   const action = useAction();
@@ -40,13 +40,13 @@ function ActionButtons({ name, artist, id }) {
   const queryClient = useQueryClient();
 
   const user = useQuery(
-    ["fetchUserInfo", auth.user.user_id],
+    ['fetchUserInfo', auth.user.user_id],
     () => fetchUserInfo(auth.user.user_id),
     { enabled: !!auth.user.user_id }
   );
 
   const actions = useQuery(
-    ["checkActions", id, auth.user.token],
+    ['checkActions', id, auth.user.token],
     () => checkAction(id, auth.user.token),
     { enabled: !!auth.user.token, id }
   );
@@ -65,12 +65,12 @@ function ActionButtons({ name, artist, id }) {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["fetchUserInfo", auth.user.user_id]);
+        queryClient.invalidateQueries(['fetchUserInfo', auth.user.user_id]);
         // queryClient.invalidateQueries(["checkActions", id, auth.user.token]);
 
         if (user.isSuccess) {
           // queryClient.invalidateQueries(["checkActions", id, auth.user.token]);
-          queryClient.setQueryData(["checkActions", id, auth.user.token], {
+          queryClient.setQueryData(['checkActions', id, auth.user.token], {
             listened: false,
             wantToListen: false,
             listening: !listening,
@@ -86,12 +86,12 @@ function ActionButtons({ name, artist, id }) {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["fetchUserInfo", auth.user.user_id]);
+        queryClient.invalidateQueries(['fetchUserInfo', auth.user.user_id]);
         // queryClient.invalidateQueries(["checkActions", id, auth.user.token]);
 
         if (user.isSuccess) {
           // queryClient.invalidateQueries(["checkActions", id, auth.user.token]);
-          queryClient.setQueryData(["checkActions", id, auth.user.token], {
+          queryClient.setQueryData(['checkActions', id, auth.user.token], {
             listened: !listened,
             wantToListen: false,
             listening: false,
@@ -107,12 +107,12 @@ function ActionButtons({ name, artist, id }) {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["fetchUserInfo", auth.user.user_id]);
+        queryClient.invalidateQueries(['fetchUserInfo', auth.user.user_id]);
         // queryClient.invalidateQueries(["checkActions", id, auth.user.token]);
 
         if (user.isSuccess) {
           // queryClient.invalidateQueries(["checkActions", id, auth.user.token]);
-          queryClient.setQueryData(["checkActions", id, auth.user.token], {
+          queryClient.setQueryData(['checkActions', id, auth.user.token], {
             listened: false,
             wantToListen: !wantToListen,
             listening: false,
@@ -130,14 +130,14 @@ function ActionButtons({ name, artist, id }) {
   const clickListened = () => {
     if (wantToListen) {
       setWantToListen(false);
-      console.log("1");
+      console.log('1');
     }
     if (listening) {
       setListening(false);
-      console.log("2");
+      console.log('2');
     }
     if (listened) {
-      console.log("3");
+      console.log('3');
       setListened(false);
       listenedMutation.mutate(albumInfo);
       return;
@@ -168,16 +168,16 @@ function ActionButtons({ name, artist, id }) {
   const clickListening = () => {
     if (wantToListen) {
       setWantToListen(false);
-      console.log("11");
+      console.log('11');
     }
     if (listened) {
       setListened(false);
-      console.log("22");
+      console.log('22');
     }
     if (listening) {
       setListening(false);
       listeningMutation.mutate(albumInfo);
-      console.log("33");
+      console.log('33');
       return;
     }
     setListening(true);
@@ -187,72 +187,72 @@ function ActionButtons({ name, artist, id }) {
 
   if (id) {
     return (
-      <div>
-        <Box w="80%" mx="auto" mt={10} mb={5}>
-          <Box d={{ base: "block", md: "flex" }} justifyContent="center">
+      <>
+        <Box w='80%' mx='auto' mt={10} mb={5}>
+          <Box d={{ base: 'block', md: 'flex' }} justifyContent='center'>
             {auth.user ? (
-              <Stack direction={["column", "column", "row"]} spacing={3}>
+              <Stack direction={['column', 'column', 'row']} spacing={3}>
                 {listened ? (
                   <Button
                     isLoading={actionLoading}
-                    spinner={<BeatLoader size={8} color="white" />}
+                    spinner={<BeatLoader size={8} color='white' />}
                     onClick={() => {
                       clickListened();
                     }}
-                    bg="purple.600"
-                    _hover={{ background: "purple.600" }}
-                    rounded="xl"
-                    size="lg"
-                    leftIcon={<MdDone color="tomato" />}
+                    bg='purple.600'
+                    _hover={{ background: 'purple.600' }}
+                    rounded='xl'
+                    size='lg'
+                    leftIcon={<MdDone color='tomato' />}
                   >
                     listened
                   </Button>
                 ) : (
                   <Button
                     isLoading={actionLoading}
-                    spinner={<BeatLoader size={8} color="white" />}
+                    spinner={<BeatLoader size={8} color='white' />}
                     onClick={() => {
                       clickListened();
                     }}
-                    bg="tomato"
-                    _hover={{ background: "purple.600" }}
-                    rounded="xl"
-                    size="lg"
+                    bg='tomato'
+                    _hover={{ background: 'purple.600' }}
+                    rounded='xl'
+                    size='lg'
                   >
-                    <Text _hover={{ color: "tomato" }} fontWeight="semibold">
+                    <Text _hover={{ color: 'tomato' }} fontWeight='semibold'>
                       listened
-                    </Text>{" "}
+                    </Text>{' '}
                   </Button>
                 )}
 
                 {wantToListen ? (
                   <Button
                     isLoading={actionLoading}
-                    spinner={<BeatLoader size={8} color="white" />}
+                    spinner={<BeatLoader size={8} color='white' />}
                     onClick={() => {
                       clickWantToListen();
                     }}
-                    bg="purple.600"
-                    _hover={{ background: "purple.600" }}
-                    rounded="xl"
-                    size="lg"
-                    leftIcon={<MdDone color="tomato" />}
+                    bg='purple.600'
+                    _hover={{ background: 'purple.600' }}
+                    rounded='xl'
+                    size='lg'
+                    leftIcon={<MdDone color='tomato' />}
                   >
                     want to listen
                   </Button>
                 ) : (
                   <Button
                     isLoading={actionLoading}
-                    spinner={<BeatLoader size={8} color="white" />}
+                    spinner={<BeatLoader size={8} color='white' />}
                     onClick={() => {
                       clickWantToListen();
                     }}
-                    bg="tomato"
-                    _hover={{ background: "purple.600" }}
-                    rounded="xl"
-                    size="lg"
+                    bg='tomato'
+                    _hover={{ background: 'purple.600' }}
+                    rounded='xl'
+                    size='lg'
                   >
-                    <Text _hover={{ color: "tomato" }} fontWeight="semibold">
+                    <Text _hover={{ color: 'tomato' }} fontWeight='semibold'>
                       want to listen
                     </Text>
                   </Button>
@@ -260,54 +260,54 @@ function ActionButtons({ name, artist, id }) {
                 {listening ? (
                   <Button
                     isLoading={actionLoading}
-                    spinner={<BeatLoader size={8} color="white" />}
+                    spinner={<BeatLoader size={8} color='white' />}
                     onClick={() => {
                       clickListening();
                     }}
-                    bg="purple.600"
-                    _hover={{ background: "purple.600" }}
-                    rounded="xl"
-                    size="lg"
-                    leftIcon={<MdDone color="tomato" />}
+                    bg='purple.600'
+                    _hover={{ background: 'purple.600' }}
+                    rounded='xl'
+                    size='lg'
+                    leftIcon={<MdDone color='tomato' />}
                   >
                     listening
                   </Button>
                 ) : (
                   <Button
                     isLoading={actionLoading}
-                    spinner={<BeatLoader size={8} color="white" />}
+                    spinner={<BeatLoader size={8} color='white' />}
                     onClick={() => {
                       clickListening();
                     }}
-                    bg="tomato"
-                    _hover={{ background: "purple.600" }}
-                    rounded="xl"
-                    size="lg"
+                    bg='tomato'
+                    _hover={{ background: 'purple.600' }}
+                    rounded='xl'
+                    size='lg'
                   >
-                    <Text _hover={{ color: "tomato" }} fontWeight="semibold">
+                    <Text _hover={{ color: 'tomato' }} fontWeight='semibold'>
                       listening
                     </Text>
                   </Button>
                 )}
               </Stack>
             ) : (
-              <Stack direction={["column", "column", "row"]} spacing={3}>
+              <Stack direction={['column', 'column', 'row']} spacing={3}>
                 <Button
                   onClick={() =>
                     toast({
-                      title: "Authorization needed",
-                      description: "Log in or sign up for an account",
-                      status: "error",
+                      title: 'Authorization needed',
+                      description: 'Log in or sign up for an account',
+                      status: 'error',
                       duration: 8000,
                       isClosable: true,
                     })
                   }
-                  bg="tomato"
-                  _hover={{ background: "purple.600" }}
-                  size="lg"
-                  rounded="xl"
+                  bg='tomato'
+                  _hover={{ background: 'purple.600' }}
+                  size='lg'
+                  rounded='xl'
                 >
-                  <Text _hover={{ color: "tomato" }} fontWeight="semibold">
+                  <Text _hover={{ color: 'tomato' }} fontWeight='semibold'>
                     listened
                   </Text>
                 </Button>
@@ -315,38 +315,38 @@ function ActionButtons({ name, artist, id }) {
                 <Button
                   onClick={() =>
                     toast({
-                      title: "Authorization needed",
-                      description: "Log in or sign up for an account",
-                      status: "error",
+                      title: 'Authorization needed',
+                      description: 'Log in or sign up for an account',
+                      status: 'error',
                       duration: 8000,
                       isClosable: true,
                     })
                   }
-                  bg="tomato"
-                  _hover={{ background: "purple.600" }}
-                  size="lg"
-                  rounded="xl"
+                  bg='tomato'
+                  _hover={{ background: 'purple.600' }}
+                  size='lg'
+                  rounded='xl'
                 >
-                  <Text _hover={{ color: "tomato" }} fontWeight="semibold">
+                  <Text _hover={{ color: 'tomato' }} fontWeight='semibold'>
                     want to listen
                   </Text>
                 </Button>
                 <Button
                   onClick={() =>
                     toast({
-                      title: "Authorization needed",
-                      description: "Log in or sign up for an account",
-                      status: "error",
+                      title: 'Authorization needed',
+                      description: 'Log in or sign up for an account',
+                      status: 'error',
                       duration: 8000,
                       isClosable: true,
                     })
                   }
-                  bg="tomato"
-                  _hover={{ background: "purple.600" }}
-                  size="lg"
-                  rounded="xl"
+                  bg='tomato'
+                  _hover={{ background: 'purple.600' }}
+                  size='lg'
+                  rounded='xl'
                 >
-                  <Text _hover={{ color: "tomato" }} fontWeight="semibold">
+                  <Text _hover={{ color: 'tomato' }} fontWeight='semibold'>
                     listening
                   </Text>
                 </Button>
@@ -354,21 +354,22 @@ function ActionButtons({ name, artist, id }) {
             )}
           </Box>
         </Box>
-      </div>
+      </>
     );
   }
   if (actions.isLoading || user.isLoading) {
     return (
-      <Box w="80%" mx="auto" mt={10} mb={5} color="white">
+      <Box w='80%' mx='auto' mt={10} mb={5} color='white'>
         <Spinner />
       </Box>
     );
+  }
+  if (!id) {
+    return <Box></Box>;
   } else {
     return (
-      <Box w="80%" mx="auto" mt={10} mb={5} color="white">
-        <Box d={{ base: "block", md: "flex" }} justifyContent="center">
-          <Text>sorry no id</Text>
-        </Box>{" "}
+      <Box w='80%' mx='auto' mt={10} mb={5} color='white'>
+        <Spinner />
       </Box>
     );
   }

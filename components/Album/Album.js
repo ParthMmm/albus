@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Box, Text, Link, useColorMode } from "@chakra-ui/react";
-import NextLink from "next/link";
-import { useAlbum } from "../../providers/albumProvider";
-import { useRouter } from "next/router";
-import useSWR from "swr";
-import { albumInfoFetch, albumSearchFetch } from "../../utils/fetch";
-import { colors } from "../../utils/randoms";
-import Image from "next/image";
-import useAverageColor from "../../utils/useAverageColor";
+import React, { useState, useEffect } from 'react';
+import { Box, Text, Link, useColorMode } from '@chakra-ui/react';
+import NextLink from 'next/link';
+import { useAlbum } from '../../providers/albumProvider';
+import { useRouter } from 'next/router';
+import useSWR from 'swr';
+import { albumInfoFetch, albumSearchFetch } from '../../utils/fetch';
+import { colors } from '../../utils/randoms';
+import Image from 'next/image';
+import useAverageColor from '../../utils/useAverageColor';
 function Album({ thing }) {
   const album = useAlbum();
   const router = useRouter();
@@ -15,9 +15,10 @@ function Album({ thing }) {
   let properties = {};
   let color;
   const { colorMode } = useColorMode();
+
   const searchSubmit = () => {
     router.push({
-      pathname: "/search",
+      pathname: '/search',
       query: { input: properties.artist },
     });
   };
@@ -41,7 +42,7 @@ function Album({ thing }) {
     }
     if (data) {
       properties = {
-        imageUrl: data.album.image[2]["#text"],
+        imageUrl: data.album.image[2]['#text'],
         artist: data.album.artist,
         name: data.album.name,
         url: data.album.url,
@@ -64,7 +65,7 @@ function Album({ thing }) {
     }
     if (data) {
       properties = {
-        imageUrl: data.album.image[2]["#text"],
+        imageUrl: data.album.image[2]['#text'],
         artist: data.album.artist,
         name: data.album.name,
         url: data.album.url,
@@ -72,14 +73,14 @@ function Album({ thing }) {
     }
   } else if (thing.artist?.name) {
     properties = {
-      imageUrl: thing.image[2]["#text"],
+      imageUrl: thing.image[2]['#text'],
       artist: thing.artist.name,
       name: thing.name,
       url: thing.url,
     };
   } else if (thing.artist) {
     properties = {
-      imageUrl: thing.image[2]["#text"],
+      imageUrl: thing.image[2]['#text'],
       artist: thing.artist,
       name: thing.name,
       url: thing.url,
@@ -93,23 +94,23 @@ function Album({ thing }) {
 
   return (
     <Box
-      shadow="md"
+      shadow='md'
       // w={{ base: "18vh", sm: "24vh", md: "100%" }}
-      d="flex"
-      flexFlow="row nowrap"
-      rounded="xl"
+      d='flex'
+      flexFlow='row nowrap'
+      rounded='xl'
     >
-      {" "}
+      {' '}
       <Box
         p={5}
-        d="flex"
-        alignItems="center"
-        justifyContent="center"
-        rounded="xl"
-        roundedRight="none"
+        d='flex'
+        alignItems='center'
+        justifyContent='center'
+        rounded='xl'
+        roundedRight='none'
         bg={color}
         borderColor={color}
-        w="45%"
+        w='45%'
       >
         <NextLink
           href={{
@@ -126,28 +127,28 @@ function Album({ thing }) {
         >
           <Image
             src={properties.imageUrl}
-            alt="Album Cover"
+            alt='Album Cover'
             width={250}
             height={250}
-            quality="100"
-            layout="intrinsic"
+            quality='100'
+            layout='intrinsic'
             // fallbackSrc="https://via.placeholder.com/174"
           />
         </NextLink>
       </Box>
       <Box
-        d="flex"
-        justifyContent="center"
-        alignItems="flex-start"
-        flexDirection="column"
-        px="4"
+        d='flex'
+        justifyContent='center'
+        alignItems='flex-start'
+        flexDirection='column'
+        px='4'
         // flexShrink="1"
-        w="55%"
+        w='55%'
         // h="150"
-        rounded="xl"
-        roundedLeft="none"
+        rounded='xl'
+        roundedLeft='none'
         // w={{ base: "18vh", sm: "24vh", md: "full" }}
-        bg={colorMode === "dark" ? "componentBg" : "white"}
+        bg={colorMode === 'dark' ? 'componentBg' : 'white'}
       >
         <NextLink
           href={{
@@ -164,12 +165,12 @@ function Album({ thing }) {
         >
           <Text>
             <Link
-              href=""
-              fontWeight="bold"
-              lineHeight="normal"
-              fontSize={{ base: "l", md: "xl" }}
-              _hover={{ color: "tomato" }}
-              color={colorMode === "light" ? "purple.600" : "purple.300"}
+              href=''
+              fontWeight='bold'
+              lineHeight='normal'
+              fontSize={{ base: 'l', md: 'xl' }}
+              _hover={{ color: 'tomato' }}
+              color={colorMode === 'light' ? 'purple.600' : 'purple.300'}
               noOfLines={[2, 2, 2, 2, 3]}
             >
               {properties.name}
@@ -178,18 +179,18 @@ function Album({ thing }) {
         </NextLink>
 
         <Text
-          fontSize="md"
-          fontWeight="semibold"
-          _hover={{ color: "tomato" }}
-          textDecoration="purple"
+          fontSize='md'
+          fontWeight='semibold'
+          _hover={{ color: 'tomato' }}
+          textDecoration='purple'
         >
           <Link
-            href=""
+            href=''
             onClick={() => searchSubmit()}
             noOfLines={[2, 2, 2, 2, 3]}
-            isExternal
+            // isExternal
           >
-            {" "}
+            {' '}
             {properties.artist}
           </Link>
         </Text>

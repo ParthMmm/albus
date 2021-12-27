@@ -1,10 +1,10 @@
-import React from "react";
-import axios from "axios";
-import { userInfoFetch } from "../fetch";
+import React from 'react';
+import axios from 'axios';
+import { userInfoFetch } from '../fetch';
 async function fetchUserInfo(userID) {
   const { data } = await axios.get(userInfoFetch + `?userID=${userID}`);
 
-  console.log(userInfoFetch);
+  // console.log(userInfoFetch);
   //   console.log(data);
   //   const { data } = await axios.get(userInfoFetch + `?userID=${userID}`);
 
