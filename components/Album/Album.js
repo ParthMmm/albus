@@ -16,13 +16,6 @@ function Album({ thing }) {
   let color;
   const { colorMode } = useColorMode();
 
-  const searchSubmit = () => {
-    router.push({
-      pathname: '/search',
-      query: { input: properties.artist },
-    });
-  };
-
   let randomNum = Math.floor(Math.random() * colors.length);
 
   if (thing._id && thing.mbid) {
@@ -91,6 +84,14 @@ function Album({ thing }) {
   if (properties.imageUrl === undefined) {
     return null;
   }
+
+  const searchSubmit = () => {
+    console.log(properties.artist);
+    router.push({
+      pathname: '/search',
+      query: { input: properties.artist },
+    });
+  };
 
   return (
     <Box
@@ -185,10 +186,10 @@ function Album({ thing }) {
           textDecoration='purple'
         >
           <Link
-            href=''
+            // href=''
             onClick={() => searchSubmit()}
             noOfLines={[2, 2, 2, 2, 3]}
-            // isExternal
+            textDecoration='none'
           >
             {' '}
             {properties.artist}

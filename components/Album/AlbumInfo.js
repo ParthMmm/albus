@@ -130,9 +130,9 @@ function AlbumInfo({ currentAlbum, color, avgRating }) {
           <RatingView ratingValue={avgRating} />
         </Flex>
         <SimpleGrid
-          // mt={3}
-          columns={{ base: 2, sm: 3, md: 5, lg: 3 }}
-          row={{ base: 5, sm: 2, md: 2, lg: 2 }}
+          mt={3}
+          columns={{ base: 2, sm: 4, md: 5, lg: 3 }}
+          row={{ base: 2, sm: 2, md: 2, lg: 2 }}
           spacingY='2px'
           spacingX='2px'
         >
