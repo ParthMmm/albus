@@ -130,12 +130,13 @@ function AlbumInfo({ currentAlbum, color, avgRating }) {
         <Flex mt={2} align='center'>
           <RatingView ratingValue={avgRating} />
         </Flex>
-        <SimpleGrid
+        <Grid
           mt={3}
-          columns={{ base: 2, sm: 4, md: 5, lg: 3 }}
-          row={{ base: 1, sm: 1, md: 2, lg: 2 }}
-          spacingY='2px'
-          spacingX='2px'
+          // column={{ base: 2, sm: 4, md: 5, lg: 3 }}
+          // row={{ base: 1, sm: 1, md: 2, lg: 2 }}
+          templateRows='repeat(2, 1fr)'
+          templateColumns='repeat(3, 1fr)'
+          gap={2}
         >
           {currentAlbum.tags ? (
             currentAlbum.tags.map((tag) => (
@@ -146,7 +147,7 @@ function AlbumInfo({ currentAlbum, color, avgRating }) {
           ) : (
             <></>
           )}
-        </SimpleGrid>
+        </Grid>
       </Box>
 
       {currentAlbum.wiki ? (
