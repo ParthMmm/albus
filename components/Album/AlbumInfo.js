@@ -9,6 +9,7 @@ import {
   Button,
   Collapse,
   SimpleGrid,
+  GridItem,
   Grid,
   Divider,
   Center,
@@ -132,12 +133,16 @@ function AlbumInfo({ currentAlbum, color, avgRating }) {
         <SimpleGrid
           mt={3}
           columns={{ base: 2, sm: 4, md: 5, lg: 3 }}
-          row={{ base: 2, sm: 2, md: 2, lg: 2 }}
+          row={{ base: 1, sm: 1, md: 2, lg: 2 }}
           spacingY='2px'
           spacingX='2px'
         >
           {currentAlbum.tags ? (
-            currentAlbum.tags.map((tag) => <Tags key={tag.url} tag={tag} />)
+            currentAlbum.tags.map((tag) => (
+              <GridItem>
+                <Tags key={tag.url} tag={tag} />{' '}
+              </GridItem>
+            ))
           ) : (
             <></>
           )}
