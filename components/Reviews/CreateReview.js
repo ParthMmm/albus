@@ -70,11 +70,15 @@ const ReviewModal = ({ isOpen, onClose, album }) => {
     },
     {
       onSuccess: () => {
+        console.log('🎇 new review sent');
+
         queryClient.invalidateQueries([
           'fetchReviews',
           album.albumName,
           album.artist,
         ]);
+        console.log('🎇 new review created');
+
         action.setReviewCreated(true);
       },
     }

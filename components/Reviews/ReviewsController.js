@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from 'react';
 import {
   Box,
   Flex,
@@ -11,30 +11,30 @@ import {
   Heading,
   Select,
   Spinner,
-} from "@chakra-ui/react";
-import _ from "lodash";
-import Reviews from "./Reviews";
-import { useAlbum } from "../../providers/albumProvider";
-import { useAction } from "../../providers/actionProvider";
+} from '@chakra-ui/react';
+import _ from 'lodash';
+import Reviews from './Reviews';
+import { useAlbum } from '../../providers/albumProvider';
+import { useAction } from '../../providers/actionProvider';
 
-import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
-import CreateReview from "./CreateReview";
-import { useRouter } from "next/router";
-import fetcher from "../../utils/fetcher";
-import useSWR, { mutate } from "swr";
-import { fetchAlbumReviews } from "../../utils/fetch";
+import { MdNavigateBefore, MdNavigateNext } from 'react-icons/md';
+import CreateReview from './CreateReview';
+import { useRouter } from 'next/router';
+import fetcher from '../../utils/fetcher';
+import useSWR, { mutate } from 'swr';
+import { fetchAlbumReviews } from '../../utils/fetch';
 import {
   useQuery,
   useMutation,
   useQueryClient,
   QueryClient,
   QueryClientProvider,
-} from "react-query";
-import axios from "axios";
-import { useAuth } from "../../providers/authProvider";
+} from 'react-query';
+import axios from 'axios';
+import { useAuth } from '../../providers/authProvider';
 
-import newReview from "../../utils/newReview";
-import useAverageRating from "../../utils/useAverageRating";
+import newReview from '../../utils/newReview';
+import useAverageRating from '../../utils/useAverageRating';
 function ReviewsController({ data, color, albumName, artist, isLoading }) {
   const album = useAlbum();
   const router = useRouter();
@@ -44,8 +44,8 @@ function ReviewsController({ data, color, albumName, artist, isLoading }) {
   const [firstIndex, setFirstIndex] = useState(0);
   const [lastIndex, setLastIndex] = useState(10);
   const [page, setPage] = useState(1);
-  const [filter, setFilter] = useState("");
-  const [copyData, setCopyData] = useState("");
+  const [filter, setFilter] = useState('');
+  const [copyData, setCopyData] = useState('');
   const queryClient = useQueryClient();
   const { colorMode } = useColorMode();
 
@@ -83,8 +83,8 @@ function ReviewsController({ data, color, albumName, artist, isLoading }) {
       setTimeout(() => {
         bottomRef.current &&
           bottomRef.current.scrollIntoView({
-            behavior: "smooth",
-            block: "center",
+            behavior: 'smooth',
+            block: 'center',
           });
       }, 500);
     }
@@ -93,6 +93,7 @@ function ReviewsController({ data, color, albumName, artist, isLoading }) {
 
   useEffect(() => {
     action.setReviewCreated(false);
+    console.log('🎇 new scroll created');
 
     return () => executeScroll();
   }, [action.reviewCreated]);
@@ -121,7 +122,7 @@ function ReviewsController({ data, color, albumName, artist, isLoading }) {
   };
 
   useEffect(() => {
-    if (data && filter === "newest") {
+    if (data && filter === 'newest') {
       const sortByDate = [...data];
       sortByDate.sort((a, b) => {
         return (
@@ -130,11 +131,11 @@ function ReviewsController({ data, color, albumName, artist, isLoading }) {
       });
 
       setCopyData(sortByDate);
-      console.log("new");
+      console.log('new');
       return;
     }
 
-    if (data && filter === "oldest") {
+    if (data && filter === 'oldest') {
       const sortByDate = [...data];
       sortByDate.sort((a, b) => {
         return (
@@ -143,12 +144,12 @@ function ReviewsController({ data, color, albumName, artist, isLoading }) {
       });
 
       setCopyData(sortByDate);
-      console.log("old");
+      console.log('old');
 
       return;
     }
 
-    if (data && filter === "rating") {
+    if (data && filter === 'rating') {
       //descending order
       const sortByRating = [...data];
       sortByRating.sort((a, b) => b.rating - a.rating);
@@ -157,7 +158,7 @@ function ReviewsController({ data, color, albumName, artist, isLoading }) {
       return;
     }
 
-    if (filter === "") {
+    if (filter === '') {
       setCopyData(data);
       return;
     }
@@ -166,42 +167,42 @@ function ReviewsController({ data, color, albumName, artist, isLoading }) {
   if (copyData && data) {
     return (
       <>
-        <Flex justifyContent="space-between" alignItems="center">
+        <Flex justifyContent='space-between' alignItems='center'>
           <Heading>reviews</Heading>
-          <Flex alignItems="center" justifyContent="space-evenly">
+          <Flex alignItems='center' justifyContent='space-evenly'>
             <Select
-              placeholder="sort by"
-              variant="filled"
+              placeholder='sort by'
+              variant='filled'
               onChange={(e) => setFilter(e.target.value)}
               value={filter}
-              bg="none"
-              _hover={{ color: "purple.600" }}
+              bg='none'
+              _hover={{ color: 'purple.600' }}
             >
-              <option value="newest">newest</option>
-              <option value="oldest">oldest</option>
-              <option value="rating">rating</option>
+              <option value='newest'>newest</option>
+              <option value='oldest'>oldest</option>
+              <option value='rating'>rating</option>
             </Select>
             <CreateReview />
           </Flex>
         </Flex>
         <Reviews data={copyData.slice(firstIndex, lastIndex)} color={color} />
         <Flex
-          flexDir="row"
-          justifyContent="space-between"
-          alignItems="center"
+          flexDir='row'
+          justifyContent='space-between'
+          alignItems='center'
           m={2}
-          flexShrink="0"
+          flexShrink='0'
         >
           {firstIndex === 0 ? (
-            <Button visibility="hidden" />
+            <Button visibility='hidden' />
           ) : (
             <Button as={MdNavigateBefore} onClick={() => prevPage()} />
           )}
-          <Text as="span" ref={bottomRef}>
+          <Text as='span' ref={bottomRef}>
             {page}
           </Text>
           {lastIndex >= data.length ? (
-            <Button visibility="hidden" />
+            <Button visibility='hidden' />
           ) : (
             <Button as={MdNavigateNext} onClick={() => nextPage()} />
           )}
@@ -218,24 +219,24 @@ function ReviewsController({ data, color, albumName, artist, isLoading }) {
   } else {
     return (
       <>
-        <Flex justifyContent="space-between" alignItems="center">
+        <Flex justifyContent='space-between' alignItems='center'>
           <Heading>reviews</Heading>
           <CreateReview />
         </Flex>
         <Box
           mt={1}
-          color={colorMode === "dark" ? "white" : "black"}
-          border="5px solid"
+          color={colorMode === 'dark' ? 'white' : 'black'}
+          border='5px solid'
           borderColor={color}
-          borderRadius="sm"
-          rounded="xl"
-          boxShadow="lg"
+          borderRadius='sm'
+          rounded='xl'
+          boxShadow='lg'
           p={5}
           //   w="80%"
           //   mx="auto"
-          d="flex"
-          justifyContent="center"
-          bg={colorMode === "dark" ? "componentBg" : "white"}
+          d='flex'
+          justifyContent='center'
+          bg={colorMode === 'dark' ? 'componentBg' : 'white'}
         >
           <Text>write the first review!</Text>
         </Box>
