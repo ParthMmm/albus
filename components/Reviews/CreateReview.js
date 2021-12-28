@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Button,
   Modal,
@@ -17,41 +17,42 @@ import {
   Textarea,
   NumberInput,
   Box,
-} from "@chakra-ui/react";
-import { MdPeople, MdPlayArrow, MdAdd } from "react-icons/md";
-import { useDisclosure } from "@chakra-ui/hooks";
-import { useForm, useFormState } from "react-hook-form";
-import { Rating, RatingView } from "react-simple-star-rating";
-import { Formik, Field, Form } from "formik";
-import { useAction } from "../../providers/actionProvider";
-import { useAlbum } from "../../providers/albumProvider";
-import newReview from "../../utils/newReview";
-import axios from "axios";
+  IconButton,
+} from '@chakra-ui/react';
+import { MdPeople, MdPlayArrow, MdAdd } from 'react-icons/md';
+import { useDisclosure } from '@chakra-ui/hooks';
+import { useForm, useFormState } from 'react-hook-form';
+import { Rating, RatingView } from 'react-simple-star-rating';
+import { Formik, Field, Form } from 'formik';
+import { useAction } from '../../providers/actionProvider';
+import { useAlbum } from '../../providers/albumProvider';
+import newReview from '../../utils/newReview';
+import axios from 'axios';
 import {
   useQuery,
   useMutation,
   useQueryClient,
   QueryClient,
   QueryClientProvider,
-} from "react-query";
+} from 'react-query';
 // import ReviewModal from "./ReviewModal";
-import { useAuth } from "../../providers/authProvider";
+import { useAuth } from '../../providers/authProvider';
 function CreateReview() {
   const { colorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const album = useAlbum();
+  const auth = useAuth();
 
   return (
     <>
-      <Button
-        onClick={onOpen}
+      <IconButton
+        size='md'
+        bg='none'
+        _hover={{ color: 'purple.600' }}
         as={MdAdd}
-        size="md"
-        bg="none"
-        _hover={{ color: "purple.600" }}
-      >
-        Open Modal
-      </Button>
+        isDisabled={!auth.user}
+        onClick={onOpen}
+      />
       <ReviewModal isOpen={isOpen} onClose={onClose} album={album?.album} />
     </>
   );
@@ -70,7 +71,7 @@ const ReviewModal = ({ isOpen, onClose, album }) => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries([
-          "fetchReviews",
+          'fetchReviews',
           album.albumName,
           album.artist,
         ]);
@@ -83,13 +84,13 @@ const ReviewModal = ({ isOpen, onClose, album }) => {
     const errors = {};
 
     if (!values.rating) {
-      errors.rating = "required";
+      errors.rating = 'required';
     }
     if (!values.title) {
-      errors.title = "required";
+      errors.title = 'required';
     }
     if (!values.reviewBody) {
-      errors.reviewBody = "required";
+      errors.reviewBody = 'required';
     }
 
     return errors;
@@ -109,8 +110,8 @@ const ReviewModal = ({ isOpen, onClose, album }) => {
           <Formik
             validate={validate}
             initialValues={{
-              title: "",
-              reviewBody: "",
+              title: '',
+              reviewBody: '',
               rating: 0,
             }}
             onSubmit={(values, actions) => {
@@ -125,15 +126,15 @@ const ReviewModal = ({ isOpen, onClose, album }) => {
             }}
           >
             <Form>
-              <Field name="rating" type="number">
+              <Field name='rating' type='number'>
                 {({ field, form: { setFieldValue, errors, touched } }) => (
                   <FormControl isInvalid={errors.rating && touched.rating}>
                     <Rating
                       {...field}
-                      id="rating"
+                      id='rating'
                       onClick={(rate) => {
                         setRating(rate);
-                        setFieldValue("rating", rate);
+                        setFieldValue('rating', rate);
                       }}
                       ratingValue={rating}
                     />
@@ -141,7 +142,7 @@ const ReviewModal = ({ isOpen, onClose, album }) => {
                   </FormControl>
                 )}
               </Field>
-              <Field name="title">
+              <Field name='title'>
                 {({ field, form }) => (
                   <FormControl
                     isInvalid={form.errors.title && form.touched.title}
@@ -149,15 +150,15 @@ const ReviewModal = ({ isOpen, onClose, album }) => {
                   >
                     <Input
                       {...field}
-                      id="title"
-                      placeholder="enter title here"
+                      id='title'
+                      placeholder='enter title here'
                     />
                     <FormErrorMessage>{form.errors.title}</FormErrorMessage>
                   </FormControl>
                 )}
               </Field>
 
-              <Field name="reviewBody">
+              <Field name='reviewBody'>
                 {({ field, form }) => (
                   <FormControl
                     isInvalid={
@@ -167,8 +168,8 @@ const ReviewModal = ({ isOpen, onClose, album }) => {
                   >
                     <Textarea
                       {...field}
-                      id="reviewBody"
-                      placeholder="enter review here"
+                      id='reviewBody'
+                      placeholder='enter review here'
                     />
                     <FormErrorMessage>
                       {form.errors.reviewBody}
@@ -177,12 +178,12 @@ const ReviewModal = ({ isOpen, onClose, album }) => {
                 )}
               </Field>
 
-              <Box d="flex" justifyContent="space-between" my={4}>
-                {" "}
+              <Box d='flex' justifyContent='space-between' my={4}>
+                {' '}
                 <Button
-                  colorScheme="blue"
+                  colorScheme='blue'
                   mr={3}
-                  variant="ghost"
+                  variant='ghost'
                   onClick={() => {
                     setRating(0);
                     onClose();
@@ -192,16 +193,17 @@ const ReviewModal = ({ isOpen, onClose, album }) => {
                 </Button>
                 <Button
                   isLoading={action.loading}
-                  type="submit"
-                  bg="tomato"
-                  rounded="xl"
-                  size="md"
-                  _hover={{ background: "purple.600" }}
+                  type='submit'
+                  bg='tomato'
+                  rounded='xl'
+                  size='md'
+                  _hover={{ background: 'purple.600' }}
+                  isDisabled={!auth.user}
                 >
                   <Text
-                    _hover={{ color: "tomato" }}
-                    fontSize="1rem"
-                    color="white"
+                    _hover={{ color: 'tomato' }}
+                    fontSize='1rem'
+                    color='white'
                   >
                     submit
                   </Text>
