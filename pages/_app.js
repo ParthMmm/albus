@@ -1,24 +1,24 @@
-import { ChakraProvider } from "@chakra-ui/react";
-import { ActionProvider } from "../providers/actionProvider";
-import { AlbumProvider } from "../providers/albumProvider";
-import { AuthProvider } from "../providers/authProvider";
-import { ProfileProvider } from "../providers/profileProvider";
-import theme from "../styles/theme";
-import { ErrorBoundary } from "react-error-boundary";
-import { useRouter } from "next/router";
-import { Button, Box } from "@chakra-ui/react";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
+import { ChakraProvider } from '@chakra-ui/react';
+import { ActionProvider } from '../providers/actionProvider';
+import { AlbumProvider } from '../providers/albumProvider';
+import { AuthProvider } from '../providers/authProvider';
+import { ProfileProvider } from '../providers/profileProvider';
+import theme from '../styles/theme';
+import { ErrorBoundary } from 'react-error-boundary';
+import { useRouter } from 'next/router';
+import { Button, Box } from '@chakra-ui/react';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
 // import { ErrorFallback } from "../components/ErrorFallback";
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (
     <Box
-      d="flex"
-      flexDir="column"
-      justifyContent="center"
-      alignItems="center"
-      h="100vh"
+      d='flex'
+      flexDir='column'
+      justifyContent='center'
+      alignItems='center'
+      h='100vh'
     >
       <h2>sorry! something went wrong 🙁</h2>
       <Button onClick={resetErrorBoundary}>go home</Button>
@@ -31,7 +31,7 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <ChakraProvider theme={theme}>
-      <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={queryClient} contextSharing={true}>
         <ReactQueryDevtools initialIsOpen={false} />
 
         <AuthProvider>
@@ -41,7 +41,7 @@ function MyApp({ Component, pageProps }) {
                 <ErrorBoundary
                   FallbackComponent={ErrorFallback}
                   onReset={() => {
-                    router.push("/");
+                    router.push('/');
                   }}
                 >
                   <Component {...pageProps} />

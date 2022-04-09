@@ -130,14 +130,11 @@ function ActionButtons({ name, artist, id }) {
   const clickListened = () => {
     if (wantToListen) {
       setWantToListen(false);
-      console.log('1');
     }
     if (listening) {
       setListening(false);
-      console.log('2');
     }
     if (listened) {
-      console.log('3');
       setListened(false);
       listenedMutation.mutate(albumInfo);
       return;
@@ -168,16 +165,13 @@ function ActionButtons({ name, artist, id }) {
   const clickListening = () => {
     if (wantToListen) {
       setWantToListen(false);
-      console.log('11');
     }
     if (listened) {
       setListened(false);
-      console.log('22');
     }
     if (listening) {
       setListening(false);
       listeningMutation.mutate(albumInfo);
-      console.log('33');
       return;
     }
     setListening(true);

@@ -1,25 +1,27 @@
-import React, { useState, useEffect, useContext, createContext } from "react";
-import Cookies from "js-cookie";
-import axios from "axios";
-import { useRouter } from "next/router";
+import React, { useState, useEffect, useContext, createContext } from 'react';
+import Cookies from 'js-cookie';
+import axios from 'axios';
+import { useRouter } from 'next/router';
 
 const AuthContext = createContext();
 
-export function AuthProvider({ children }) {
+function AuthProvider({ children }) {
   const auth = useProvideAuth();
 
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 }
 
-export function useAuth() {
+function useAuth() {
   return useContext(AuthContext);
 }
+
+export { useAuth, AuthProvider, AuthContext };
 
 function useProvideAuth() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [message, setMessage] = useState("");
+  const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
   const [userInfo, setUserInfo] = useState(null);
   const [listened, setListened] = useState(null);
   const [wantToListen, setWantToListen] = useState(null);
@@ -34,7 +36,7 @@ function useProvideAuth() {
       const user = await formatUser(rawUser);
       const userString = JSON.stringify(user);
 
-      Cookies.set("albus-auth", userString, { expires: 7 });
+      Cookies.set('albus-auth', userString, { expires: 7 });
 
       setUser(user);
 
@@ -43,10 +45,10 @@ function useProvideAuth() {
     } else {
       setUser(false);
 
-      Cookies.remove("albus-auth");
+      Cookies.remove('albus-auth');
 
       setLoading(false);
-      router.push("/");
+      router.push('/');
       return false;
     }
   };
@@ -58,7 +60,7 @@ function useProvideAuth() {
       const user = await formatUserInfo(rawUser);
       const userString = JSON.stringify(user);
 
-      Cookies.set("albus-userInfo", userString, { expires: 7 });
+      Cookies.set('albus-userInfo', userString, { expires: 7 });
 
       setUserInfo(user);
       setListened(user.actions.listened);
@@ -70,7 +72,7 @@ function useProvideAuth() {
       return user;
     } else {
       setUserInfo(false);
-      Cookies.remove("albus-userInfo");
+      Cookies.remove('albus-userInfo');
       setLoading(false);
 
       return false;
@@ -79,8 +81,8 @@ function useProvideAuth() {
   };
 
   const readCookie = () => {
-    const authState = Cookies.get("albus-auth");
-    const infoState = Cookies.get("albus-userInfo");
+    const authState = Cookies.get('albus-auth');
+    const infoState = Cookies.get('albus-userInfo');
     if (authState) {
       setLoading(false);
       const parsedUser = JSON.parse(authState);
@@ -102,7 +104,7 @@ function useProvideAuth() {
 
   const register = async (data) => {
     setLoading(true);
-    setMessage("");
+    setMessage('');
 
     const res = await axios.post(
       `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/signup`,
@@ -113,14 +115,14 @@ function useProvideAuth() {
       console.log(res.data.error);
       setError(res.data.error);
       setLoading(false);
-      setMessage("");
+      setMessage('');
       return res.data.error;
     } else {
       if (handleUser(res.data)) {
-        setMessage("success! 🎉");
-        setError("");
+        setMessage('success! 🎉');
+        setError('');
 
-        router.push("/");
+        router.push('/');
         return;
       }
     }
@@ -129,7 +131,7 @@ function useProvideAuth() {
 
   const login = async (data) => {
     setLoading(true);
-    setMessage("");
+    setMessage('');
 
     const res = await axios.post(
       `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/login`,
@@ -140,14 +142,14 @@ function useProvideAuth() {
       console.log(res.data.error);
       setError(res.data.error);
       setLoading(false);
-      setMessage("");
+      setMessage('');
 
       return res.data.error;
     } else {
       if (handleUser(res.data)) {
-        setError("");
-        setMessage("success! 🎉");
-        router.push("/");
+        setError('');
+        setMessage('success! 🎉');
+        router.push('/');
 
         return;
       }
@@ -157,7 +159,7 @@ function useProvideAuth() {
 
   const fetchUser = async () => {
     setLoading(true);
-    setError("");
+    setError('');
 
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_BACKEND_SERVER}api/user/fetchUser`,

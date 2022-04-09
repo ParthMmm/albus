@@ -5,40 +5,27 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
   Text,
-  FormLabel,
   FormErrorMessage,
   FormControl,
   Input,
-  useColorMode,
   Textarea,
-  NumberInput,
   Box,
   IconButton,
+  Icon,
 } from '@chakra-ui/react';
-import { MdPeople, MdPlayArrow, MdAdd } from 'react-icons/md';
+import { MdAdd } from 'react-icons/md';
 import { useDisclosure } from '@chakra-ui/hooks';
-import { useForm, useFormState } from 'react-hook-form';
-import { Rating, RatingView } from 'react-simple-star-rating';
+import { Rating } from 'react-simple-star-rating';
 import { Formik, Field, Form } from 'formik';
 import { useAction } from '../../providers/actionProvider';
 import { useAlbum } from '../../providers/albumProvider';
 import newReview from '../../utils/newReview';
-import axios from 'axios';
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  QueryClient,
-  QueryClientProvider,
-} from 'react-query';
-// import ReviewModal from "./ReviewModal";
+import { useMutation, useQueryClient } from 'react-query';
 import { useAuth } from '../../providers/authProvider';
 function CreateReview() {
-  const { colorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const album = useAlbum();
   const auth = useAuth();
@@ -46,12 +33,13 @@ function CreateReview() {
   return (
     <>
       <IconButton
+        aria-label='add'
         size='md'
         bg='none'
         _hover={{ color: 'purple.600' }}
-        as={MdAdd}
+        icon={<Icon as={MdAdd} w={7} h={7} />}
         isDisabled={!auth.user}
-        onClick={onOpen}
+        onClick={() => (auth.user ? onOpen : null)}
       />
       <ReviewModal isOpen={isOpen} onClose={onClose} album={album?.album} />
     </>
@@ -70,14 +58,11 @@ const ReviewModal = ({ isOpen, onClose, album }) => {
     },
     {
       onSuccess: () => {
-        console.log('🎇 new review sent');
-
         queryClient.invalidateQueries([
           'fetchReviews',
           album.albumName,
           album.artist,
         ]);
-        console.log('🎇 new review created');
 
         action.setReviewCreated(true);
       },
